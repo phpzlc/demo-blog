@@ -1,0 +1,27 @@
+{
+    "name": "phpzlc/upload",
+    "description": "上传文件组件",
+    "homepage": "https://phpzlc.github.io/",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "phpzlc", "upload"
+    ],
+    "support": {
+        "email": "1044295598@qq.com"
+    },
+    "authors": [
+        {
+            "name": "CJayHe",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PHPZlc\\Upload\\": ["src"]
+        }
+    },
+    "require": {
+        "php": ">=7.1.3"
+    }
+}

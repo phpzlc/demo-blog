@@ -1,0 +1,33 @@
+{
+    "name": "phpzlc/admin-business",
+    "description": "后台业务组件",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+      "phpzlc",
+      "admin",
+      "symfony"
+    ],
+    "homepage": "",
+    "authors": [
+      {
+        "name": "海底捞面条师傅",
+        "email": "1847944340@qq.com",
+        "role": "Developer"
+
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "PHPZlc\\AdminBusiness\\": "src/"
+      }
+    },
+    "require": {
+      "phpzlc/admin": "1.*",
+      "phpzlc/auth-business": "1.*",
+      "phpzlc/platform-business": "1.*",
+      "phpzlc/upload-business": "1.*",
+      "phpzlc/captcha-business": "1.*"
+    }
+
+}

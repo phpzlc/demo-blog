@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+admin:
+  resource: "routing/admin/admin.yaml"
+  prefix:   /admin
+
+upload:
+  resource: "routing/upload/upload.yaml"
+  prefix:   /upload
+
+captcha:
+  resource: "routing/captcha/captcha.yaml"
+  prefix:   /captcha

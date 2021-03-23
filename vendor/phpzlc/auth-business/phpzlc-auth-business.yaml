@@ -1,0 +1,11 @@
+parameters:
+
+  # 登录session名后缀
+  login_tag_session_name: _login_tag
+
+  # 操作主体- 系统
+  subject_system: system
+
+  # 全部操作主体
+  subject_array:
+    '%subject_system%': 系统

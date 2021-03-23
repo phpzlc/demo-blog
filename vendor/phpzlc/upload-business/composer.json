@@ -1,0 +1,30 @@
+{
+    "name": "phpzlc/upload-business",
+    "description": "上传业务组件",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+      "phpzlc",
+      "admin",
+      "symfony"
+    ],
+    "homepage": "",
+    "authors": [
+      {
+        "name": "CJayHe",
+        "email": "1044295598@qq.com",
+        "role": "Developer"
+
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "PHPZlc\\UploadBusiness\\": "src/"
+      }
+    },
+    "require": {
+      "phpzlc/phpzlc": "1.*",
+      "phpzlc/upload": "1.*"
+    }
+
+}

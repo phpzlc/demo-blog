@@ -1,0 +1,28 @@
+{
+  "name": "phpzlc/auth-business",
+  "description": "登录组件",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "phpzlc",
+    "auth",
+    "symfony"
+  ],
+  "homepage": "",
+  "authors": [
+    {
+      "name": "海底捞面条师傅",
+      "email": "1847944340@qq.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PHPZlc\\AuthBusiness\\": "src/"
+    }
+  },
+  "require": {
+    "phpzlc/phpzlc": "1.*",
+    "phpzlc/platform-business": "1.*"
+  }
+}

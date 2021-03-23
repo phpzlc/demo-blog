@@ -15,4 +15,5 @@ return [
     PHPZlc\Document\DocumentBundle\DocumentBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     PHPZlc\PHPZlc\Bundle\PHPZlcBundle::class => ['all' => true],
+    PHPZlc\Admin\Bundle\PHPZlcAdminBundle::class => ['all' => true],
 ];

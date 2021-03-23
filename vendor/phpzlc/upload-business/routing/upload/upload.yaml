@@ -1,0 +1,4 @@
+# 上传接口
+upload_file:
+  path: /
+  controller: App\Controller\Upload\UploadController:upload

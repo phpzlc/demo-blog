@@ -1,0 +1,6 @@
+services:
+    phpzlc.admin.twig.strategy.extension:
+        class: PHPZlc\Admin\Bundle\Extension\StrategyExtension
+        tags:
+            - { name: twig.extension }
+        arguments: ['@service_container']

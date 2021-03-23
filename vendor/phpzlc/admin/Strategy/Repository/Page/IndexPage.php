@@ -1,0 +1,186 @@
+<?php
+/**
+ * PhpStorm.
+ * User: Jay
+ * Date: 2020/8/28
+ */
+namespace PHPZlc\Admin\Strategy\Repository\Page;
+
+use App\Business\FileBusiness\FileBusiness;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use PHPZlc\Admin\Strategy\Repository\Field;
+use PHPZlc\Admin\Strategy\Repository\FieldPageConfig;
+use PHPZlc\Admin\Strategy\Repository\RepositoryStrategy;
+use PHPZlc\PHPZlc\Doctrine\ORM\Repository\AbstractServiceEntityRepository;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rules;
+
+class IndexPage extends AbstractPage
+{
+    //分页
+    private $search = [];
+
+    private $action = [];
+
+    private $isOpenPagination = true;
+
+    private $paginationRows = 20;
+
+    private $rules = array();
+
+    private $resultSetMappingBuilder = null;
+
+    private $aliasChain = '';
+
+    public function __construct(RepositoryStrategy $reposiort)
+    {
+        parent::__construct($reposiort, self::PAGE_INDEX);
+    }
+
+    public function configSearch(array $filedNames)
+    {
+        $this->search = $filedNames;
+
+        return $this;
+    }
+
+    public function configAction(array $artion)
+    {
+        $this->action = $artion;
+
+        return $this;
+    }
+
+    public function configPagination($isOpenPagination = false, $rows = 20)
+    {
+        $this->isOpenPagination = $isOpenPagination;
+        $this->rows = $rows;
+    }
+
+    /**
+     * @param Rules|array|null $rules
+     * @param ResultSetMappingBuilder|null $resultSetMappingBuilder
+     * @param string $aliasChain
+     * @return $this
+     */
+    public function configRules($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+    {
+        $this->rules = $rules;
+        $this->resultSetMappingBuilder = $resultSetMappingBuilder;
+        $this->aliasChain = $aliasChain;
+
+        return $this;
+    }
+
+
+    public function indexData()
+    {
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        /**
+         * @var Field[] $fileds
+         */
+        $fileds = $this->pageFileds();
+
+        //表头字段
+        $tableColumns = [];
+        foreach ($fileds as $field){
+            if($field->pageConfigs[self::PAGE_INDEX]->authority != FieldPageConfig::HIDE){
+                $tableColumns[$field->column->propertyName] = [
+                    'field' => $field,
+                    'pageConfig' => $field->pageConfigs[self::PAGE_INDEX]
+                ];
+            }
+        }
+
+        //检索
+        $rules = new Rules($this->rules);
+
+        $searchs = [];
+
+        foreach ($this->search as $field_name){
+            $field = $fileds[$field_name];
+            $data = false;
+
+           switch ($field->column->type) {
+               case 'boolean':
+                   $name = $field_name;
+                   $rules->addRule(new Rule($field_name . Rule::RA_NOT_REAL_EMPTY, $request->get($name)));
+                   eval('$data = $this->reposiort->entityRepository->getClassName()::'. $field->getDataMethod . ';');
+                   break;
+               case 'date':
+               case 'time':
+               case 'datetime':
+                   $name1 = $field_name . '_start';
+                   $name2 = $field_name . '_end';
+                   $rules->addRule(new Rule($field_name . Rule::RA_CONTRAST, ['>=', $request->get($name1)]));
+                   $rules->addRule(new Rule($field_name . Rule::RA_CONTRAST, ['<=', $request->get($name2) . ' 23:59:59']));
+                   $name = [$name1, $name2];
+                   break;
+               case 'smallint':
+                   $name = $field_name;
+                   $rules->addRule(new Rule($field_name . Rule::RA_NOT_REAL_EMPTY, $request->get($name)));
+                   eval('$data = $this->reposiort->entityRepository->getClassName()::'. $field->getDataMethod . ';');
+                   break;
+               default:
+                   $name = $field_name;
+                   $rules->addRule(new Rule($field_name . Rule::RA_LIKE, $request->get($name)));
+           }
+
+           $searchs[$field_name] = array(
+               'name' => $name,
+               'field' => $field,
+               'data' => $data
+           );
+        }
+
+        if($this->isOpenPagination){
+            $list = $this->reposiort->entityRepository->findLimitAll($this->paginationRows, $request->get('page', 1),$rules, $this->resultSetMappingBuilder, $this->aliasChain);
+            $count = $this->reposiort->entityRepository->findCount($rules, $this->resultSetMappingBuilder, $this->aliasChain);
+        }else{
+            $list = $this->reposiort->entityRepository->findAll($rules, $this->resultSetMappingBuilder, $this->aliasChain);
+            $count = null;
+        }
+
+        //表格数据
+        $tableData = [];
+        foreach ($list as $key => $value){
+            foreach ($tableColumns as $field => $column){
+                $text = null;
+                eval(' $text = $value->'. $column['field']->getStringMethod . ';');
+                $tableData[$key][] = array(
+                    'field' => $field,
+                    'value' => $this->fieldToString($column['field'], $text),
+                    'column' => $column
+                );
+            }
+        }
+
+        return [
+            'tableColumns' => $tableColumns,
+            'tableData' => $tableData,
+            'isOpenPagination' => $this->isOpenPagination,
+            'paginationRows' => $this->paginationRows,
+            'dataCount' => $count,
+            'searchs' => $searchs
+        ];
+    }
+
+    public function index()
+    {
+        return $this->render('@PHPZlcAdmin/page/list.html.twig', $this->indexData());
+    }
+
+    public static function fieldPageConfigConstruce(AbstractServiceEntityRepository $entityRepository, Field $field, $stort)
+    {
+        $pageConfig = new FieldPageConfig();
+        $pageConfig->nullable = $field->column->nullable;
+        $pageConfig->sort = $stort;
+        
+        if($field->column->propertyName == $entityRepository->getPrimaryKey() || $field->column->isEntity){
+            $pageConfig->authority = FieldPageConfig::HIDE;
+        }
+
+        return $pageConfig;
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "phpzlc/platform-business",
+  "description": "平台组件",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "phpzlc",
+    "platform",
+    "symfony"
+  ],
+  "homepage": "",
+  "authors": [
+    {
+      "name": "海底捞面条师傅",
+      "email": "1847944340@qq.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PHPZlc\\PlatformBusiness\\": "src/"
+    }
+  },
+  "require": {
+    "phpzlc/phpzlc": "1.*"
+  }
+}

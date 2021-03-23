@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'a096bc56ea6ddd0e9a0ed36138ba157a7eea82c7',
+    'reference' => '8bce1c47cf04869644b2c9368a4062f5a92c9073',
     'name' => '__root__',
   ),
   'versions' => 
@@ -31,7 +31,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'a096bc56ea6ddd0e9a0ed36138ba157a7eea82c7',
+      'reference' => '8bce1c47cf04869644b2c9368a4062f5a92c9073',
     ),
     'brick/math' => 
     array (
@@ -213,6 +213,15 @@ private static $installed = array (
       ),
       'reference' => '0dbf5d78455d4d6a41d186da50adc1122ec066f4',
     ),
+    'ezyang/htmlpurifier' => 
+    array (
+      'pretty_version' => 'v4.13.0',
+      'version' => '4.13.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '08e27c97e4c6ed02f37c5b2b20488046c8d90d75',
+    ),
     'friendsofphp/proxy-manager-lts' => 
     array (
       'pretty_version' => 'v1.0.3',
@@ -221,6 +230,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '121af47c9aee9c03031bdeca3fac0540f59aa5c3',
+    ),
+    'gregwar/captcha' => 
+    array (
+      'pretty_version' => 'v1.1.9',
+      'version' => '1.1.9.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4bb668e6b40e3205a020ca5ee4ca8cff8b8780c5',
     ),
     'laminas/laminas-code' => 
     array (
@@ -249,6 +267,33 @@ private static $installed = array (
       ),
       'reference' => '6cccbddfcfc742eb02158d6137ca5687d92cee32',
     ),
+    'maennchen/zipstream-php' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c4c5803cc1f93df3d2448478ef79394a5981cc58',
+    ),
+    'markbaker/complex' => 
+    array (
+      'pretty_version' => '2.0.0',
+      'version' => '2.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9999f1432fae467bc93c53f357105b4c31bb994c',
+    ),
+    'markbaker/matrix' => 
+    array (
+      'pretty_version' => '2.1.2',
+      'version' => '2.1.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '361c0f545c3172ee26c3d596a0aa03f0cef65e6a',
+    ),
     'monolog/monolog' => 
     array (
       'pretty_version' => '1.26.0',
@@ -257,6 +302,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '2209ddd84e7ef1256b7af205d0717fb62cfc9c33',
+    ),
+    'myclabs/php-enum' => 
+    array (
+      'pretty_version' => '1.8.0',
+      'version' => '1.8.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '46cf3d8498b095bd33727b13fd5707263af99421',
     ),
     'nikic/php-parser' => 
     array (
@@ -338,6 +392,51 @@ private static $installed = array (
       ),
       'reference' => 'b210e219a54df9b9822880780bb3ba0fffa1f542',
     ),
+    'phpoffice/phpspreadsheet' => 
+    array (
+      'pretty_version' => '1.17.1',
+      'version' => '1.17.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c55269cb06911575a126dc225a05c0e4626e5fb4',
+    ),
+    'phpzlc/admin' => 
+    array (
+      'pretty_version' => 'v1.0.5',
+      'version' => '1.0.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'abedb185ac4ffb3c006358db88ff76326adaa5c6',
+    ),
+    'phpzlc/admin-business' => 
+    array (
+      'pretty_version' => 'v1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c2cd62c210f8b2f3021a73222f989d0e34871e12',
+    ),
+    'phpzlc/auth-business' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b261bed9156489bc416220aeda27774944d77fb8',
+    ),
+    'phpzlc/captcha-business' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '19df681742059e2ff8c07f19f8ea895d59d28d00',
+    ),
     'phpzlc/document-bundle' => 
     array (
       'pretty_version' => 'v1.1.0',
@@ -355,6 +454,33 @@ private static $installed = array (
       array (
       ),
       'reference' => '05ad7fb0b82323eea47a73e408e24210dbbcad65',
+    ),
+    'phpzlc/platform-business' => 
+    array (
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e7e8501aa298622830da0682f247986a889ca68e',
+    ),
+    'phpzlc/upload' => 
+    array (
+      'pretty_version' => 'v1.0.0',
+      'version' => '1.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f6edc9f63d88e077d258d781f5588da6a02c1a30',
+    ),
+    'phpzlc/upload-business' => 
+    array (
+      'pretty_version' => 'v1.0.0',
+      'version' => '1.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'fc84916b50795474e036927f0e7ed0538cc915ea',
     ),
     'phpzlc/validate' => 
     array (
@@ -404,12 +530,39 @@ private static $installed = array (
         0 => '1.0',
       ),
     ),
+    'psr/http-client' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
+    ),
     'psr/http-client-implementation' => 
     array (
       'provided' => 
       array (
         0 => '1.0',
       ),
+    ),
+    'psr/http-factory' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
+    ),
+    'psr/http-message' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f6561bf28d520154e4b0ec72be95418abe6d9363',
     ),
     'psr/link' => 
     array (
@@ -443,6 +596,15 @@ private static $installed = array (
         0 => '1.0.0',
         1 => '1.0',
       ),
+    ),
+    'psr/simple-cache' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
     ),
     'psr/simple-cache-implementation' => 
     array (

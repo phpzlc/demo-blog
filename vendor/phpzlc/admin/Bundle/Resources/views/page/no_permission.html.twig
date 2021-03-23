@@ -1,0 +1,33 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{% block main_content %}
+    <div class="page-500 clearfix">
+        <div class="content-500">
+            <img src="{{ asset('bundles/phpzlcadmin/images/authority.png') }}" alt="">
+            <p class="authority-title">您的权限不足</p>
+            <p class="authority-info">您不能操作此模块<br> 您可以联系管理员开通此模块的操作权限！</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content_vue %}
+    <script>
+        new Vue({
+            el: '#main-content',
+            data: function () {
+                return {
+
+                }
+            },
+            created() {
+                // 页面初始化使用
+                console.log(1);
+            },
+
+            mounted() {
+            },
+            methods: {
+            }
+        })
+    </script>
+{% endblock %}

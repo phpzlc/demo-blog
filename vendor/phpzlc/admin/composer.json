@@ -1,0 +1,28 @@
+{
+    "name": "phpzlc/admin",
+    "description": "后台系统",
+    "homepage": "https://phpzlc.github.io/",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "phpzlc", "symfony", "admin"
+    ],
+    "support": {
+        "email": "1044295598@qq.com"
+    },
+    "authors": [
+        {
+            "name": "CJayHe",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PHPZlc\\Admin\\": [""]
+        }
+    },
+    "require": {
+        "symfony/framework-bundle": ">=4.4",
+        "phpoffice/phpspreadsheet": "*"
+    }
+}

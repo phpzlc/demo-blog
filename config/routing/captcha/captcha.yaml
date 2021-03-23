@@ -1,0 +1,4 @@
+# 验证码生成
+captcha_generate:
+  path: /generate
+  controller: App\Controller\Captcha\CaptchaController:generate

@@ -1,0 +1,219 @@
+{% extends '@PHPZlcAdmin/base/base.html.twig' %}
+
+{% block body %}
+
+{% set ment_root_item = '' %}
+{% set ment_top_item = '' %}
+
+<body>
+    <div id="main-sidebar" class="sidebar-collapsed">
+        <div class="sidebar-nav-btn" title="展开/收起">
+            <i class="fa fa-outdent nav-icon fa-indent"></i>
+        </div>
+        <ul id="sidebar-products">
+            {% for item, menu in admin_menus() %}
+                <li class="sidebar-item loaded tip-disable">
+                    <a href="{{ menu.url }}" title="{{ menu.title }}" target="{{ menu.urlTarget }}" {% if admin_page_tag() in menu.tags %}class="active" {% set ment_root_item = item %}{% endif %}>
+                        <i class="{{ menu.ico | default('fa fa-cube') }}"></i>
+                        <span class="sidebar-products-sapn">{{ menu.title }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+
+            {% if ment_root_item is empty %}
+                {% if admin_menus() is empty %}
+                {% else %}
+                    {% set ment_root_item = 0 %}
+                {% endif%}
+            {% endif %}
+        </ul>
+    </div>
+
+    <div id="bce-content" class="sidebar-collapsed">
+        <div id="header" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner" id="app">
+                <div class="container-fluid clearfix">
+                    <a class="brand" href="javascript:;">
+                        <img src="{{ asset(admin_logo()) }}" />
+                    </a>
+                    <ul class="pull-left top-nav-ul clearfix">
+                        {% if admin_menu_model() == 1 %}
+                            {% if ment_root_item is not empty %}
+                                {% for item, menu in admin_menus()[ment_root_item].childs %}
+                                    <li>
+                                        <a href="{{ menu.url }}" title="{{ menu.title }}" target="{{ menu.urlTarget }}"  {% if admin_page_tag() in menu.tags %} class="top-nav-hover" {% set ment_top_item = item %}{% endif %}>
+                                            {{ menu.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            {% if ment_top_item is empty %}
+                                {% set ment_top_item = 0 %}
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                    <div class="pull-right top-nav clearfix">
+                        <ul class="pull-left top-nav-ul quick-navigation clearfix">
+                            {% for top_menu in admin_top_menus() %}
+                                {{ top_menu.html | raw }}
+                            {% endfor %}
+                            {% if admin_clear_cache_api_url() is not empty %}
+                                <li> <a href="javascript:;" @click="clearCache">清除缓存</a></li>
+                            {% endif %}
+                        </ul>
+                        <el-dropdown class="nav pull-right top-menu" @command="handlePersonal">
+                            <div class="el-dropdown-link">
+                                <img src="{{ asset(admin_avatar()) }}" class="admin-avatar" alt="">
+                                <p class="admin-info">
+                                    <span>{{ admin_name() }}</span>
+                                    <span>{{ admin_role_name() }}</span>
+                                </p>
+                                <i class="el-icon--right el-icon-caret-bottom"></i>
+                            </div>
+
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="pwd">修改密码</el-dropdown-item>
+                                <el-dropdown-item command="end">退出</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        {% if admin_env() == 'dev' %}
+                            <p class="testing-environment">开发环境</p>
+                        {% elseif admin_env() == 'beta' %}
+                            <p class="testing-environment">测试环境</p>
+                        {% elseif admin_env() == 'demo' %}
+                            <p class="testing-environment">样品</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#header',
+                delimiters: ['${', '}$'],
+                data: function () {
+                    return {
+
+                    }
+                },
+                methods: {
+                    handlePersonal(command) {
+                        switch(command){
+                            case 'pwd':
+                                window.open("{{ admin_setting_pwd_url() }}", '_self');
+                                brank;
+                            case 'end':
+                                window.open("{{ admin_end_url() }}", '_self');
+                                brank;
+                        }
+                    },
+                    clearCache(){
+                        const that = this;
+                        $.post("{{ admin_clear_cache_api_url() }}",{}, function(data) {
+                            resultPreprocess(that, data, '')
+                        }).fail(function(response) {
+                            window.location.reload();
+                        });
+                    },
+
+
+                    {% for top_menu in admin_top_menus() %}
+                    {{ top_menu.function | raw }}
+                    {% endfor %}
+
+                }
+            })
+        </script>
+        <div id="container" class="row-fluid">
+            <div id="sidebar" class="nav-collapse collapse">
+                <ul class="sidebar-menu">
+                    {% if ment_root_item is not empty %}
+                        {% if admin_menu_model() == 1 and ment_top_item is not empty %}
+                            {% set left_ments = admin_menus()[ment_root_item].childs[ment_top_item].childs %}
+                        {% else %}
+                            {% set left_ments = admin_menus()[ment_root_item].childs %}
+                        {% endif %}
+
+                        {% if left_ments is defined %}
+                            {% for menu in left_ments %}
+                                <li class="has-sub {% if admin_page_tag() in menu.tags %} active {% endif %}">
+                                    <a href="{{ menu.url }}" target="{{ menu.urlTarget }}" class="">
+                                        <i class="{{ menu.ico | default('fa fa-telegram') }}"></i>
+                                        {{ menu.title }}
+
+                                        {% if menu.childs is not empty %}
+                                            <span class="arrow {% if admin_page_tag() in menu.tags %} open {% endif %}"></span>
+                                        {% endif %}
+                                    </a>
+                                    {% if menu.childs is not empty %}
+                                        <ul class="sub" {% if admin_page_tag() in menu.tags %} style="display: block;" {% endif %}>
+                                            {% for child in menu.childs %}
+                                                <li class=" {% if admin_page_tag() in child.tags %} active {% endif %}">
+                                                    <a class="" href="{{ child.url }}" target="{{ child.urlTarget }}">
+                                                        {{ child.title }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div id="main-content" class="page-content clearfix">
+                <el-breadcrumb separator-class="el-icon-arrow-right" class="page-crumb">
+                    {% for navigation in admin_navigations() %}
+                        <el-breadcrumb-item><a href="{% if navigation.url is not empty %} {{ navigation.url }} {% else %} # {% endif %}">{{ navigation.title }}</a></el-breadcrumb-item>
+                    {% endfor %}
+                </el-breadcrumb>
+                {% block main_content %}{% endblock %}
+            </div>
+
+            {% block main_content_vue %}{% endblock %}
+        </div>
+    </div>
+
+    <script>
+        // 应用栏修改
+        $('#main-sidebar .nav-icon').click(function () {
+            if ($(this).hasClass('fa-indent')) {
+                // 展开
+                $(this).removeClass('fa-indent');
+                $('#sidebar-products .sidebar-products-sapn').addClass('show');
+                $('#main-sidebar,#bce-content').removeClass('sidebar-collapsed');
+            } else {
+                // 缩小
+                $(this).addClass('fa-indent');
+                $('#sidebar-products .sidebar-products-sapn').removeClass('show');
+                $('#main-sidebar,#bce-content').addClass('sidebar-collapsed');
+            }
+        })
+        // 导航栏
+        handleMainMenu()
+        function handleMainMenu() {
+            jQuery('#sidebar .has-sub > a').click(function () {
+                var last = jQuery('.has-sub.open', $('#sidebar'));
+                last.removeClass("open");
+                jQuery('.arrow', last).removeClass("open");
+                jQuery('.sub', last).slideUp(200);
+                var sub = jQuery(this).next();
+                if (sub.is(":visible")) {
+                    jQuery('.arrow', jQuery(this)).removeClass("open");
+                    jQuery(this).parent().removeClass("open");
+                    sub.slideUp(200);
+                } else {
+                    jQuery('.arrow', jQuery(this)).addClass("open");
+                    jQuery(this).parent().addClass("open");
+                    sub.slideDown(200);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+{% endblock %}

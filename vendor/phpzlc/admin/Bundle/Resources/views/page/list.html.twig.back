@@ -1,0 +1,160 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{% block main_content %}
+    <div class="search-page clearfix">
+        <el-row class="page-search">
+            <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="80px">
+                <el-form-item label="活动名称" prop="name">
+                    <el-input v-model="searchForm.name" size="mini" clearable placeholder="请输入"></el-input>
+                </el-form-item>
+                <el-form-item label="编号" prop="number">
+                    <el-input v-model="searchForm.number" size="mini" clearable placeholder="请输入">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="编号" prop="number">
+                    <el-input v-model="searchForm.number" size="mini" clearable placeholder="请输入">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="编号" prop="number">
+                    <el-input v-model="searchForm.number" size="mini" clearable placeholder="请输入">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="编号" prop="number">
+                    <el-input v-model="searchForm.number" size="mini" clearable placeholder="请输入">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="选择状态" prop="status">
+                    <el-select v-model="searchForm.status" size="mini" clearable placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="选择人员" prop="personal">
+                    <el-select v-model="searchForm.personal" size="mini" clearable placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                   :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="拜访时间" prop="date" class="search-item-time">
+                    <el-date-picker v-model="searchForm.date" size="mini" clearable type="daterange"
+                                    range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="mini" @click="searchBtn()">搜索</el-button>
+                    <el-button size="mini" @click="resetForm('searchForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-row>
+        <el-row class="list-btn-content mt-10">
+            <el-button size="mini" type="primary">新建</el-button>
+            <el-button size="mini" type="success">导入</el-button>
+            <el-button size="mini" type="info">信息按钮</el-button>
+            <el-button size="mini" type="warning">警告按钮</el-button>
+            <el-button size="mini" type="danger">危险按钮</el-button>
+            <el-button size="mini">下载导入模板</el-button>
+        </el-row>
+        <el-table :data="listData" style="width: 100%" border class="mt-10">
+            {% for field, column in tableColumns %}
+                <el-table-column prop="{{ field }}" label="{{ column['field'].text }}" width="120">
+                </el-table-column>
+            {% endfor %}
+            <el-table-column fixed="right" prop="date" label="操作" width="430">
+                <template slot-scope="scope">
+                    <el-button size="mini">查看详情</el-button>
+                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="mini" type="primary">审核</el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+                        删除
+                    </el-button>
+                    <el-button size="mini" type="danger">拒绝</el-button>
+                    <el-button size="mini" type="success">启用</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        {% if isOpenPagination %}
+            <el-col class="mt-20 clearfix">
+                <el-pagination class="page" @current-change="handleCurrentChange" @size-change="handleSizeChange"
+                               :page-sizes="[20, 60, 100, 200]" :page-size="{{ paginationRows }}" :hide-on-single-page="true" :current-page="{{ app.request.get('page', 1) }}"
+                               layout="total, sizes, prev, pager, next, jumper" :total="{{ dataCount }}">
+                </el-pagination>
+            </el-col>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+{% block main_content_vue %}
+    <script>
+        new Vue({
+            el: '#main-content',
+            data: function () {
+                return {
+                    searchForm: {
+                        name: '',
+                        number: '',
+                        personal: '',
+                        date: [],
+                        status: ''
+                    },
+                    options: [{
+                        value: '选项1',
+                        label: '黄金糕'
+                    }, {
+                        value: '选项2',
+                        label: '双皮奶'
+                    }, {
+                        value: '选项3',
+                        label: '蚵仔煎'
+                    }, {
+                        value: '选项4',
+                        label: '龙须面'
+                    }, {
+                        value: '选项5',
+                        label: '北京烤鸭'
+                    }],
+                    listData: [
+                        {% for data in tableData %}
+                        {
+                            {% for value in data %}
+                                {{ value.field }}: "{{ value.value }}"{% if loop.last == false %},{% endif %}
+                            {% endfor %}
+                        }{% if loop.last == false %},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            },
+            created() {
+                // 页面初始化使用
+                console.log(1);
+            },
+            methods: {
+                // 搜索按钮
+                searchBtn() {
+                    const that = this;
+
+                    console.log('搜索');
+                },
+                resetForm(formName) {
+                    console.log(formName);
+                    this.$refs[formName].resetFields();
+                },
+
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                },
+                handleCurrentChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'page', val);
+                },
+                handleSizeChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'rows', val);
+                },
+            }
+        })
+    </script>
+{% endblock %}
