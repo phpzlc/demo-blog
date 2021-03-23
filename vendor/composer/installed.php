@@ -1,16 +1,34 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'v4.4.99',
-    'version' => '4.4.99.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
-    'name' => 'symfony/website-skeleton',
+    'reference' => 'a096bc56ea6ddd0e9a0ed36138ba157a7eea82c7',
+    'name' => '__root__',
   ),
   'versions' => 
   array (
+    '__root__' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a096bc56ea6ddd0e9a0ed36138ba157a7eea82c7',
+    ),
+    'brick/math' => 
+    array (
+      'pretty_version' => '0.9.2',
+      'version' => '0.9.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dff976c2f3487d42c1db75a3b180e2b9f0e72ce0',
+    ),
     'composer/package-versions-deprecated' => 
     array (
       'pretty_version' => '1.11.99.1',
@@ -56,6 +74,15 @@
       ),
       'reference' => '2afde5a9844126bc311cd5f548b5475e75f800d3',
     ),
+    'doctrine/data-fixtures' => 
+    array (
+      'pretty_version' => '1.5.0',
+      'version' => '1.5.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '51d3d4880d28951fff42a635a2389f8c63baddc5',
+    ),
     'doctrine/dbal' => 
     array (
       'pretty_version' => '2.12.1',
@@ -73,6 +100,15 @@
       array (
       ),
       'reference' => '8b922578bdee2243a26202b13df795e170efaef8',
+    ),
+    'doctrine/doctrine-fixtures-bundle' => 
+    array (
+      'pretty_version' => '3.4.0',
+      'version' => '3.4.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '870189619a7770f468ffb0b80925302e065a3b34',
     ),
     'doctrine/doctrine-migrations-bundle' => 
     array (
@@ -280,6 +316,42 @@
       ),
       'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
     ),
+    'phpmyadmin/sql-parser' => 
+    array (
+      'pretty_version' => '5.4.2',
+      'version' => '5.4.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b210e219a54df9b9822880780bb3ba0fffa1f542',
+    ),
+    'phpzlc/document-bundle' => 
+    array (
+      'pretty_version' => 'v1.1.0',
+      'version' => '1.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4f4fc5665c5b465aa13f5e9b5b05b207c7bebac8',
+    ),
+    'phpzlc/phpzlc' => 
+    array (
+      'pretty_version' => 'v1.0.8',
+      'version' => '1.0.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '05ad7fb0b82323eea47a73e408e24210dbbcad65',
+    ),
+    'phpzlc/validate' => 
+    array (
+      'pretty_version' => 'v1.2.1',
+      'version' => '1.2.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3c18d3c3122b1692516a3c55f0af4e8582bf4766',
+    ),
     'psr/cache' => 
     array (
       'pretty_version' => '1.0.1',
@@ -355,8 +427,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache-implementation' => 
@@ -364,6 +436,31 @@
       'provided' => 
       array (
         0 => '1.0',
+      ),
+    ),
+    'ramsey/collection' => 
+    array (
+      'pretty_version' => '1.1.3',
+      'version' => '1.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '28a5c4ab2f5111db6a60b2b4ec84057e0f43b9c1',
+    ),
+    'ramsey/uuid' => 
+    array (
+      'pretty_version' => '4.1.1',
+      'version' => '4.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'cd4032040a750077205918c86049aa0f43d22947',
+    ),
+    'rhumsaa/uuid' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '4.1.1',
       ),
     ),
     'sensio/framework-extra-bundle' => 
@@ -1029,15 +1126,6 @@
       array (
       ),
       'reference' => '2a5eeaa950e5702738437c6c8f442eca46ffc0c5',
-    ),
-    'symfony/website-skeleton' => 
-    array (
-      'pretty_version' => 'v4.4.99',
-      'version' => '4.4.99.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => NULL,
     ),
     'symfony/yaml' => 
     array (

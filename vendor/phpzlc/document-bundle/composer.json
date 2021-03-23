@@ -1,0 +1,28 @@
+{
+    "name": "phpzlc/document-bundle",
+    "description": "API文档生成组件",
+    "homepage": "https://phpzlc.github.io/",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "phpzlc", "symfony", "document", "api-document", "doc", "api-doc"
+    ],
+    "support": {
+        "email": "1044295598@qq.com"
+    },
+    "authors": [
+        {
+            "name": "CJayHe",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PHPZlc\\Document\\": ["src"]
+        }
+    },
+    "require": {
+        "symfony/framework-bundle": ">=4.4"
+    }
+}
+

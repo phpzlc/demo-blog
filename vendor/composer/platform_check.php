@@ -12,6 +12,7 @@ $missingExtensions = array();
 extension_loaded('ctype') || $missingExtensions[] = 'ctype';
 extension_loaded('filter') || $missingExtensions[] = 'filter';
 extension_loaded('iconv') || $missingExtensions[] = 'iconv';
+extension_loaded('json') || $missingExtensions[] = 'json';
 extension_loaded('pdo') || $missingExtensions[] = 'pdo';
 extension_loaded('tokenizer') || $missingExtensions[] = 'tokenizer';
 extension_loaded('xml') || $missingExtensions[] = 'xml';

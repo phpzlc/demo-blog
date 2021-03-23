@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "phpzlc/phpzlc": "^1.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -88,8 +89,9 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "4.4.*"
+            "allow-contrib": true,
+            "require": "4.4.*",
+            "endpoint": "http://127.0.0.1:8000"
         }
     }
 }

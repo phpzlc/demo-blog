@@ -1,0 +1,191 @@
+body{
+    background-color: #f0f3fa;
+    min-width: 600px;
+}
+.content{
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 20px;
+    min-height: 500px;
+}
+.content-center{
+    width: 80%;
+    margin: 0 auto;
+    min-height: 100px;
+    background-color: white;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.not-found {
+    color: #666666;
+    font-size: 20px;
+    margin-left: 30px;
+    padding-top: 35px;
+}
+.son-title {
+    color: #636363;
+    font-size: 14px;
+    margin-left: 75px;
+    padding-top: 20px;
+}
+.son-content {
+    color: #9a9b9a;
+    font-size: 14px;
+    margin-left: 114px;
+    padding-top: 15px;
+}
+/*说明*/
+.explain{
+    color: #ff8c00;
+    font-size: 16px;
+    padding-bottom: 15px;
+}
+/*参数表格*/
+table { border-collapse: collapse; border: 1px solid #CCC; background: #efefef; }
+table th { text-align: left; font-weight: bold; height: 26px; line-height: 26px; font-size: 14px; text-align:center; border: 1px solid #CCC; padding:5px;}
+table td { height: 20px; font-size: 14px; border: 1px solid #CCC; background-color: #fff; padding:5px;}
+.table-param {
+    margin: 0 auto;
+    width: 80%;
+    padding-top: 15px;
+}
+.box-in{
+    margin-top: 40px;
+    margin-left: 55px;
+    border-radius: 7px;
+    border: 1px solid #e7e7e7;
+    height:60%;
+    width: 80%;
+}
+.poster{
+    display: inline-block;
+    border-right: 1px solid #e3e3e3;
+    height: 40px;
+    width: 10%;
+    font-family: 宋体;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+    text-align: center;
+    color: #7d7d7d;
+    background-color: #f0f0f0;
+}
+.address-input{
+    display: inline-block;
+    margin-left: -4px;
+    padding-left: 20px;
+    margin-top: -6px;
+    border: none;
+    width: 90%;
+    height: 40px;
+    line-height: 35px;
+    font-size: 14px;
+    color: #7d7d7d;
+    background-color: white;
+}
+.sends{
+    display: inline-block;
+    border: none;
+    border-radius: 7px;
+    float: right;
+    margin-top: -41px;
+    margin-bottom: 40px;
+    margin-right: 59px;
+    width: 10%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    color: white;
+    background-color: #077bf2;
+}
+.content-center .from-submit{
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+
+}
+.content-center{
+    min-width: 900px;
+    background-color: #fafafa;
+    overflow: hidden;
+}
+.multiple-choice{
+    border-top: 1px solid #eaeaea;
+    width: 100%;
+    height: 50px;
+    background-color: #fafafa;
+}
+.multiple-choice input{
+    margin-left: 15px;
+}
+.multiple-choice span{
+    display: inline-block;
+    margin-right: 30px;
+    margin-top: 16px;
+}
+.from-submit div{
+    border-right: 1px solid #eeeeee;
+    border-left: 1px solid #eeeeee;
+    margin:0 auto ;
+    width: 90%;
+    height: auto;
+    overflow: hidden;
+}
+
+.from-submit .form-top-box{
+    border-bottom: 2px solid #eeeeee;
+    border-top: 2px solid #eeeeee;
+    background-color: white;
+    text-align: center;
+}
+.from-submit div li{
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.from-submit div .keys{
+    border-right: 1px solid #eeeeee;
+    width: 25%;
+}
+.from-submit div .value{
+    width: 75%;
+}
+.from-submit .form-center-box{
+    border-top: none;
+    border-bottom: 1px solid #eeeeee;
+    background-color: white;
+}
+
+.form-center-box .keys{
+    padding-left: 15px;
+    background-color: #c0c0c0;
+}
+.text-input{
+    margin-left: 10px;
+    width: 100%;
+    height: 91%;
+}
+
+.result-display-box{
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #777777;
+    width: 90%;
+    max-height: 600px;
+    line-height: 25px;
+    font-size: 14px;
+    word-wrap:break-word;
+    overflow: auto;
+}
+.from-title{
+    padding-left: 60px;
+    margin-bottom:  20px;
+    font-size: 20px;
+    background-color: none;
+    margin-top: 20px;
+
+}

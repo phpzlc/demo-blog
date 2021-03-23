@@ -1,0 +1,24 @@
+{
+    "name": "phpzlc/validate",
+    "description": "返回真假的验证组件",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "phpzlc", "symfony", "validate"
+    ],
+    "support": {
+        "email": "1044295598@qq.com"
+    },
+    "authors": [
+        {
+            "name": "CJayHe",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {  "PHPZlc\\Validate\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.5.0"
+    }
+}

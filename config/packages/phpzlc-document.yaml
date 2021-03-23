@@ -1,0 +1,5 @@
+services:
+  phpzlc_document_generate_document:
+    class: PHPZlc\Document\DocumentBundle\Command\GenerateDocumentCommand
+    tags: [console.command]
+    arguments: ['@database_connection']

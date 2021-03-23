@@ -1,0 +1,60 @@
+body{
+    background-color: #f0f3fa;
+    min-width: 600px;
+}
+.content{
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 20px;
+    min-height: 500px;
+}
+a{
+    cursor:pointer;
+}
+.content table{
+    width: 100%;
+}
+.content table tr {
+    width: 100%;
+}
+/* 目录版api */
+.left{
+    width: 60%;
+}
+.directory{
+    width: 80%;
+    background-color: white;
+    margin-left: 10%;
+}
+/* 全局列表api */
+.right{
+    width: 40%;
+}
+.list{
+    width: 80%;
+    background-color: white;
+    margin-left: 10%;
+}
+/* 正文样式 */
+.content .content-son{
+    margin-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.content img{
+    height: 20px;
+    width: 20px;
+}
+.content .head-fond{
+    font-size: 14px;
+    color: #666666;
+    vertical-align: bottom;
+}
+.content .item {
+    margin-left: 20px;
+}
+.content li{
+    margin-top: 10px;
+}
+
+
