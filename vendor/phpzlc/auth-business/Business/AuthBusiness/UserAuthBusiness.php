@@ -86,10 +86,6 @@ class UserAuthBusiness extends AbstractBusiness
     {
         if(!array_key_exists($subject_type, $this->subjectAuthCaches)){
             switch ($subject_type){
-                case $this->getParameter('subject_admin'):
-                    $this->subjectAuthCaches[$subject_type] = new AdminAuth($this->container);
-                    break;
-                    
                 default:
                     throw new \Exception('授权登录权限不存在');
             }

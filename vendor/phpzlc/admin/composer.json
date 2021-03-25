@@ -22,7 +22,6 @@
         }
     },
     "require": {
-        "symfony/framework-bundle": ">=4.4",
-        "phpoffice/phpspreadsheet": "*"
+        "symfony/framework-bundle": ">=4.4"
     }
 }
