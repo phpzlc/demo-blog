@@ -92,7 +92,6 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.4.*"
-
         }
     }
 }
