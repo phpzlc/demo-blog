@@ -9,3 +9,7 @@ upload:
 captcha:
   resource: "routing/captcha/captcha.yaml"
   prefix:   /captcha
+
+blog:
+  resource: "routing/blog/blog.yaml"
+  prefix:   /blog

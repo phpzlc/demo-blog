@@ -1,0 +1,4 @@
+# 博客首页
+blog_index:
+  controller: App\Controller\Blog\BlogController::index
+  path:   /
