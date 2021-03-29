@@ -23,4 +23,29 @@ class BlogController extends SystemBaseController
     {
         return $this->render('blog/index.html.twig');
     }
+
+    public function types()
+    {
+        return $this->render('blog/types.html.twig');
+    }
+
+    public function tags()
+    {
+        return $this->render('blog/tags.html.twig');
+    }
+
+    public function archives()
+    {
+        return $this->render('blog/archives.html.twig');
+    }
+
+    public function about()
+    {
+        return $this->render('blog/about.html.twig');
+    }
+
+    public function blog()
+    {
+        return $this->render('blog/blog.html.twig');
+    }
 }

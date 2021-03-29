@@ -2,3 +2,28 @@
 blog_index:
   controller: App\Controller\Blog\BlogController::index
   path:   /
+
+# 博客分类
+blog_types:
+  controller: App\Controller\Blog\BlogController::types
+  path:   /types
+
+# 博客标签
+blog_tags:
+  controller: App\Controller\Blog\BlogController::tags
+  path:   /tags
+
+# 博客归档
+blog_archives:
+  controller: App\Controller\Blog\BlogController::archives
+  path:   /archives
+
+# 博客关于我
+blog_about:
+  controller: App\Controller\Blog\BlogController::about
+  path:   /about
+
+# 博客文章
+blog_article:
+ controller:  App\Controller\Blog\BlogController::blog
+ path:    /blog
