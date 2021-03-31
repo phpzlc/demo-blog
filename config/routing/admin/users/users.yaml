@@ -1,0 +1,14 @@
+# 用户管理-首页
+admin_users_index:
+  path: /
+  controller: App\Controller\Admin\UsersManageController::index
+
+# 用户管理-禁用
+admin_users_disable:
+  path:  /disable
+  controller: App\Controller\Admin\UsersManageController::disable
+
+# 用户管理-启用
+admin_users_enable:
+  path: /enable
+  controller: App\Controller\Admin\UsersManageController::enable

@@ -64,6 +64,20 @@ class User
     private $mailbox;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_disable", type="boolean", options={"comment":"是否禁用", "default":"0"})
+     */
+    private $isDisable;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_delete", type="boolean", options={"comment":"是否删除", "default":"0"})
+     */
+    private $isDelete;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="create_at", type="datetime", options={"comment":"注册时间"})
@@ -155,6 +169,30 @@ class User
     public function setCreateAt(\DateTimeInterface $createAt): self
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getIsDisable(): ?bool
+    {
+        return $this->isDisable;
+    }
+
+    public function setIsDisable(bool $isDisable): self
+    {
+        $this->isDisable = $isDisable;
+
+        return $this;
+    }
+
+    public function getIsDelete(): ?bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
 
         return $this;
     }

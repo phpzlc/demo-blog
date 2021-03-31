@@ -17,3 +17,8 @@ admin_manage_logout:
 admin_manage_edit_password:
   path:   /edit-password
   controller: App\Controller\Admin\AuthController:editPassword
+
+# 管理端-用户管理
+admin_users_manage:
+  prefix:   /users
+  resource: 'users/users.yaml'

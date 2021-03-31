@@ -1,0 +1,134 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{% block main_content %}
+<div class="search-page clearfix" >
+
+    <!-- 搜索框 start -->
+    <el-row class="page-search">
+        <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="90px" style="margin-left: 10px">
+
+            <el-form-item label="用户名:" prop="user_name">
+                <el-input v-model="searchForm.user_name" size="mini" clearable placeholder="请输入">
+                </el-input>
+            </el-form-item>
+
+            <el-form-item label="邮箱:" prop="mailbox">
+                <el-input v-model="searchForm.mailbox" size="mini" clearable placeholder="请输入">
+                </el-input>
+            </el-form-item>
+
+            <el-form-item label="登录时间" prop="login_at" class="search-item-time">
+                <el-date-picker v-model="searchForm.login_at" size="mini" clearable type="daterange"
+                                range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" size="mini" @click="searchBtn()"> 搜索 </el-button>
+                <el-button size="mini" @click="resetForm('searchForm')"> 重制 </el-button>
+            </el-form-item>
+
+        </el-form>
+
+    </el-row>
+    <!-- 搜索框 end -->
+
+    <!-- 数据显示 start-->
+    <el-table :data="listData" style="width: 100%" border class="mt-10">
+        <el-table-column prop="face" label="头像"></el-table-column>
+
+        <el-table-column prop="user_nickname" label="用户昵称" ></el-table-column>
+
+        <el-table-column prop="user_name" label="用户名"></el-table-column>
+
+        <el-table-column prop="birthday" label="生日"></el-table-column>
+
+        <el-table-column prop="mailbox" label="邮箱"></el-table-column>
+
+        <el-table-column prop="create_at" label="注册时间"></el-table-column>
+
+        <el-table-column prop="update_at" label="最新修改时间"></el-table-column>
+
+        <el-table-column prop="login_at" label="最后登录时间"></el-table-column>
+
+        <!-- 添加操作行 start -->
+        <el-table-column prop="date" label="操作" width="200">
+            <template slot-scope="scope">
+                <el-button size="mini" @click="handleDisable(scope.$index, scope.row)" type="danger"> 禁用 </el-button>
+                <el-button size="mini" @click="handleEnable(scope.$index, scope.row)" type="success"> 启用 </el-button>
+            </template>
+        </el-table-column>
+        <!-- 添加操作行 end -->
+
+    </el-table>
+    <!-- 分页 start -->
+    <el-col class="mt-20 clearfix">
+        <el-pagination class="page" @current-change="handleCurrentChange" @size-change="handleSizeChange"
+                       :page-sizes="[20, 60, 100, 200]" :page-size="{{ rows }}" :hide-on-single-page="true" :current-page="{{ page }}"
+                       layout="total, sizes, prev, pager, next, jumper" :total="{{ count }}">
+        </el-pagination>
+    </el-col>
+    <!-- 分页 end -->
+
+    <!-- 数据显示 end -->
+</div>
+{% endblock %}
+
+{% block main_content_vue %}
+<script>
+    new Vue({
+        el: '#main-content',
+        //用于替换vue数据调用符号
+        // delimiters: ['${', '}$'],
+        data: function (){
+            return {
+                searchForm: {
+                    user_name: '',
+                    mailbox: '',
+                    login_at: ''
+                },
+
+                listData: [
+                    {
+                        id: '',
+                        face: '测试',
+                        user_nickname: '测试',
+                        user_name: '测试',
+                        birthday: '测试',
+                        mailbox: '测试',
+                        create_at: '测试',
+                        update_at: '测试',
+                        login_at: '测试'
+                    }
+                ],
+
+                created(){
+                  //页面初始化勾子
+                },
+
+                methods: {
+                    // 搜索按钮
+                    searchBtn() {
+
+                    },
+
+                    // 重置按钮
+                    resetForm(formName){
+                        this.$refs[formName].resetFields();
+                    },
+
+                    handleDisable(index, row){
+
+                    },
+
+                    handleEnable(index, row){
+
+                    }
+
+                }
+
+            }
+        }
+    })
+</script>
+{% endblock %}
