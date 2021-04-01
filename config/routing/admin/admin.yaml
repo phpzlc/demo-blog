@@ -22,3 +22,8 @@ admin_manage_edit_password:
 admin_users_manage:
   prefix:   /users
   resource: 'users/users.yaml'
+
+# 管理端-博客管理
+admin_blog_manage:
+  prefix:   /blog
+  resource: 'blog/blog.yaml'

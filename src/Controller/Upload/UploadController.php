@@ -32,21 +32,21 @@ class UploadController extends AbstractController
         $uploadName = $request->get('uploadName', 'file');
         $uploadType = $request->get('uploadType', '');
 
-        $project_id = $request->get('project_id');
+//        $project_id = $request->get('project_id');
 
         $uploadSaveFile = 'upload';
 
-        if(!empty($project_id)){
-            /**
-             * @var Project $project
-             */
-            $project = $this->getDoctrine()->getRepository('App:Project')->find($project_id);
-            if(!empty($project)){
-                $uploadSaveFile = ProjectDirBusiness::getProjectDir($project);
-            }else{
-                return Responses::error('项目不存在');
-            }
-        }
+//        if(!empty($project_id)){
+//            /**
+//             * @var Project $project
+//             */
+//            $project = $this->getDoctrine()->getRepository('App:Project')->find($project_id);
+//            if(!empty($project)){
+//                $uploadSaveFile = ProjectDirBusiness::getProjectDir($project);
+//            }else{
+//                return Responses::error('项目不存在');
+//            }
+//        }
 
         $uploadFile = new UploadFile($this->container);
 

@@ -1,0 +1,4 @@
+# 博客管理-文章管理
+admin_blog_manage_article:
+  prefix: /article
+  resource: 'article/article.yaml'

@@ -1,0 +1,9 @@
+# 博客管理-文章管理-首页
+admin_blog_manage_article_index:
+  path: /
+  controller: App\Controller\Admin\BlogManager\ArticleManagerController::index
+
+# 新建/编辑页面
+admin_blog_manage_article_page:
+  path: /page
+  controller: App\Controller\Admin\BlogManager\ArticleManagerController::page
