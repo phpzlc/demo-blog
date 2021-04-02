@@ -64,7 +64,10 @@ class AdminManageController extends SystemBaseController
         $menus = [
             new Menu('首页', null, null, null, null, [
                 new Menu('首页', null, null, null, null),
-                new Menu('用户管理', null, 'admin_blog_user', $this->generateUrl('admin_users_index'), null)
+                new Menu('用户管理', null, 'admin_blog_user', $this->generateUrl('admin_users_index'), null),
+                new Menu('博客管理', null, null, null, null, [
+                    new Menu('文章管理', null, 'admin_article_index', $this->generateUrl('admin_blog_manage_article_index'), null)
+                ])
             ])
         ];
 

@@ -10,11 +10,16 @@
 
 namespace App\Controller\Admin\BlogManager;
 
+use App\Business\ArticleBusiness\ArticleBusiness;
+use App\Business\AuthBusiness\CurAuthSubject;
 use App\Controller\Admin\AdminManageController;
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use PHPZlc\Admin\Strategy\Navigation;
+use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,6 +35,11 @@ class ArticleManagerController extends AdminManageController
      */
     protected $articleRepository;
 
+    /**
+     * @var ArticleBusiness
+     */
+    protected $articleBusiness;
+
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
         $r = parent::inlet($returnType, $isLogin);
@@ -40,6 +50,7 @@ class ArticleManagerController extends AdminManageController
         $this->adminStrategy->addNavigation(new Navigation('文章管理'));
 
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
+        $this->articleBusiness = new ArticleBusiness($this->container);
 
         return true;
     }
@@ -93,6 +104,81 @@ class ArticleManagerController extends AdminManageController
         }
 
         return $this->render('admin/blog/article/edit.html.twig');
+    }
+
+    /**
+     * 博客-文章新建
+     *
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse
+     */
+    public function create(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        $title = $request->get('title');
+        $content = $request->get('content');
+
+        $article = new Article();
+        $article->setTitle($title)
+            ->setContent($content)
+            ->setUserAuth(CurAuthSubject::getCurUserAuth());
+
+        if(!$this->articleBusiness->create($article)){
+            return Responses::error(Errors::getError());
+        }
+
+        return Responses::success('发布成功');
+    }
+
+    /**
+     * 博客-文章编辑
+     *
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse
+     */
+    public function edit(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        $id = $request->get('id');
+        $title = $request->get('title');
+        $content = $request->get('content');
+
+        $article = $this->articleRepository->find($id);
+        $article->setTitle($title)
+            ->setContent($content);
+
+        if(!$this->articleBusiness->update($article)){
+            return Responses::error(Errors::getError());
+        }
+
+        return Responses::success('修改成功');
+    }
+
+    /**
+     * 博客-文章删除
+     *
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse
+     */
+    public function delete(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        $id = $request->get('id');
+
+
+        return Responses::success('删除成功');
     }
 
 

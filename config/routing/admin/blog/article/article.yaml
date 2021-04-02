@@ -7,3 +7,13 @@ admin_blog_manage_article_index:
 admin_blog_manage_article_page:
   path: /page
   controller: App\Controller\Admin\BlogManager\ArticleManagerController::page
+
+# 新建
+admin_blog_manage_article_create:
+  path: /create
+  controller: App\Controller\Admin\BlogManager\ArticleManagerController::create
+
+# 编辑
+admin_blog_manage_article_edit:
+  path: /edit
+  controller: App\Controller\Admin\BlogManager\ArticleManagerController::edit

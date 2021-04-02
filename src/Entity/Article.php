@@ -66,7 +66,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="thumbnail", type="string", options={"comment":"文章缩略图"})
+     * @ORM\Column(name="thumbnail", type="string", nullable=true, options={"comment":"文章缩略图"})
      */
     private $thumbnail;
 

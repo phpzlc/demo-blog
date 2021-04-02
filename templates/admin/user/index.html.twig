@@ -80,7 +80,7 @@
         el: '#main-content',
         //用于替换vue数据调用符号
         // delimiters: ['${', '}$'],
-        data: function (){
+        data: function () {
             return {
                 searchForm: {
                     user_name: '',
@@ -101,34 +101,36 @@
                         login_at: '测试'
                     }
                 ],
+            }
+        },
 
-                created(){
-                  //页面初始化勾子
+        created(){
+            //页面初始化勾子
+        },
+
+        methods: {
+                handleCurrentChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'page', val);
                 },
 
-                methods: {
-                    // 搜索按钮
-                    searchBtn() {
+                handleSizeChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'rows', val);
+                },
 
-                    },
+                // 搜索按钮
+                searchBtn() {},
 
-                    // 重置按钮
-                    resetForm(formName){
-                        this.$refs[formName].resetFields();
-                    },
+                // 重置按钮
+                resetForm(formName){
+                    this.$refs[formName].resetFields();
+                },
 
-                    handleDisable(index, row){
+                handleDisable(index, row){},
 
-                    },
+                handleEnable(index, row){},
 
-                    handleEnable(index, row){
-
-                    }
-
-                }
-
-            }
         }
+
     })
 </script>
 {% endblock %}
