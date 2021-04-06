@@ -3,12 +3,17 @@
 {% block main_content %}
     <div class="add-page clearfix">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
-            <el-form-item label="标签名称:" prop="name" size="mini" class="el-form-width-all" label-width="130px">
+            <el-form-item label="标签名称:" prop="name" size="mini" class="el-form-width-all" label-width="100px">
                 <el-input v-model="form.name" placeholder="请输入" style="width: 150px"></el-input>
             </el-form-item>
 
-            <el-form-item label="标签描述:" prop="describe" size="mini" class="el-form-width-all" label-width="130px">
-                <el-input type="textarea" v-model="form.describe"></el-input>
+            <el-form-item label="标签描述:" prop="describe" size="mini" class="el-form-width-all" label-width="100px">
+                <el-input type="textarea" v-model="form.describe" style="width: 200px"></el-input>
+            </el-form-item>
+
+            <el-form-item size="mini">
+            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button @click="resetForm()">取消</el-button>
             </el-form-item>
 
         </el-form>

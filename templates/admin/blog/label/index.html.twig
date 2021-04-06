@@ -117,7 +117,9 @@
                 handleDelete(index, row){},
 
                 // 新建按钮
-                handleCreate(){},
+                handleCreate(){
+                    window.location = '{{ path('admin_blog_manage_label_page') }}'
+                },
 
                 handleEdit(index, row){
                     window.location = '?id='+ row.id;

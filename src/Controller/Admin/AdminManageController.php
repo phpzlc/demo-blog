@@ -84,6 +84,7 @@ class AdminManageController extends SystemBaseController
             ->setSettingPwdUrl($this->generateUrl('admin_manage_edit_password'))
             ->setMenuModel(AdminStrategy::menu_model_simple)
             ->setPageTag($this->page_tag)
+            ->setLogo($this->adminStrategy->getBaseUrl() . '/asset/logo.png')
             ->setMenus($menus);
 
         $r = parent::inlet($returnType, $isLogin);
