@@ -1,4 +1,4 @@
-# 博客管理-文章管理-首页
+# 首页
 admin_blog_manage_article_index:
   path: /
   controller: App\Controller\Admin\BlogManager\ArticleManagerController::index
@@ -17,3 +17,8 @@ admin_blog_manage_article_create:
 admin_blog_manage_article_edit:
   path: /edit
   controller: App\Controller\Admin\BlogManager\ArticleManagerController::edit
+
+# 删除
+admin_blog_manage_article_delete:
+  path: /delete
+  controller: App\Controller\Admin\BlogManager\ArticleManagerController::delete

@@ -177,6 +177,16 @@ class ArticleManagerController extends AdminManageController
 
         $id = $request->get('id');
 
+        $article = $this->articleRepository->find($id);
+
+        if(empty($article)){
+            return Responses::error('没有该文章');
+        }
+
+        $article->setIsDel(true);
+
+        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->clear();
 
         return Responses::success('删除成功');
     }
