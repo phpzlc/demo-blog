@@ -12,3 +12,8 @@ admin_blog_manage_commentary:
 admin_blog_manage_label:
   prefix: /label
   resource: 'label/label.yaml'
+
+# 博客管理-收藏管理
+admin_blog_manage_collection:
+  prefix: /collection
+  resource: 'collection/collection.yaml'
