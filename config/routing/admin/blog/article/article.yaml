@@ -1,24 +1,24 @@
 # 首页
 admin_blog_manage_article_index:
   path: /
-  controller: App\Controller\Admin\BlogManager\ArticleManagerController::index
+  controller: App\Controller\Admin\BlogManager\ArticleManageController::index
 
 # 新建/编辑页面
 admin_blog_manage_article_page:
   path: /page
-  controller: App\Controller\Admin\BlogManager\ArticleManagerController::page
+  controller: App\Controller\Admin\BlogManager\ArticleManageController::page
 
 # 新建
 admin_blog_manage_article_create:
   path: /create
-  controller: App\Controller\Admin\BlogManager\ArticleManagerController::create
+  controller: App\Controller\Admin\BlogManager\ArticleManageController::create
 
 # 编辑
 admin_blog_manage_article_edit:
   path: /edit
-  controller: App\Controller\Admin\BlogManager\ArticleManagerController::edit
+  controller: App\Controller\Admin\BlogManager\ArticleManageController::edit
 
 # 删除
 admin_blog_manage_article_delete:
   path: /delete
-  controller: App\Controller\Admin\BlogManager\ArticleManagerController::delete
+  controller: App\Controller\Admin\BlogManager\ArticleManageController::delete

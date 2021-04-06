@@ -2,3 +2,8 @@
 admin_blog_manage_article:
   prefix: /article
   resource: 'article/article.yaml'
+
+# 博客管理-评论管理
+admin_blog_manage_commentary:
+  prefix: /commentary
+  resource: 'commentary/commentary.yaml'

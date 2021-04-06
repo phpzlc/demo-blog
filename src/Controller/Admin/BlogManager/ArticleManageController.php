@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class ArticleManagerController extends AdminManageController
+class ArticleManageController extends AdminManageController
 {
     protected $page_tag = 'admin_article_index';
 
@@ -56,7 +56,7 @@ class ArticleManagerController extends AdminManageController
     }
 
     /**
-     * 博客-文章管理首页
+     * 文章管理-首页
      *
      * @param Request|null $request
      * @return bool|JsonResponse|RedirectResponse|Response
@@ -91,7 +91,7 @@ class ArticleManagerController extends AdminManageController
     }
 
     /**
-     * 博客-文章新建/编辑页面
+     * 文章管理-新建/编辑页面
      *
      * @param Request $request
      * @return bool|JsonResponse|RedirectResponse|Response
@@ -107,7 +107,7 @@ class ArticleManagerController extends AdminManageController
     }
 
     /**
-     * 博客-文章新建
+     * 文章管理-新建
      *
      * @param Request $request
      * @return bool|JsonResponse|RedirectResponse
@@ -135,7 +135,7 @@ class ArticleManagerController extends AdminManageController
     }
 
     /**
-     * 博客-文章编辑
+     * 文章管理-编辑
      *
      * @param Request $request
      * @return bool|JsonResponse|RedirectResponse
@@ -163,7 +163,7 @@ class ArticleManagerController extends AdminManageController
     }
 
     /**
-     * 博客-文章删除
+     * 文章管理-删除
      *
      * @param Request $request
      * @return bool|JsonResponse|RedirectResponse

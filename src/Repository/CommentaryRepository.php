@@ -2,49 +2,38 @@
 
 namespace App\Repository;
 
+use App\Entity\Article;
 use App\Entity\Commentary;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPZlc\PHPZlc\Doctrine\ORM\Repository\AbstractServiceEntityRepository;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rules;
 
 /**
  * @method Commentary|null find($id, $lockMode = null, $lockVersion = null)
  * @method Commentary|null findOneBy(array $criteria, array $orderBy = null)
- * @method Commentary[]    findAll()
+ * @method Commentary|null    findAssoc($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method Commentary|null   findLastAssoc($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method Commentary|null    findAssocById($id, $rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
  * @method Commentary[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Commentary[]    findAll($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method Commentary[]    findLimitAll($rows, $page = 1, $rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
  */
-class CommentaryRepository extends ServiceEntityRepository
+class CommentaryRepository extends AbstractServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commentary::class);
     }
 
-    // /**
-    //  * @return Commentary[] Returns an array of Commentary objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function registerRules()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        // TODO: Implement registerRules() method.
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Commentary
+    public function ruleRewrite(Rule $currentRule, Rules $rules, ResultSetMappingBuilder $resultSetMappingBuilder)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        // TODO: Implement ruleRewrite() method.
     }
-    */
 }

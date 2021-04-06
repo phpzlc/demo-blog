@@ -64,6 +64,13 @@ class Commentary
      */
     private $creatAt;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_del", type="boolean", options={"comment":"是否删除", "default":0})
+     */
+    private $isDel = false;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -137,6 +144,18 @@ class Commentary
     public function setParentCommentary(?self $parentCommentary): self
     {
         $this->parentCommentary = $parentCommentary;
+
+        return $this;
+    }
+
+    public function getIsDel(): ?bool
+    {
+        return $this->isDel;
+    }
+
+    public function setIsDel(bool $isDel): self
+    {
+        $this->isDel = $isDel;
 
         return $this;
     }

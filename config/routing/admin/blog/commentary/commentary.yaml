@@ -1,0 +1,9 @@
+# 首页
+admin_blog_manage_commentary_index:
+  path: /
+  controller: App\Controller\Admin\BlogManager\CommentaryManageController::index
+
+# 删除
+admin_blog_manage_commentary_delete:
+  path: /delete
+  controller: App\Controller\Admin\BlogManager\CommentaryManageController::delete
