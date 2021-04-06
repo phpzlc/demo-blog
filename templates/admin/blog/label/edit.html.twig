@@ -1,24 +1,19 @@
 {% extends '@PHPZlcAdmin/page/index.html.twig' %}
 
 {% block main_content %}
-<div class="add-page clearfix">
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
-        <el-form-item label="文章标题:" prop="title" size="mini" class="el-form-width-all">
-            <el-input v-model="form.title" placeholder="请输入标题"></el-input>
-        </el-form-item>
+    <div class="add-page clearfix">
+        <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
+            <el-form-item label="标签名称:" prop="name" size="mini" class="el-form-width-all" label-width="130px">
+                <el-input v-model="form.name" placeholder="请输入" style="width: 150px"></el-input>
+            </el-form-item>
 
-        <el-form-item label="内容" prop="content" size="mini" class="el-form-width-all" class="form-content">
-            <el-ueditor id="editor" action="{{ path('upload_file') }}" content=""></el-ueditor>
-        </el-form-item>
+            <el-form-item label="标签描述:" prop="describe" size="mini" class="el-form-width-all" label-width="130px">
+                <el-input type="textarea" v-model="form.describe"></el-input>
+            </el-form-item>
 
-        <el-form-item size="mini">
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-            <el-button @click="resetForm()">取消</el-button>
-        </el-form-item>
-    </el-form>
-</div>
+        </el-form>
+    </div>
 {% endblock %}
-
 
 {% block main_content_vue %}
     <script>
@@ -28,17 +23,17 @@
                 return {
                     id: '',
                     form: {
-                        id: '{{ info.id|default }}',
-                        title: '{{ info.title|default }}',
-                        content: '{{ info.content|default }}',
+                        id: '',
+                        name: '',
+                        describe: '',
                     },
                     rules: {
-                        title: [
-                            { required: true, message: '请输入标题', trigger: 'blur' },
+                        name: [
+                            { required: true, message: '请输入标签名称', trigger: 'blur' },
                         ],
 
-                        content: [
-                            { required: true, message: '请输入内容', trigger: 'blur' },
+                        describe: [
+                            { required: true, message: '请输入标签描述', trigger: 'blur' },
                         ],
                     },
 
@@ -50,17 +45,16 @@
             },
             methods: {
                 submitForm(formName) {
-                    this.form.content = UE.getEditor('editor').getContent();
                     const that = this;
                     this.$refs[formName].validate((valid) => {
                         if (valid) {
                             {% if app.request.get('id') is not null %}
-                            var url = "{{ path('admin_blog_manage_article_edit') }}?id={{ app.request.get('id') }}";
+                            {#var url = "{{ path('admin_manage_message_manage_edit') }}?id={{ app.request.get('id') }}";#}
                             $.post(url, that.form, function (result) {
                                 resultPreprocess(that, result,"{{ admin_url_anchor() }}")
                             });
                             {% elseif app.request.get('id') is null %}
-                            var url = "{{ path('admin_blog_manage_article_create')}}";
+                            {#var url = "{{ path('admin_manage_message_manage_create')}}";#}
                             $.post(url, that.form, function (result) {
                                 resultPreprocess(that, result,"{{ admin_url_anchor() }}")
                             });

@@ -7,3 +7,8 @@ admin_blog_manage_article:
 admin_blog_manage_commentary:
   prefix: /commentary
   resource: 'commentary/commentary.yaml'
+
+# 博客管理-标签管理
+admin_blog_manage_label:
+  prefix: /label
+  resource: 'label/label.yaml'
