@@ -81,13 +81,19 @@
                     },
 
                     listData: [
+                        {% for item in data %}
                         {
-                            id: '',
-                            name: '测试',
-                            describe: '测试',
-                            create_at: '',
-                            update_at: ''
-                        }
+                            id: '{{ item.id | default }}',
+                            name: '{{ item.name | default }}',
+                            describe: '{{ item.illustrate | default }}',
+                            create_at: '{{ item.createAt | date('Y-m-d H:i:s') }}',
+                        {% if item.updateAt | default is not null %}
+                            update_at: '{{ item.updateAt | date('Y-m-d H:i:s') }}',
+                        {% else %}
+                            update_at: '',
+                        {% endif %}
+                        },
+                        {% endfor %}
                     ],
                 }
             },
@@ -113,16 +119,33 @@
                     this.$refs[formName].resetFields();
                 },
 
-                // 删除按钮
-                handleDelete(index, row){},
+                // 删除按钮(做一个交互删除,提醒用户这个操作是不可逆的)
+                handleDelete(index, row){
+                    const that = this;
+                    this.$confirm('此操作将会删除该标签!是否确认删除?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        $.post('{{ path('admin_blog_manage_label_delete') }}', {id:row.id}, function (result){
+                            resultPreprocess(that, result, "{{ admin_url_anchor() }}")
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        })
+                    })
+                },
 
                 // 新建按钮
                 handleCreate(){
                     window.location = '{{ path('admin_blog_manage_label_page') }}'
                 },
 
+                // 编辑按钮
                 handleEdit(index, row){
-                    window.location = '?id='+ row.id;
+                    window.location = '{{ path('admin_blog_manage_label_page') }}?id='+ row.id;
                 }
 
             }

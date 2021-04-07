@@ -57,7 +57,6 @@ class LabelBusiness extends AbstractBusiness
 
         try {
             $this->em->flush();
-            $this->em->clear();
 
             return true;
         }catch (\Exception $exception){
@@ -77,7 +76,6 @@ class LabelBusiness extends AbstractBusiness
         try {
             $this->em->persist($label);
             $this->em->flush();
-            $this->em->clear();
 
             return true;
         }catch (\Exception $exception){

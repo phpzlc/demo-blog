@@ -62,9 +62,13 @@ class LabelManageController extends AdminManageController
             return $r;
         }
 
+        $this->adminStrategy->setUrlAnchor();
+
         $name = $request->get('name');
 
-        $rules = [];
+        $rules = [
+            'is_del' => 0
+        ];
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);
@@ -93,7 +97,16 @@ class LabelManageController extends AdminManageController
             return $r;
         }
 
-        return $this->render('admin/blog/label/edit.html.twig');
+        $id = $request->get('id');
+        $info = null;
+
+        if(!empty($id)){
+            $info = $this->labelRepository->find($id);
+        }
+
+        return $this->render('admin/blog/label/edit.html.twig', array(
+            'info' => $info
+        ));
     }
 
     /**
@@ -114,7 +127,7 @@ class LabelManageController extends AdminManageController
 
         $label = new Label();
         $label->setName($name);
-        $label->setDescribe($describe);
+        $label->setIllustrate($describe);
 
         if(!$this->labelBusiness->create($label)){
             return Responses::error(Errors::getError());
@@ -147,7 +160,7 @@ class LabelManageController extends AdminManageController
         }
 
         $label->setName($name)
-            ->setDescribe($describe);
+            ->setIllustrate($describe);
 
         if(!$this->labelBusiness->update($label)){
             return Responses::error(Errors::getError());
@@ -180,7 +193,6 @@ class LabelManageController extends AdminManageController
         $label->setIsDel(true);
 
         $this->getDoctrine()->getManager()->flush();
-        $this->getDoctrine()->getManager()->clear();
 
         return Responses::success('删除成功');
     }

@@ -31,9 +31,9 @@ class Label
     /**
      * @var string
      *
-     * @ORM\Column(name="describe", type="string", options={"comment":"标签描述"})
+     * @ORM\Column(name="illustrate", type="string", options={"comment":"标签描述"})
      */
-    private $describe;
+    private $illustrate;
 
     /**
      * @var \DateTime
@@ -74,18 +74,6 @@ class Label
         return $this;
     }
 
-    public function getDescribe(): ?string
-    {
-        return $this->describe;
-    }
-
-    public function setDescribe(string $describe): self
-    {
-        $this->describe = $describe;
-
-        return $this;
-    }
-
     public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
@@ -118,6 +106,18 @@ class Label
     public function setIsDel(bool $isDel): self
     {
         $this->isDel = $isDel;
+
+        return $this;
+    }
+
+    public function getIllustrate(): ?string
+    {
+        return $this->illustrate;
+    }
+
+    public function setIllustrate(string $illustrate): self
+    {
+        $this->illustrate = $illustrate;
 
         return $this;
     }

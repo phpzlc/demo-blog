@@ -28,9 +28,9 @@
                 return {
                     id: '',
                     form: {
-                        id: '',
-                        name: '',
-                        describe: '',
+                        id: '{{ info.id | default }}',
+                        name: '{{ info.name | default }}',
+                        describe: '{{ info.illustrate | default }}',
                     },
                     rules: {
                         name: [
