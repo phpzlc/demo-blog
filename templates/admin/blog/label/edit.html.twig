@@ -51,24 +51,18 @@
             methods: {
                 submitForm(formName) {
                     const that = this;
-                    this.$refs[formName].validate((valid) => {
-                        if (valid) {
-                            {% if app.request.get('id') is not null %}
-                            {#var url = "{{ path('admin_manage_message_manage_edit') }}?id={{ app.request.get('id') }}";#}
-                            $.post(url, that.form, function (result) {
-                                resultPreprocess(that, result,"{{ admin_url_anchor() }}")
-                            });
-                            {% elseif app.request.get('id') is null %}
-                            {#var url = "{{ path('admin_manage_message_manage_create')}}";#}
-                            $.post(url, that.form, function (result) {
-                                resultPreprocess(that, result,"{{ admin_url_anchor() }}")
-                            });
-                            {% endif %}
-                        } else {
-                            console.log('error submit!!');
-                            return false;
-                        }
+                    {% if app.request.get('id') is not null %}
+                    var url = "{{ path('admin_blog_manage_label_edit') }}?id={{ app.request.get('id') }}";
+                    $.post(url, that.form, function (result) {
+                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
                     });
+                    {% elseif app.request.get('id') is null %}
+                    var url = "{{ path('admin_blog_manage_label_create')}}";
+                    $.post(url, that.form, function (result) {
+                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
+                    });
+                    {% endif %}
+
                 },
                 resetForm() {
                     window.location.href ="{{ admin_url_anchor() }}";

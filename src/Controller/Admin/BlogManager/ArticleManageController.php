@@ -68,6 +68,8 @@ class ArticleManageController extends AdminManageController
             return $r;
         }
 
+        $this->adminStrategy->setUrlAnchor();
+
         $user_name = $request->get('user_name');
         $title = $request->get('title');
 
@@ -85,7 +87,8 @@ class ArticleManageController extends AdminManageController
         return $this->render('admin/blog/article/index.html.twig', array(
            'page' => $page,
            'rows' => $rows,
-           'count' => $count
+           'count' => $count,
+           'data' => $data
         ));
 
     }

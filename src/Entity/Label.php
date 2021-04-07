@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Label
 {
     /**
+     * @var string
      *
      * @ORM\Id()
      * @ORM\Column(name="id", type="string")
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="PHPZlc\PHPZlc\Doctrine\SortIdGenerator")
      */
@@ -52,9 +52,10 @@ class Label
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_del", type="boolean", options={"comment":"是否删除", "default":"0"})
+     * @ORM\Column(name="is_del", type="boolean", options={"comment":"是否删除", "default":0})
      */
     private $isDel = false;
+
 
     public function getId(): ?string
     {

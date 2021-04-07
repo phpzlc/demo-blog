@@ -51,9 +51,9 @@
 
             <el-table-column prop="views" label="浏览量"></el-table-column>
 
-            <el-table-column prop="create_at" label="发布时间"></el-table-column>
+            <el-table-column prop="create_at" label="发布时间" width="150px"></el-table-column>
 
-            <el-table-column prop="update_at" label="最新修改时间"></el-table-column>
+            <el-table-column prop="update_at" label="最新修改时间" width="150px"></el-table-column>
 
             <!-- 添加操作行 start -->
             <el-table-column prop="date" label="操作" width="250">
@@ -94,16 +94,22 @@
                     },
 
                     listData: [
+                        {% for item in data %}
                         {
-                            id: '',
-                            user_name: '测试',
-                            label: '测试',
-                            title: '测试',
-                            likes: '测试',
-                            views: '测试',
-                            create_at: '',
-                            update_at: '测试',
-                        }
+                            id: '{{ item.id | default }}',
+                            user_name: '',
+                            label: '{{ item.label.name | default }}',
+                            title: '{{ item.title | default }}',
+                            likes: '{{ item.likes | default(0) }}',
+                            views: '{{ item.views | default(0) }}',
+                            create_at: '{{ item.createAt | date('Y-m-d H:i:s') }}',
+                        {% if item.updateAt | default is not null %}
+                            update_at: '{{ item.updateAt | date('Y-m-d H:i:s') }}',
+                        {% else %}
+                            update_at: '',
+                        {% endif %}
+                        },
+                        {% endfor %}
                     ],
                 }
             },

@@ -56,7 +56,6 @@ class LabelBusiness extends AbstractBusiness
         $this->em->persist($label);
 
         try {
-
             $this->em->flush();
             $this->em->clear();
 
@@ -74,9 +73,9 @@ class LabelBusiness extends AbstractBusiness
         }
 
         $label->setUpdateAt(new \DateTime());
-        $this->em->persist($label);
 
         try {
+            $this->em->persist($label);
             $this->em->flush();
             $this->em->clear();
 

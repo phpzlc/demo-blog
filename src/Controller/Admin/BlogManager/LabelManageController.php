@@ -113,8 +113,8 @@ class LabelManageController extends AdminManageController
         $describe = $request->get('describe');
 
         $label = new Label();
-        $label->setName($name)
-            ->setDescribe($describe);
+        $label->setName($name);
+        $label->setDescribe($describe);
 
         if(!$this->labelBusiness->create($label)){
             return Responses::error(Errors::getError());
