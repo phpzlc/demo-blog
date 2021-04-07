@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use App\Safety\ActionLoad;
+use App\Tools\RichText;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -108,14 +110,31 @@ class Article
         return $this;
     }
 
+    /**
+     * 将富文本内容相对地址转换成前端显示的绝对地址
+     *
+     * @return string|null
+     */
     public function getContent(): ?string
     {
-        return $this->content;
+        $request = ActionLoad::$globalContainer->get('request_stack');
+        $host = $request->getCurrentRequest()->getSchemeAndHttpHost(). $request->getCurrentRequest()->getBasePath();
+
+        return RichText::richTextAbsoluteUrl($this->content, $host);
     }
 
+    /**
+     * 将富文本内容的绝地地址转换成数据库存储的相对位置
+     *
+     * @param string $content
+     * @return $this
+     */
     public function setContent(string $content): self
     {
-        $this->content = $content;
+        $request = ActionLoad::$globalContainer->get('request_stack');
+        $host = $request->getCurrentRequest()->getSchemeAndHttpHost(). $request->getCurrentRequest()->getBasePath();
+
+        $this->content = RichText::richTextRelativeUrl($content, $host);
 
         return $this;
     }

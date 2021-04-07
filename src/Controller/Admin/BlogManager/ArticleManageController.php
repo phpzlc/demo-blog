@@ -122,6 +122,7 @@ class ArticleManageController extends AdminManageController
         $title = $request->get('title');
         $content = $request->get('content');
 
+
         $article = new Article();
         $article->setTitle($title)
             ->setContent($content)
