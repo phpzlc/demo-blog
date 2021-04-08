@@ -1,0 +1,4 @@
+# 首页
+admin_manage_statistical_station_index:
+  path: /
+  controller: App\Controller\Admin\StatisticalStationController::index
