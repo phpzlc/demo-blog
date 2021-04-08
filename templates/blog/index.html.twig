@@ -14,7 +14,7 @@
                                 <h3 class="ui teal header">博客</h3>
                             </div>
                             <div class="right aligned column">
-                                共 <h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2> 篇
+                                共 <h2 class="ui orange header m-inline-block m-text-thin"> {{ articles_numbers }} </h2> 篇
                             </div>
                         </div>
                     </div>
@@ -438,36 +438,13 @@
                             </div>
                         </div>
                         <div class="ui teal segment">
+                            {% for label in labels %}
                             <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
+                                {{ label.name | default}} <div class="detail">23</div>
                             </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
-                                方法论 <div class="detail">23</div>
-                            </a>
+                            {% endfor %}
+
+                        </div>
                         </div>
                     </div>
 

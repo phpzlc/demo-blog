@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Business\UploadBusiness\UploadFile;
 use App\Repository\ArticleRepository;
 use App\Safety\ActionLoad;
 use App\Tools\RichText;
@@ -132,7 +133,7 @@ class Article
     public function setContent(string $content): self
     {
         $request = ActionLoad::$globalContainer->get('request_stack');
-        $host = $request->getCurrentRequest()->getSchemeAndHttpHost(). $request->getCurrentRequest()->getBasePath();
+        $host = $request->getCurrentRequest()->getSchemeAndHttpHost(). $request->getCurrentRequest()->getBasePath() . '/';
 
         $this->content = RichText::richTextRelativeUrl($content, $host);
 
@@ -166,6 +167,11 @@ class Article
     public function getThumbnail(): ?string
     {
         return $this->thumbnail;
+    }
+
+    public function getThumbnailPath()
+    {
+        return UploadFile::getFileNetworkPath(ActionLoad::$globalContainer, $this->getThumbnail());
     }
 
     public function setThumbnail(string $thumbnail): self

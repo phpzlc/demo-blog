@@ -45,8 +45,8 @@ class RichText
             return $l1;
         }
 
-        $path = isset($url_parsed ["path"]) ? dirname($url_parsed ["path"]) : '' ;
-//        $path = $url_parsed["path"];
+//        $path = isset($url_parsed ["path"]) ? dirname($url_parsed ["path"]) : '' ;
+        $path = $url_parsed["path"];
         if(!empty($path)){
             if ($path [0] == "\\") {
                 $path = "";

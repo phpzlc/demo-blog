@@ -106,7 +106,19 @@ class ArticleManageController extends AdminManageController
             return $r;
         }
 
-        return $this->render('admin/blog/article/edit.html.twig');
+        $id = $request->get('id');
+        $info = null;
+
+        if(!empty($id)){
+            $info = $this->articleRepository->find($id);
+        }
+
+        $labels = $this->getDoctrine()->getRepository('App:Label')->findAll(['is_del' => 0]);
+
+        return $this->render('admin/blog/article/edit.html.twig', array(
+            'info' => $info,
+            'labels' => $labels
+        ));
     }
 
     /**
@@ -124,11 +136,12 @@ class ArticleManageController extends AdminManageController
 
         $title = $request->get('title');
         $content = $request->get('content');
-
+        $thumbnail = $request->get('thumbnail');
 
         $article = new Article();
         $article->setTitle($title)
             ->setContent($content)
+            ->setThumbnail($thumbnail)
             ->setUserAuth(CurAuthSubject::getCurUserAuth());
 
         if(!$this->articleBusiness->create($article)){
@@ -154,9 +167,11 @@ class ArticleManageController extends AdminManageController
         $id = $request->get('id');
         $title = $request->get('title');
         $content = $request->get('content');
+        $thumbnail = $request->get('thumbnail');
 
         $article = $this->articleRepository->find($id);
         $article->setTitle($title)
+            ->setThumbnail($thumbnail)
             ->setContent($content);
 
         if(!$this->articleBusiness->update($article)){
