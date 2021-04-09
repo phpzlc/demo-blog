@@ -20,3 +20,5 @@
 ###> phpzlc/document-bundle ###
 public/apidoc/
 ###< phpzlc/document-bundle ###
+
+public/upload
