@@ -59,7 +59,13 @@
                         id: '{{ info.id|default }}',
                         title: '{{ info.title|default }}',
                         content: '',
-                        label:'',
+                        label:[
+                            {% if article_labels is not empty %}
+                                {%  for item in article_labels %}
+                                '{{ item.label.id | default }}',
+                                {% endfor %}
+                            {% endif %}
+                        ],
                         thumbnail:''
                     },
                     rules: {

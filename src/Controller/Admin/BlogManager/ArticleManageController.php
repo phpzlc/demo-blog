@@ -108,16 +108,19 @@ class ArticleManageController extends AdminManageController
 
         $id = $request->get('id');
         $info = null;
+        $article_labels = null;
 
         if(!empty($id)){
             $info = $this->articleRepository->find($id);
+            $article_labels = $this->getDoctrine()->getRepository('App:ArticleLabel')->findAll(['article_id' => $id]);
         }
 
         $labels = $this->getDoctrine()->getRepository('App:Label')->findAll(['is_del' => 0]);
 
         return $this->render('admin/blog/article/edit.html.twig', array(
             'info' => $info,
-            'labels' => $labels
+            'labels' => $labels,
+            'article_labels' => $article_labels
         ));
     }
 
@@ -171,12 +174,14 @@ class ArticleManageController extends AdminManageController
         $content = $request->get('content');
         $thumbnail = $request->get('thumbnail');
 
+        $labels = $request->get('label');
+
         $article = $this->articleRepository->find($id);
         $article->setTitle($title)
             ->setThumbnail($thumbnail)
             ->setContent($content);
 
-        if(!$this->articleBusiness->update($article)){
+        if(!$this->articleBusiness->update($article, $labels)){
             return Responses::error(Errors::getError());
         }
 

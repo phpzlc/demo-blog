@@ -123,6 +123,7 @@ class ArticleBusiness extends AbstractBusiness
 
             if(!empty($labels)){
                 $articleLabels = $this->articleLabelRepository->findAll(['article_id' => $article->getId()]);
+
                 if(!empty($articleLabels)){
                     foreach ($articleLabels as $articleLabel){
                         if(!$this->deleteArticleLabel($articleLabel)){
@@ -137,7 +138,7 @@ class ArticleBusiness extends AbstractBusiness
                         $articleLabel = new ArticleLabel();
                         $articleLabel->setLabel($label);
                         $articleLabel->setArticle($article);
-                        if(!$this->articleLabel($articleLabel)){
+                        if(!$this->articleLabel($articleLabel, false)){
                             throw new \Exception();
                         }
                     }
@@ -145,8 +146,11 @@ class ArticleBusiness extends AbstractBusiness
             }
 
             $this->em->persist($article);
+
             $this->em->flush();
             $this->em->clear();
+
+            $this->conn->commit();
 
             return true;
         }catch (\Exception $exception){
@@ -161,6 +165,7 @@ class ArticleBusiness extends AbstractBusiness
         try {
 
             $this->em->persist($articleLabel);
+
             if($is_flush) {
                 $this->em->flush();
                 $this->em->clear();
