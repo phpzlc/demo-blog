@@ -137,6 +137,8 @@ class ArticleManageController extends AdminManageController
         $title = $request->get('title');
         $content = $request->get('content');
         $thumbnail = $request->get('thumbnail');
+        $labels = $request->get('label');
+
 
         $article = new Article();
         $article->setTitle($title)
@@ -144,7 +146,7 @@ class ArticleManageController extends AdminManageController
             ->setThumbnail($thumbnail)
             ->setUserAuth(CurAuthSubject::getCurUserAuth());
 
-        if(!$this->articleBusiness->create($article)){
+        if(!$this->articleBusiness->create($article, $labels)){
             return Responses::error(Errors::getError());
         }
 
