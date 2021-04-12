@@ -230,4 +230,9 @@ class Article
         return $this;
     }
 
+    public function getLabels(): ?array
+    {
+        return $this->labels;
+    }
+
 }
