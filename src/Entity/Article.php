@@ -41,6 +41,13 @@ class Article
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="article_summary", type="string", options={"comment":"文章摘要"})
+     */
+    private $articleSummary;
+
+    /**
      * @ORM\Column(name="content", type="text", options={"comment":"文章内容"})
      */
     private $content;
@@ -232,6 +239,18 @@ class Article
     public function getLabels(): ?array
     {
         return $this->labels;
+    }
+
+    public function getArticleSummary(): ?string
+    {
+        return $this->articleSummary;
+    }
+
+    public function setArticleSummary(string $articleSummary): self
+    {
+        $this->articleSummary = $articleSummary;
+
+        return $this;
     }
 
 }

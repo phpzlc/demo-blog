@@ -7,6 +7,11 @@
             <el-input v-model="form.title" placeholder="请输入标题"></el-input>
         </el-form-item>
 
+        <el-form-item label="文章概要:" prop="summary" size="mini" class="el-form-width-all">
+            <el-input v-model="summary" placeholder="请输入概要" maxlength="144"></el-input>
+            <span style="padding-left: 10px">还可输入${ titleFontNum }$个字符</span>
+        </el-form-item>
+
         <el-form-item label="缩略图:" prop="thumbnail" size="mini" class="el-form-width-all">
             <el-upload
                     class="upload-demo"
@@ -52,6 +57,7 @@
     <script>
         new Vue({
             el: '#main-content',
+            delimiters: ['${', '}$'],
             data: function () {
                 return {
                     id: '',
@@ -66,7 +72,8 @@
                                 {% endfor %}
                             {% endif %}
                         ],
-                        thumbnail:''
+                        thumbnail:'{{ info.thumbnail | default }}',
+                        summary: '{{ info.articleSummary | default }}'
                     },
                     rules: {
                         title: [
@@ -76,6 +83,10 @@
                         content: [
                             { required: true, message: '请输入内容', trigger: 'blur' },
                         ],
+
+                        summary: [
+                            { required: true, message: '请输入文章概要', trigger: 'blur'}
+                        ]
                     },
 
                     labelOptions:[
@@ -94,13 +105,24 @@
                             url:"{{ info.thumbnailPath | default }}"
                         }
                         {% endif %}
-                    ]
+                    ],
+
+                    titleFontNum: "{{ info.articleSummary | length }}",
+                    summary: "{{ info.articleSummary }}"
 
                 }
             },
             created() {
                 // // 页面初始化使用
                 // console.log(1);
+                this.fontNumCompute();
+            },
+
+            watch: {
+                summary: function (){
+                    this.form.summary = this.summary;
+                    this.fontNumCompute();
+                }
             },
             methods: {
                 submitForm(formName) {
@@ -143,6 +165,10 @@
 
                 removeThumbnailFileList(){
                     this.form.thumbnail = ''
+                },
+
+                fontNumCompute(){
+                    this.titleFontNum = 144 - this.form.summary.length;
                 }
             }
         })

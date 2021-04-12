@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LabelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use PHPZlc\PHPZlc\Doctrine\ORM\Mapping\OuterColumn;
 
 /**
  * @ORM\Entity(repositoryClass=LabelRepository::class)
@@ -55,6 +56,11 @@ class Label
      * @ORM\Column(name="is_del", type="boolean", options={"comment":"是否删除", "default":0})
      */
     private $isDel = false;
+
+    /**
+     * @OuterColumn(name="article_numbers", type="string", sql=" (SELECT COUNT(al.id) FROM article_label al WHERE al.label_id = sql_pre.id)")
+     */
+    private $articleNumbers;
 
 
     public function getId(): ?string
@@ -120,6 +126,11 @@ class Label
         $this->illustrate = $illustrate;
 
         return $this;
+    }
+
+    public function getArticleNumbers(): ?string
+    {
+        return $this->articleNumbers;
     }
 
 }

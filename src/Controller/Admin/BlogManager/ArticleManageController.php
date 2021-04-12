@@ -142,12 +142,14 @@ class ArticleManageController extends AdminManageController
         $content = $request->get('content');
         $thumbnail = $request->get('thumbnail');
         $labels = $request->get('label');
+        $summary = $request->get('summary');
 
 
         $article = new Article();
         $article->setTitle($title)
             ->setContent($content)
             ->setThumbnail($thumbnail)
+            ->setArticleSummary($summary)
             ->setUserAuth(CurAuthSubject::getCurUserAuth());
 
         if(!$this->articleBusiness->create($article, $labels)){
@@ -174,12 +176,14 @@ class ArticleManageController extends AdminManageController
         $title = $request->get('title');
         $content = $request->get('content');
         $thumbnail = $request->get('thumbnail');
+        $summary = $request->get('summary');
 
         $labels = $request->get('label');
 
         $article = $this->articleRepository->find($id);
         $article->setTitle($title)
             ->setThumbnail($thumbnail)
+            ->setArticleSummary($summary)
             ->setContent($content);
 
         if(!$this->articleBusiness->update($article, $labels)){

@@ -14,6 +14,7 @@ use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends SystemBaseController
@@ -60,11 +61,16 @@ class BlogController extends SystemBaseController
         }
 
         $articles_numbers = $this->articleRepository->findCount();
-        $labels = $this->labelRepository->findAll(['is_del' => 0]);
+        $articles = $this->articleRepository->findAll();
+        $labels = $this->labelRepository->findAll([
+            Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
+            'is_del' => 0
+        ]);
 
         return $this->render('blog/index.html.twig', array(
             'articles_numbers' => $articles_numbers,
-            'labels' => $labels
+            'labels' => $labels,
+            'articles' => $articles
         ));
     }
 
