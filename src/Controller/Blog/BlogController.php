@@ -10,6 +10,7 @@
 
 namespace App\Controller\Blog;
 
+use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
@@ -27,6 +28,11 @@ class BlogController extends SystemBaseController
      */
     protected $labelRepository;
 
+    /**
+     * @var ArticleLabelRepository
+     */
+    protected $articleLabelRepository;
+
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
         $r = parent::inlet($returnType, $isLogin);
@@ -36,6 +42,7 @@ class BlogController extends SystemBaseController
 
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
+        $this->articleLabelRepository = $this->getDoctrine()->getRepository('App:ArticleLabel');
 
         return true;
     }

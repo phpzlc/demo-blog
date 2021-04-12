@@ -90,8 +90,9 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "4.4.*"
+            "allow-contrib": true,
+            "require": "4.4.*",
+            "endpoint": "http://127.0.0.1:8000"
         }
     }
 }

@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use App\Safety\ActionLoad;
 use App\Tools\RichText;
 use Doctrine\ORM\Mapping as ORM;
+use PHPZlc\PHPZlc\Doctrine\ORM\Mapping\OuterColumn;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -31,14 +32,6 @@ class Article
      * @ORM\JoinColumn(name="user_auth_id", referencedColumnName="id")
      */
     private $userAuth;
-
-    /**
-     * @var Label
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Label")
-     * @ORM\JoinColumn(name="label_id", referencedColumnName="id")
-     */
-    private $label;
 
     /**
      * @var string
@@ -94,22 +87,18 @@ class Article
      */
     private $isDel = false;
 
+    /**
+     * @var string
+     *
+     * @OuterColumn(name="labels", type="simple_array", sql = "SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id )")
+     */
+    public $labels;
+
     public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
     /**
      * 将富文本内容相对地址转换成前端显示的绝对地址
@@ -217,18 +206,6 @@ class Article
         return $this;
     }
 
-    public function getLabel(): ?Label
-    {
-        return $this->label;
-    }
-
-    public function setLabel(?Label $label): self
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
     public function getIsDel(): ?bool
     {
         return $this->isDel;
@@ -240,4 +217,17 @@ class Article
 
         return $this;
     }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
 }
