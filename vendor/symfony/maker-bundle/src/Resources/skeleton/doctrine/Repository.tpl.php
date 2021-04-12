@@ -3,8 +3,12 @@
 namespace <?= $namespace; ?>;
 
 use <?= $entity_full_class_name; ?>;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use <?= $doctrine_registry_class; ?>;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use PHPZlc\PHPZlc\Doctrine\ORM\Repository\AbstractServiceEntityRepository;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rules;
+use PHPZlc\Validate\Validate;
 <?= $with_password_upgrade ? "use Symfony\Component\Security\Core\Exception\UnsupportedUserException;\n" : '' ?>
 <?= $with_password_upgrade ? "use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;\n" : '' ?>
 <?= $with_password_upgrade ? "use Symfony\Component\Security\Core\User\UserInterface;\n" : '' ?>
@@ -12,62 +16,27 @@ use <?= $doctrine_registry_class; ?>;
 /**
  * @method <?= $entity_class_name; ?>|null find($id, $lockMode = null, $lockVersion = null)
  * @method <?= $entity_class_name; ?>|null findOneBy(array $criteria, array $orderBy = null)
- * @method <?= $entity_class_name; ?>[]    findAll()
+ * @method <?= $entity_class_name; ?>|null    findAssoc($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method <?= $entity_class_name; ?>|null   findLastAssoc($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method <?= $entity_class_name; ?>|null    findAssocById($id, $rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
  * @method <?= $entity_class_name; ?>[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method <?= $entity_class_name; ?>[]    findAll($rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
+ * @method <?= $entity_class_name; ?>[]    findLimitAll($rows, $page = 1, $rules = null, ResultSetMappingBuilder $resultSetMappingBuilder = null, $aliasChain = '')
  */
-class <?= $class_name; ?> extends ServiceEntityRepository<?= $with_password_upgrade ? " implements PasswordUpgraderInterface\n" : "\n" ?>
+class <?= $class_name; ?> extends AbstractServiceEntityRepository<?= $with_password_upgrade ? " implements PasswordUpgraderInterface\n" : "\n" ?>
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, <?= $entity_class_name; ?>::class);
     }
-<?php if ($include_example_comments): // When adding a new method without existing default comments, the blank line is automatically added.?>
 
-<?php endif; ?>
-<?php if ($with_password_upgrade): ?>
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
-    public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+    public function registerRules()
     {
-        if (!$user instanceof <?= $entity_class_name ?>) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
-
-        $user->setPassword($newEncodedPassword);
-        $this->_em->persist($user);
-        $this->_em->flush();
+        // TODO: Implement registerRules() method.
     }
 
-<?php endif ?>
-<?php if ($include_example_comments): ?>
-    // /**
-    //  * @return <?= $entity_class_name ?>[] Returns an array of <?= $entity_class_name ?> objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function ruleRewrite(Rule $currentRule, Rules $rules, ResultSetMappingBuilder $resultSetMappingBuilder)
     {
-        return $this->createQueryBuilder('<?= $entity_alias; ?>')
-            ->andWhere('<?= $entity_alias; ?>.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('<?= $entity_alias; ?>.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        // TODO: Implement ruleRewrite() method.
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?<?= $entity_class_name."\n" ?>
-    {
-        return $this->createQueryBuilder('<?= $entity_alias ?>')
-            ->andWhere('<?= $entity_alias ?>.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-<?php endif; ?>
 }

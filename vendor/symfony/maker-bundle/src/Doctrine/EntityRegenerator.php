@@ -11,16 +11,19 @@
 
 namespace Symfony\Bundle\MakerBundle\Doctrine;
 
-use Doctrine\Common\Persistence\Mapping\MappingException as LegacyCommonMappingException;
+use Doctrine\Common\Persistence\Mapping\MappingException as CommonMappingException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\MappingException;
-use Doctrine\Persistence\Mapping\MappingException as PersistenceMappingException;
+use PHPZlc\PHPZlc\Doctrine\ORM\RuleColumn\ClassRuleMetaDataFactroy;
+use PHPZlc\PHPZlc\Doctrine\ORM\RuleColumn\RuleColumn;
 use Symfony\Bundle\MakerBundle\Exception\RuntimeCommandException;
 use Symfony\Bundle\MakerBundle\FileManager;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\Util\ClassSourceManipulator;
 
 /**
+ * 该类从phpzlc/phpzlc复制过来的；原类代码被phpzlc/phpzlc在保留原有功能的基础上加入了代码；新增代码文件内检索 //重写
+ *
  * @internal
  */
 final class EntityRegenerator
@@ -44,7 +47,7 @@ final class EntityRegenerator
     {
         try {
             $metadata = $this->doctrineHelper->getMetadata($classOrNamespace);
-        } catch (MappingException | LegacyCommonMappingException | PersistenceMappingException $mappingException) {
+        } catch (MappingException | CommonMappingException $mappingException) {
             $metadata = $this->doctrineHelper->getMetadata($classOrNamespace, true);
         }
 
@@ -175,6 +178,16 @@ final class EntityRegenerator
                         throw new \Exception('Unknown association type.');
                 }
             }
+
+            //重写 为表外字段设置get方法
+            $classRuleMetadata = ClassRuleMetaDataFactroy::getClassRuleMetadata($classMetadata);
+            foreach ($classRuleMetadata->getAllRuleColumn() as $ruleColumn){
+                if($ruleColumn->propertyType == RuleColumn::PT_TABLE_OUT){
+                    $manipulator->addGetter($ruleColumn->propertyName, $manipulator->getEntityTypeHint($ruleColumn->type), true);
+                }
+            }
+
+
         }
 
         foreach ($operations as $filename => $manipulator) {
@@ -183,6 +196,8 @@ final class EntityRegenerator
                 $manipulator->getSourceCode()
             );
         }
+
+
     }
 
     private function generateClass(ClassMetadata $metadata): string
