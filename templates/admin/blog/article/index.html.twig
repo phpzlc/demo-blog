@@ -80,7 +80,6 @@
 {% endblock %}
 
 {% block main_content_vue %}
-    {{ dump() }}
     <script>
         new Vue({
             el: '#main-content',
@@ -99,7 +98,11 @@
                         {
                             id: '{{ item.id | default }}',
                             user_name: '',
-                            label: '{{ item.label.name | default }}',
+                        {% if item.labels is not empty %}
+                            label:'{% for key in item.labels %} {{ key }} {% endfor %}',
+                        {% else %}
+                            label: '',
+                        {% endif %}
                             title: '{{ item.title | default }}',
                             likes: '{{ item.likes | default(0) }}',
                             views: '{{ item.views | default(0) }}',

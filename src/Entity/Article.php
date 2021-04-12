@@ -88,9 +88,8 @@ class Article
     private $isDel = false;
 
     /**
-     * @var string
      *
-     * @OuterColumn(name="labels", type="simple_array", sql = "SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id )")
+     * @OuterColumn(name="labels", type="simple_array", sql="(SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id ))")
      */
     public $labels;
 
