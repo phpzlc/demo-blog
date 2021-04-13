@@ -100,8 +100,16 @@ class SortManageController extends AdminManageController
         }
 
         $id = $request->get('id');
+        $sort = null;
 
-        return $this->render('admin/sort/edit.html.twig', array());
+        if(!empty($id)){
+            $sort = $this->sortRepository->find($id);
+        }
+
+        return $this->render('admin/sort/edit.html.twig', array(
+            'sort' => $sort,
+            'parentSorts' => $this->sortRepository->findAll(['is_del' => 0])
+        ));
     }
 
     /**
@@ -153,7 +161,7 @@ class SortManageController extends AdminManageController
 
         $sort = $this->sortRepository->find($id);
 
-        if(!empty($sort)){
+        if(empty($sort)){
             return Responses::error('未找到该分类');
         }
 

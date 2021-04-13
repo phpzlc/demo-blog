@@ -39,9 +39,9 @@
             data: function () {
                 return {
                     form: {
-                        sort_no: "",
-                        sort_name: "",
-                        parentSortId: "",
+                        sort_no: "{{ sort.sortNo | default }}",
+                        sort_name: "{{ sort.sortName | default }}",
+                        parentSortId: "{{ sort.parentSort.id | default }}",
                     },
                     rules: {
                         sort_no: { required: true, message: '请输入分类编号', trigger: 'blur' },
@@ -52,12 +52,12 @@
                             value: "",
                             label: "顶级分类"
                         },
-{#                        {% for parentColumn in parentColumns %}#}
-{#                        {#}
-{#                            value: "{{ parentColumn.id }}",#}
-{#                            label: "{{ parentColumn.columnNo }}/{{ parentColumn.columnTitle }}"#}
-{#                        }{% if loop.last == false %},{% endif %}#}
-{#                        {% endfor %}#}
+                        {% for parentSort in parentSorts %}
+                        {
+                            value: "{{ parentSort.id }}",
+                            label: "{{ parentSort.sortNo }}/{{ parentSort.sortName }}"
+                        }{% if loop.last == false %},{% endif %}
+                        {% endfor %}
                     ],
                 }
             },
