@@ -15,6 +15,7 @@ use App\Entity\Sort;
 use App\Repository\SortRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,7 +64,26 @@ class SortManageController extends AdminManageController
 
         $this->adminStrategy->setUrlAnchor();
 
-        return $this->render('admin/sort/index.html.twig', array());
+        $sort_no = $request->get('sort_no');
+        $sort_name = $request->get('sort_name');
+
+        $rules = [
+            'sortNo' . Rule::RA_LIKE => '%' . $sort_no . '%',
+            'sortName' . Rule::RA_LIKE => '%' . $sort_name . '%'
+        ];
+
+        $page = $request->get('page', 1);
+        $rows = $request->get('rows', 20);
+
+        $data = $this->sortRepository->findLimitAll($rows, $page, $rules);
+        $count = $this->sortRepository->findCount($rules);
+
+        return $this->render('admin/sort/index.html.twig', array(
+            'page' => $page,
+            'rows' => $rows,
+            'count' => $count,
+            'sorts' => $this->sortRepository->sequenceSorts($data)
+        ));
     }
 
     /**

@@ -23,7 +23,7 @@
             </el-form-item>
 
             <el-form-item size="mini">
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button type="primary" @click="submitForm('Form')">提交</el-button>
                 <el-button @click="resetForm()">取消</el-button>
             </el-form-item>
 
@@ -67,6 +67,18 @@
             },
             methods: {
                 submitForm(formName) {
+                    const that = this;
+                    {% if app.request.get('id') is not null %}
+                    var url = "{{ path('admin_manage_sort_edit') }}?id={{ app.request.get('id') }}";
+                    $.post(url, that.form, function (result) {
+                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
+                    });
+                    {% elseif app.request.get('id') is null %}
+                    var url = "{{ path('admin_manage_sort_create')}}";
+                    $.post(url, that.form, function (result) {
+                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
+                    });
+                    {% endif %}
                 },
                 resetForm(formName) {
                     window.location.href ="{{ admin_url_anchor() }}";

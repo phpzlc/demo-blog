@@ -36,4 +36,70 @@ class SortRepository extends AbstractServiceEntityRepository
     {
         // TODO: Implement ruleRewrite() method.
     }
+
+    /**
+     * @param Sort[]
+     * @return array
+     */
+    public function sequenceSorts($sorts)
+    {
+        if(empty($sorts)){
+            return [];
+        }
+
+        $idToPIds = array();
+        $prepareSequence = array();
+        $sequence = array();
+        $useRootIds = array();
+
+        /**
+         * @var Sort $sort
+         */
+        foreach ($sorts as $key => $sort){
+            $idToPIds[$sort->getId()] = $key;
+            if(empty($sort->getParentSort())){
+                $prepareSequence[''][] = $sort;
+            }else{
+                $prepareSequence[$sort->getParentSort()->getId()][] = $sort;
+            }
+        }
+
+        foreach ($sorts as $key => $sort){
+            $sort = $this->arrayRootSortToSort($sort, $sorts, $idToPIds);
+            if(!in_array($sort->getId(), $useRootIds, true)){
+                $sequence[] = array(
+                    'sort' => $sort,
+                    'children' => $this->sequenceGetChildren($sort, $prepareSequence)
+                );
+                $useRootIds[] = $sort->getId();
+            }
+        }
+
+        return $sequence;
+    }
+
+    private function arrayRootSortToSort(Sort $sort, $sorts, array $idToPIds)
+    {
+        if(empty($sort->getParentSort()) || !array_key_exists($sort->getParentSort()->getId(), $idToPIds)){
+            return $sort;
+        }
+
+        return $this->arrayRootSortToSort($sorts[$idToPIds[$sort->getParentSort()->getId()]], $sorts, $idToPIds);
+    }
+
+    private function sequenceGetChildren(Sort $parentSort, $prepareSequence)
+    {
+        $array = [];
+
+        if(array_key_exists($parentSort->getId(), $prepareSequence)){
+            foreach ($prepareSequence[$parentSort->getId()] as $sort){
+                $array[] = array(
+                    'sort' => $sort,
+                    'children' => $this->sequenceGetChildren($sort, $prepareSequence)
+                );
+            }
+        }
+
+        return $array;
+    }
 }
