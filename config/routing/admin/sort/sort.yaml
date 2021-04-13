@@ -1,0 +1,24 @@
+# 首页
+admin_manage_sort_index:
+  path: /
+  controller: App\Controller\Admin\SortManageController::index
+
+# 新建/编辑页面
+admin_manage_sort_page:
+  path: /page
+  controller: App\Controller\Admin\SortManageController::page
+
+# 新建
+admin_manage_sort_create:
+  path: /create
+  controller: App\Controller\Admin\SortManageController::create
+
+# 编辑
+admin_manage_sort_edit:
+  path: /edit
+  controller: App\Controller\Admin\SortManageController::edit
+
+# 删除
+admin_manage_sort_delete:
+  path: /delete
+  controller: App\Controller\Admin\SortManageController::delete

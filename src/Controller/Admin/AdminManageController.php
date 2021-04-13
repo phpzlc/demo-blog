@@ -65,6 +65,7 @@ class AdminManageController extends SystemBaseController
             new Menu('博客管理系统', null, null, null, null, [
                 new Menu('统计台', null, 'admin_statistical_station_index', $this->generateUrl('admin_manage_statistical_station_index'), null),
                 new Menu('用户管理', null, 'admin_blog_user', $this->generateUrl('admin_users_index'), null),
+                new Menu('分类管理', null, 'admin_sort_index', $this->generateUrl('admin_manage_sort_index'), null),
                 new Menu('博客管理', null, null, null, null, [
                     new Menu('文章管理', null, 'admin_article_index', $this->generateUrl('admin_blog_manage_article_index'), null),
                     new Menu('评论管理', null, 'admin_commentary_index', $this->generateUrl('admin_blog_manage_commentary_index'), null),

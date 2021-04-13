@@ -23,6 +23,11 @@ admin_manage_statistical_station:
   prefix: /statistical-station
   resource: 'statistical-station/statistical-station.yaml'
 
+# 管理端-分类管理
+admin_manage_sort:
+  prefix: /sort
+  resource: 'sort/sort.yaml'
+
 # 管理端-用户管理
 admin_users_manage:
   prefix:   /users

@@ -1,0 +1,139 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{#{% macro loadSortData(sorts) %}#}
+{#    {% import _self as m %}#}
+{#    {% for sort in sorts %}#}
+{#    #}
+{#    {% endfor %}#}
+{#{% endmacro %}#}
+
+{% block main_content %}
+<div class="search-page clearfix">
+
+    <el-row class="page-search">
+        <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="90px" style="margin-left: 10px">
+            <el-form-item label="分类编号:" prop="sort_no">
+                <el-input v-model="searchForm.sort_no" size="mini" clearable placeholder="请输入分类编号"></el-input>
+            </el-form-item>
+
+            <el-form-item label="分类名称:" prop="sort_name">
+                <el-input v-model="searchForm.sort_name" size="mini" clearable placeholder="请输入"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" size="mini" @click="searchBtn()"> 搜索 </el-button>
+                <el-button size="mini" @click="resetForm('searchForm')"> 重置 </el-button>
+            </el-form-item>
+        </el-form>
+    </el-row>
+
+    <el-row class="list-btn-content mt-10">
+        <el-button size="mini" type="primary" @click="add()"> 新建 </el-button>
+    </el-row>
+
+    <el-table
+            class="mt-10"
+            :data="tableData"
+            style="width: 100%"
+            border
+            default-expand-all
+            row-key="id"
+            :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+    >
+        <el-table-column prop="sortNo" label="分类编号"></el-table-column>
+        <el-table-column prop="sortName" label="分类名称"></el-table-column>
+        <el-table-column prop="createAt" label="创建时间"></el-table-column>
+        <el-table-column prop="updateAt" label="编辑时间"></el-table-column>
+
+        <!-- 添加操作行 start -->
+        <el-table-column prop="date" label="操作" width="250">
+            <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary"> 编辑 </el-button>
+                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" type="danger"> 删除 </el-button>
+            </template>
+        </el-table-column>
+        <!-- 添加操作行 end -->
+
+    </el-table>
+
+    <!-- 分页 start -->
+{#    <el-col class="mt-20 clearfix">#}
+{#        <el-pagination class="page" @current-change="handleCurrentChange" @size-change="handleSizeChange"#}
+{#                       :page-sizes="[20, 60, 100, 200]" :page-size="{{ rows }}" :hide-on-single-page="true" :current-page="{{ page }}"#}
+{#                       layout="total, sizes, prev, pager, next, jumper" :total="{{ count }}">#}
+{#        </el-pagination>#}
+{#    </el-col>#}
+    <!-- 分页 end -->
+</div>
+
+{% endblock %}
+
+{% block main_content_vue %}
+    <script>
+        new Vue({
+            el: '#main-content',
+            data: function () {
+                return {
+                    searchForm: {
+                        sort_no: '{{ app.request.get('sort_no') }}',
+                        sort_name: '{{ app.request.get('sort_name') }}',
+                    },
+                    tableData: [
+                        {
+                           sort_no: '',
+                           sort_name: '',
+                           createAt: '',
+                           updateAt: ''
+                        },
+{#                        {{ _self.loadColumnData(columns) }}#}
+                    ],
+                }
+            },
+            methods: {
+                handleCurrentChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'page', val);
+                },
+
+                handleSizeChange(val) {
+                    window.location.href = urlParamWrite(getSelfUrl(), 'rows', val);
+                },
+
+                searchBtn() {
+                    window.location.href = splicingGetParamsToUrl("{{ path('admin_manage_sort_index') }}", this.searchForm);
+                },
+
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                },
+
+                add(){
+                    window.location.href = "{{ path('admin_manage_sort_page') }}";
+                },
+
+                handleDelete(index, row) {
+                    this.$confirm('此操作将永久删除该栏目, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        const that = this;
+                        $.post("{{ path('admin_manage_sort_delete') }}", {"id": row.id}, function(data) {
+                            resultPreprocess(that, data,'','')
+                        }, )
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                },
+
+                handleEdit(index, row) {
+                    window.location.href = "{{ path('admin_manage_sort_page') }}?id=" + row.id;
+                },
+
+
+            }
+        })
+    </script>
+{% endblock %}

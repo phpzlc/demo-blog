@@ -1,0 +1,78 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{% block main_content %}
+    <div class="add-page clearfix">
+        <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
+            <el-form-item label="分类编号:" prop="sort_no" size="mini" class="el-form-width-all" label-width="100px">
+                <el-input v-model="form.sort_no" placeholder="请输入" style="width: 150px"></el-input>
+            </el-form-item>
+
+            <el-form-item label="分类名称:" prop="sort_name" size="mini" class="el-form-width-all" label-width="100px">
+                <el-input v-model="form.sort_name" placeholder="请输入" style="width: 150px"></el-input>
+            </el-form-item>
+
+            <el-form-item label="父级分类:" prop="parentSortId" size="mini" class="el-form-width-all">
+                <el-select v-model="form.parentSortId" placeholder="请选择" style="width: 200px">
+                    <el-option
+                            v-for="item in parentSortOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item size="mini">
+                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button @click="resetForm()">取消</el-button>
+            </el-form-item>
+
+        </el-form>
+    </div>
+{% endblock %}
+
+{% block main_content_vue %}
+    <script>
+        new Vue({
+            el: '#main-content',
+            delimiters: ['${', '}$'],
+            data: function () {
+                return {
+                    form: {
+                        sort_no: "",
+                        sort_name: "",
+                        parentSortId: "",
+                    },
+                    rules: {
+                        sort_no: { required: true, message: '请输入分类编号', trigger: 'blur' },
+                        sort_name: { required: true, message: '请输入分类名称', trigger: 'blur' },
+                    },
+                    parentSortOptions: [
+                        {
+                            value: "",
+                            label: "顶级分类"
+                        },
+{#                        {% for parentColumn in parentColumns %}#}
+{#                        {#}
+{#                            value: "{{ parentColumn.id }}",#}
+{#                            label: "{{ parentColumn.columnNo }}/{{ parentColumn.columnTitle }}"#}
+{#                        }{% if loop.last == false %},{% endif %}#}
+{#                        {% endfor %}#}
+                    ],
+                }
+            },
+            created() {
+                // 页面初始化使用
+                console.log(1);
+            },
+            methods: {
+                submitForm(formName) {
+                },
+                resetForm(formName) {
+                    window.location.href ="{{ admin_url_anchor() }}";
+                },
+
+            }
+        })
+    </script>
+{% endblock %}
