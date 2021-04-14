@@ -16,6 +16,7 @@ use App\Repository\LabelRepository;
 use App\Repository\SortRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends SystemBaseController
@@ -78,24 +79,58 @@ class BlogController extends SystemBaseController
             'articles_numbers' => $articles_numbers,
             'labels' => $labels,
             'articles' => $articles,
-            'sorts' => $this->sortRepository->findAll(['is_del' => 0]),
+            'sorts' => $this->sortRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers' ,'is_del' => 0]),
             'new_articles' => $this->articleRepository->findLimitAll(10, 1, ['is_del' => 0])
+        ));
+    }
+
+    /**
+     * 分类页
+     *
+     * @return bool|Response
+     */
+    public function types()
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        $sorts = $this->sortRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers' ,'is_del' => 0]);
+
+        $articles = $this->articleRepository->findAll();
+
+        $count = $this->sortRepository->findCount(['is_del' => 0]);
+
+        return $this->render('blog/types.html.twig', array(
+            'sorts' => $sorts,
+            'articles' => $articles,
+            'count' => $count
         ));
     }
 
     /**
      * 标签页
      *
-     * @return Response
+     * @return bool|Response
      */
-    public function types()
-    {
-        return $this->render('blog/types.html.twig');
-    }
-
     public function tags()
     {
-        return $this->render('blog/tags.html.twig');
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        $count = $this->labelRepository->findCount(['is_del' => 0]);
+        $labels = $this->labelRepository->findAll([ Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
+            'is_del' => 0]);
+        $articles = $this->articleRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.labels']);
+
+        return $this->render('blog/tags.html.twig', array(
+            'count' => $count,
+            'labels' => $labels,
+            'articles' => $articles
+        ));
     }
 
     public function archives()
@@ -108,8 +143,19 @@ class BlogController extends SystemBaseController
         return $this->render('blog/about.html.twig');
     }
 
-    public function blog()
+    public function blog(Request $request)
     {
-        return $this->render('blog/blog.html.twig');
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        $id = $request->get('id');
+
+        $article = $this->articleRepository->findAssoc([Rule::R_SELECT => 'sql_pre.*, sql_pre.labels','id' => $id]);
+
+        return $this->render('blog/blog.html.twig', array(
+            'article' => $article
+        ));
     }
 }

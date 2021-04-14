@@ -1,7 +1,6 @@
 {% extends 'blog/base/head.html.twig' %}
 
 {% block main_content %}
-    {{ dump() }}
     <!--中间内容-->
     <div  class="m-container m-padded-tb-big">
         <div class="ui container">
@@ -98,7 +97,7 @@
                                 {% for item in sorts %}
                                 <a href="#" class="item">
                                     {{ item.sortName | default }}
-                                    <div class="ui teal basic left pointing label">13</div>
+                                    <div class="ui teal basic left pointing label">{{ item.articlesNumbers | default(0) }}</div>
                                 </a>
                                 {% endfor %}
                             </div>

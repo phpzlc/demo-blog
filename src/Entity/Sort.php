@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SortRepository;
 use Doctrine\ORM\Mapping as ORM;
+use PHPZlc\PHPZlc\Doctrine\ORM\Mapping\OuterColumn;
 
 /**
  * @ORM\Entity(repositoryClass=SortRepository::class)
@@ -70,6 +71,11 @@ class Sort
      * @ORM\Column(name="update_at", type="datetime", nullable=true, options={"comment":"更新时间"})
      */
     private $updateAt;
+
+    /**
+     * @OuterColumn(name="articles_numbers", type="string", sql="(SELECT COUNT(a.id) FROM article a WHERE a.sort_id = sql_pre.id)")
+     */
+    public $articlesNumbers;
 
     public function getId(): ?string
     {
@@ -158,6 +164,11 @@ class Sort
         $this->parentSort = $parentSort;
 
         return $this;
+    }
+
+    public function getArticlesNumbers(): ?string
+    {
+        return $this->articlesNumbers;
     }
 
 }
