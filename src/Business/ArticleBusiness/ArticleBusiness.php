@@ -43,6 +43,7 @@ class ArticleBusiness extends AbstractBusiness
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
         $this->articleLabelRepository = $this->getDoctrine()->getRepository('App:ArticleLabel');
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
+
     }
 
     public function validator($class): bool
@@ -61,7 +62,7 @@ class ArticleBusiness extends AbstractBusiness
         return true;
     }
 
-    public function create(Article $article, $labels = null)
+    public function create(Article $article, $labels = null, $sort = null)
     {
         if(!$this->validator($article)){
             return false;
@@ -109,7 +110,7 @@ class ArticleBusiness extends AbstractBusiness
         }
     }
 
-    public function update(Article $article, $labels = null)
+    public function update(Article $article, $labels = null, $sort = null)
     {
         if(!$this->validator($article)){
             return false;

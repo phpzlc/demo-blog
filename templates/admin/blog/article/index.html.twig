@@ -45,6 +45,8 @@
 
             <el-table-column prop="label" label="标签" ></el-table-column>
 
+            <el-table-column prop="sort" label="所属分类"></el-table-column>
+
             <el-table-column prop="title" label="标题"></el-table-column>
 
             <el-table-column prop="likes" label="点赞量"></el-table-column>
@@ -112,6 +114,7 @@
                         {% else %}
                             update_at: '',
                         {% endif %}
+                            sort: '{{ item.sort.sortName | default }}'
                         },
                         {% endfor %}
                     ],

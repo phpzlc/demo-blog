@@ -40,6 +40,18 @@
             </el-select>
         </el-form-item>
 
+        <el-form-item label="分类:" prop="sort" size="mini" class="el-form-width-all">
+            <el-select v-model="form.sort" placeholder="请选择">
+                <el-option
+                        v-for="item in sortOptions"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                >
+                </el-option>
+            </el-select>
+        </el-form-item>
+
         <el-form-item label="内容" prop="content" size="mini" class="el-form-width-all" class="form-content">
             <el-ueditor id="editor" action="{{ path('upload_file') }}" content="{{ info.content | default }}"></el-ueditor>
         </el-form-item>
@@ -73,7 +85,8 @@
                             {% endif %}
                         ],
                         thumbnail:'{{ info.thumbnail | default }}',
-                        summary: '{{ info.articleSummary | default }}'
+                        summary: '{{ info.articleSummary | default }}',
+                        sort: '{{ info.sort.id | default }}'
                     },
                     rules: {
                         title: [
@@ -98,6 +111,15 @@
                         {% endfor %}
                     ],
 
+                    sortOptions:[
+                        {% for item in sorts %}
+                        {
+                            id:"{{ item.id | default }}",
+                            name:"{{ item.sortName | default }}"
+                        },
+                        {% endfor %}
+                    ],
+
                     uploadThumbnailFileList:[
                         {% if info.thumbnail | default  is not empty %}
                         {
@@ -107,8 +129,8 @@
                         {% endif %}
                     ],
 
-                    titleFontNum: "{{ info.articleSummary | length }}",
-                    summary: "{{ info.articleSummary }}"
+                    titleFontNum: "{{ info.articleSummary | default | length }}",
+                    summary: "{{ info.articleSummary | default }}"
 
                 }
             },

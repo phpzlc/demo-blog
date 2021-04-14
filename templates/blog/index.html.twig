@@ -95,30 +95,12 @@
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu">
+                                {% for item in sorts %}
                                 <a href="#" class="item">
-                                    学习日志
+                                    {{ item.sortName | default }}
                                     <div class="ui teal basic left pointing label">13</div>
                                 </a>
-                                <a href="#" class="item">
-                                    思考与感悟
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
-                                <a href="#" class="item">
-                                    学习日志
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
-                                <a href="#" class="item">
-                                    学习日志
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
-                                <a href="#" class="item">
-                                    学习日志
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
-                                <a href="#" class="item">
-                                    学习日志
-                                    <div class="ui teal basic left pointing label">13</div>
-                                </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -143,7 +125,6 @@
                             {% endfor %}
 
                         </div>
-                        </div>
                     </div>
 
                     <!--最新推荐-->
@@ -151,30 +132,11 @@
                         <div class="ui secondary segment ">
                             <i class="bookmark icon"></i>最新推荐
                         </div>
+                        {% for item in new_articles %}
                         <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">{{ item.title | default('') }}</a>
                         </div>
-                        <div class="ui segment" >
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
-                        <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
-                        </div>
+                        {% endfor %}
                     </div>
 
                     <!--二维码-->
@@ -183,7 +145,6 @@
 {#                        <img src="../static/images/wechat.jpg" alt="" class="ui rounded image" >#}
 {#                    </div>#}
                 </div>
-
             </div>
         </div>
 

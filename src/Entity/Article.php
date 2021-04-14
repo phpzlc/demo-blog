@@ -34,6 +34,14 @@ class Article
     private $userAuth;
 
     /**
+     * @var Sort
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sort")
+     * @ORM\JoinColumn(name="sort_id", referencedColumnName="id")
+     */
+    private $sort;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", options={"comment":"文章标题"})
@@ -249,6 +257,18 @@ class Article
     public function setArticleSummary(string $articleSummary): self
     {
         $this->articleSummary = $articleSummary;
+
+        return $this;
+    }
+
+    public function getSort(): ?Sort
+    {
+        return $this->sort;
+    }
+
+    public function setSort(?Sort $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

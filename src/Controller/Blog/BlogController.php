@@ -13,6 +13,7 @@ namespace App\Controller\Blog;
 use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
+use App\Repository\SortRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,11 @@ class BlogController extends SystemBaseController
      */
     protected $articleLabelRepository;
 
+    /**
+     * @var SortRepository
+     */
+    protected $sortRepository;
+
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
         $r = parent::inlet($returnType, $isLogin);
@@ -44,6 +50,7 @@ class BlogController extends SystemBaseController
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
         $this->articleLabelRepository = $this->getDoctrine()->getRepository('App:ArticleLabel');
+        $this->sortRepository = $this->getDoctrine()->getRepository('App:Sort');
 
         return true;
     }
@@ -70,7 +77,9 @@ class BlogController extends SystemBaseController
         return $this->render('blog/index.html.twig', array(
             'articles_numbers' => $articles_numbers,
             'labels' => $labels,
-            'articles' => $articles
+            'articles' => $articles,
+            'sorts' => $this->sortRepository->findAll(['is_del' => 0]),
+            'new_articles' => $this->articleRepository->findLimitAll(10, 1, ['is_del' => 0])
         ));
     }
 

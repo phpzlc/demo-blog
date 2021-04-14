@@ -15,6 +15,7 @@ use App\Business\AuthBusiness\CurAuthSubject;
 use App\Controller\Admin\AdminManageController;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\SortRepository;
 use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
@@ -40,6 +41,11 @@ class ArticleManageController extends AdminManageController
      */
     protected $articleBusiness;
 
+    /**
+     * @var SortRepository
+     */
+    protected $sortRepository;
+
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
         $r = parent::inlet($returnType, $isLogin);
@@ -51,6 +57,7 @@ class ArticleManageController extends AdminManageController
 
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
         $this->articleBusiness = new ArticleBusiness($this->container);
+        $this->sortRepository = $this->getDoctrine()->getRepository('App:Sort');
 
         return true;
     }
@@ -121,7 +128,8 @@ class ArticleManageController extends AdminManageController
         return $this->render('admin/blog/article/edit.html.twig', array(
             'info' => $info,
             'labels' => $labels,
-            'article_labels' => $article_labels
+            'article_labels' => $article_labels,
+            'sorts' => $this->getDoctrine()->getRepository('App:Sort')->findAll(['is_del' => 0])
         ));
     }
 
@@ -143,6 +151,7 @@ class ArticleManageController extends AdminManageController
         $thumbnail = $request->get('thumbnail');
         $labels = $request->get('label');
         $summary = $request->get('summary');
+        $sort = $request->get('sort');
 
 
         $article = new Article();
@@ -150,6 +159,7 @@ class ArticleManageController extends AdminManageController
             ->setContent($content)
             ->setThumbnail($thumbnail)
             ->setArticleSummary($summary)
+            ->setSort($this->sortRepository->find($sort))
             ->setUserAuth(CurAuthSubject::getCurUserAuth());
 
         if(!$this->articleBusiness->create($article, $labels)){
@@ -177,6 +187,7 @@ class ArticleManageController extends AdminManageController
         $content = $request->get('content');
         $thumbnail = $request->get('thumbnail');
         $summary = $request->get('summary');
+        $sort = $request->get('sort');
 
         $labels = $request->get('label');
 
@@ -184,6 +195,7 @@ class ArticleManageController extends AdminManageController
         $article->setTitle($title)
             ->setThumbnail($thumbnail)
             ->setArticleSummary($summary)
+            ->setSort($this->sortRepository->find($sort))
             ->setContent($content);
 
         if(!$this->articleBusiness->update($article, $labels)){
