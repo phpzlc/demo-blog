@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class BlogController extends SystemBaseController
+class BlogController extends BlogBaseController
 {
     /**
      * @var ArticleRepository
