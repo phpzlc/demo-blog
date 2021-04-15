@@ -202,6 +202,16 @@ class BlogController extends BlogBaseController
         ));
     }
 
+    public function about()
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        return $this->render('blog/about.html.twig');
+    }
+
     /**
      * 登录页面
      *

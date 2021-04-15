@@ -18,6 +18,11 @@ blog_article:
  controller:  App\Controller\Blog\BlogController::blog
  path:    /blog
 
+# 博客关于我
+blog_about:
+  controller: App\Controller\Blog\BlogController::about
+  path:  /about
+
 # 博客登录页面
 blog_login_page:
   controller: App\Controller\Blog\BlogController::loginPage
