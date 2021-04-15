@@ -60,11 +60,9 @@ class UsersManageController extends AdminManageController
         $this->adminStrategy->setUrlAnchor();
 
         $user_name = $request->get('user_name');
-        $mailbox = $request->get('mailbox');
 
         $rules = [
           'user_name' . Rule::RA_LIKE => '%' . $user_name . '%',
-          'mailbox' . Rule::RA_LIKE => '%' . $mailbox . '%'
         ];
 
         $page = $request->get('page', 1);
@@ -76,7 +74,8 @@ class UsersManageController extends AdminManageController
         return $this->render('admin/user/index.html.twig', array(
             'page' => $page,
             'rows' => $rows,
-            'count' => $count
+            'count' => $count,
+            'users' => $data
         ));
     }
 

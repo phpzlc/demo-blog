@@ -24,6 +24,7 @@ use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BlogController extends SystemBaseController
 {
@@ -141,16 +142,12 @@ class BlogController extends SystemBaseController
         ));
     }
 
-    public function archives()
-    {
-        return $this->render('blog/archives.html.twig');
-    }
-
-    public function about()
-    {
-        return $this->render('blog/about.html.twig');
-    }
-
+    /**
+     * 博客详情
+     *
+     * @param Request $request
+     * @return bool|Response
+     */
     public function blog(Request $request)
     {
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
@@ -161,12 +158,20 @@ class BlogController extends SystemBaseController
         $id = $request->get('id');
 
         $article = $this->articleRepository->findAssoc([Rule::R_SELECT => 'sql_pre.*, sql_pre.labels','id' => $id]);
+        $article->setViews($article->getViews() + 1);
+
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->render('blog/blog.html.twig', array(
             'article' => $article
         ));
     }
 
+    /**
+     * 登录页面
+     *
+     * @return bool|Response
+     */
     public function loginPage()
     {
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
@@ -177,6 +182,13 @@ class BlogController extends SystemBaseController
         return $this->render('blog/login.html.twig');
     }
 
+    /**
+     * 登录
+     *
+     * @param Request $request
+     * @return bool|JsonResponse
+     * @throws \Exception
+     */
     public function login(Request $request)
     {
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
@@ -197,6 +209,11 @@ class BlogController extends SystemBaseController
 
     }
 
+    /**
+     * 注册页面
+     *
+     * @return bool|Response
+     */
     public function registerPage()
     {
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
@@ -207,9 +224,15 @@ class BlogController extends SystemBaseController
         return $this->render('blog/register.html.twig');
     }
 
+    /**
+     * 注册
+     *
+     * @param Request $request
+     * @return bool|JsonResponse
+     */
     public function register(Request $request)
     {
-        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, false);
         if($r !== true){
             return $r;
         }
@@ -225,5 +248,21 @@ class BlogController extends SystemBaseController
         }
 
         return Responses::success('注册成功');
+    }
+
+    /**
+     * 收藏
+     *
+     * @param Request $request
+     * @return bool|JsonResponse
+     */
+    public function collection(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        return Responses::success('收藏成功');
     }
 }

@@ -12,11 +12,6 @@
                 </el-input>
             </el-form-item>
 
-            <el-form-item label="邮箱:" prop="mailbox">
-                <el-input v-model="searchForm.mailbox" size="mini" clearable placeholder="请输入">
-                </el-input>
-            </el-form-item>
-
             <el-form-item label="登录时间" prop="login_at" class="search-item-time">
                 <el-date-picker v-model="searchForm.login_at" size="mini" clearable type="daterange"
                                 range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
@@ -25,7 +20,7 @@
 
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchBtn()"> 搜索 </el-button>
-                <el-button size="mini" @click="resetForm('searchForm')"> 重制 </el-button>
+                <el-button size="mini" @click="resetForm('searchForm')"> 重置 </el-button>
             </el-form-item>
 
         </el-form>
@@ -35,19 +30,10 @@
 
     <!-- 数据显示 start-->
     <el-table :data="listData" style="width: 100%" border class="mt-10">
-        <el-table-column prop="face" label="头像"></el-table-column>
-
-        <el-table-column prop="user_nickname" label="用户昵称" ></el-table-column>
 
         <el-table-column prop="user_name" label="用户名"></el-table-column>
 
-        <el-table-column prop="birthday" label="生日"></el-table-column>
-
-        <el-table-column prop="mailbox" label="邮箱"></el-table-column>
-
         <el-table-column prop="create_at" label="注册时间"></el-table-column>
-
-        <el-table-column prop="update_at" label="最新修改时间"></el-table-column>
 
         <el-table-column prop="login_at" label="最后登录时间"></el-table-column>
 
@@ -89,17 +75,18 @@
                 },
 
                 listData: [
+                    {% for item in users %}
                     {
-                        id: '',
-                        face: '测试',
-                        user_nickname: '测试',
-                        user_name: '测试',
-                        birthday: '测试',
-                        mailbox: '测试',
-                        create_at: '测试',
-                        update_at: '测试',
-                        login_at: '测试'
-                    }
+                        id: '{{ item.id | default }}',
+                        user_name: '{{ item.userName | default }}',
+                        create_at: '{{ item.createAt | date('Y-m-d H:i:s') }}',
+                    {% if item.userAuth.lastLoginAt is not null %}
+                        login_at: '{{ item.userAuth.lastLoginAt | date('Y-m-d H:i:s') }}',
+                    {% else %}
+                        login_at : '',
+                    {% endif %}
+                    },
+                    {% endfor %}
                 ],
             }
         },
