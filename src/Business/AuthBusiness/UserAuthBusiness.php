@@ -11,6 +11,7 @@
 namespace App\Business\AuthBusiness;
 
 use App\Business\AdminBusiness\AdminAuth;
+use App\Business\UserBusiness\ConsumerAuth;
 use App\Entity\UserAuth;
 use App\Repository\UserAuthRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
@@ -88,6 +89,9 @@ class UserAuthBusiness extends AbstractBusiness
             switch ($subject_type){
                 case $this->getParameter('subject_admin'):
                     $this->subjectAuthCaches[$subject_type] = new AdminAuth($this->container);
+                    break;
+                case $this->getParameter('subject_user'):
+                    $this->subjectAuthCaches[$subject_type] = new ConsumerAuth($this->container);
                     break;
                 default:
                     throw new \Exception('授权登录权限不存在');

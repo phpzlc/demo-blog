@@ -9,6 +9,9 @@ parameters:
   # 操作主体- 管理员
   subject_admin: admin
 
+  # 操作主体- 用户
+  subject_user: user
+
   # 全部操作主体
   subject_array:
     '%subject_system%': 系统

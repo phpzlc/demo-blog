@@ -10,12 +10,18 @@
 
 namespace App\Controller\Blog;
 
+use App\Business\AuthBusiness\UserAuthBusiness;
+use App\Business\PlatformBusiness\PlatformClass;
+use App\Business\UserBusiness\ConsumerAuth;
+use App\Entity\User;
 use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
 use App\Repository\SortRepository;
+use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
+use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,6 +49,8 @@ class BlogController extends SystemBaseController
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
+        PlatformClass::setPlatform($this->getParameter('platform_blog'));
+
         $r = parent::inlet($returnType, $isLogin);
         if($r !== true){
             return $r;
@@ -157,5 +165,65 @@ class BlogController extends SystemBaseController
         return $this->render('blog/blog.html.twig', array(
             'article' => $article
         ));
+    }
+
+    public function loginPage()
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        return $this->render('blog/login.html.twig');
+    }
+
+    public function login(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        $data['account'] = $request->get('account');
+        $data['password'] = $request->get('password');
+
+        $userAuth = new UserAuthBusiness($this->container);
+
+        if($userAuth->accountLogin($data['account'], $data['password'], $this->getParameter('subject_user'), 'user_name') === false){
+            return Responses::error(Errors::getError());
+        }
+
+        return Responses::success('登录成功',['go_url' => $this->generateUrl('blog_index')]);
+
+    }
+
+    public function registerPage()
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        return $this->render('blog/register.html.twig');
+    }
+
+    public function register(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
+        if($r !== true){
+            return $r;
+        }
+
+        $account = $request->get('account');
+        $password = $request->get('password');
+
+        $user = new User();
+        $user->setUserName($account);
+
+        if(!(new ConsumerAuth($this->container))->create($user, $password)){
+            return Responses::error(Errors::getError());
+        }
+
+        return Responses::success('注册成功');
     }
 }

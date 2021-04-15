@@ -37,6 +37,9 @@ class AuthTag
             case $container->get('parameter_bag')->get('platform_admin'):
                 $container->get('session')->set(PlatformClass::getPlatform() . $container->get('parameter_bag')->get('login_tag_session_name'), $userAuth->getId());
                 break;
+            case $container->get('parameter_bag')->get('platform_blog'):
+                $container->get('session')->set(PlatformClass::getPlatform() . $container->get('parameter_bag')->get('login_tag_session_name'), $userAuth->getId());
+                break;
             default:
                 throw new \Exception('来源溢出');
         }

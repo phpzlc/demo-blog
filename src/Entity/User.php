@@ -24,58 +24,31 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="user_nickname", type="string", options={"comment":"用户昵称"})
-     */
-    private $userNickname;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="user_name", type="string", options={"comment":"用户名"})
      */
     private $userName;
 
     /**
-     * @var \DateTime
+     * @var UserAuth
      *
-     * @ORM\Column(name="birthday", type="datetime", options={"comment":"生日"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserAuth")
+     * @ORM\JoinColumn(name="user_auth_id", referencedColumnName="id")
      */
-    private $birthday;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="age", type="integer", options={"comment":"年龄"})
-     */
-    private $age;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="face", type="string", nullable=true, options={"comment":"头像"})
-     */
-    private $face;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mailbox", type="string", nullable=true, options={"comment":"邮箱"})
-     */
-    private $mailbox;
+    private $userAuth;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_disable", type="boolean", options={"comment":"是否禁用", "default":"0"})
+     * @ORM\Column(name="is_disable", type="boolean", options={"comment":"是否禁用", "default":0})
      */
-    private $isDisable;
+    private $isDisable = false;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_delete", type="boolean", options={"comment":"是否删除", "default":"0"})
+     * @ORM\Column(name="is_delete", type="boolean", options={"comment":"是否删除", "default":0})
      */
-    private $isDelete;
+    private $isDelete = false;
 
     /**
      * @var \DateTime
@@ -89,18 +62,6 @@ class User
         return $this->id;
     }
 
-    public function getUserNickname(): ?string
-    {
-        return $this->userNickname;
-    }
-
-    public function setUserNickname(string $userNickname): self
-    {
-        $this->userNickname = $userNickname;
-
-        return $this;
-    }
-
     public function getUserName(): ?string
     {
         return $this->userName;
@@ -109,54 +70,6 @@ class User
     public function setUserName(string $userName): self
     {
         $this->userName = $userName;
-
-        return $this;
-    }
-
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(\DateTimeInterface $birthday): self
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    public function getAge(): ?int
-    {
-        return $this->age;
-    }
-
-    public function setAge(int $age): self
-    {
-        $this->age = $age;
-
-        return $this;
-    }
-
-    public function getFace(): ?string
-    {
-        return $this->face;
-    }
-
-    public function setFace(?string $face): self
-    {
-        $this->face = $face;
-
-        return $this;
-    }
-
-    public function getMailbox(): ?string
-    {
-        return $this->mailbox;
-    }
-
-    public function setMailbox(?string $mailbox): self
-    {
-        $this->mailbox = $mailbox;
 
         return $this;
     }
@@ -193,6 +106,18 @@ class User
     public function setIsDelete(bool $isDelete): self
     {
         $this->isDelete = $isDelete;
+
+        return $this;
+    }
+
+    public function getUserAuth(): ?UserAuth
+    {
+        return $this->userAuth;
+    }
+
+    public function setUserAuth(?UserAuth $userAuth): self
+    {
+        $this->userAuth = $userAuth;
 
         return $this;
     }

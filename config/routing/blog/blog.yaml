@@ -27,3 +27,25 @@ blog_about:
 blog_article:
  controller:  App\Controller\Blog\BlogController::blog
  path:    /blog
+
+# 博客登录页面
+blog_login_page:
+  controller: App\Controller\Blog\BlogController::loginPage
+  path: /page
+
+# 博客注册页面
+blog_register_page:
+  controller: App\Controller\Blog\BlogController::registerPage
+  path: /register-page
+
+# 博客登录
+blog_login:
+  controller: App\Controller\Blog\BlogController::login
+  path: /login
+
+# 博客注册
+blog_register:
+  controller: App\Controller\Blog\BlogController::register
+  path: /register
+
+

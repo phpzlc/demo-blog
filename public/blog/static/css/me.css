@@ -3,6 +3,20 @@ body {
     background: url("../images/bg.png");
 }
 
+.login-page {
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*height: 100vh;*/
+    background: url('../images/bg.png');
+    /*background-size: cover;*/
+    /*overflow: hidden;*/
+}
+
+.login-content::before {
+    background: url('../images/bg.png');
+    /*background-size: cover;*/
+}
+
 .m-padded-mini {
     padding: 0.2em !important;
 }
