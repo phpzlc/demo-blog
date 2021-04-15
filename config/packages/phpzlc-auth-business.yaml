@@ -7,10 +7,10 @@ parameters:
   subject_system: system
 
   # 操作主体- 管理员
-  subject_admin: admin
+  subject_admin: 2
 
   # 操作主体- 用户
-  subject_user: user
+  subject_user: 3
 
   # 全部操作主体
   subject_array:

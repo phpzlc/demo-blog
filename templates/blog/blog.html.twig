@@ -64,8 +64,8 @@
                 <div class="ui middle aligned grid">
                     <div class="eleven wide column">
                         <ui class="list">
-                            <li>作者：李仁密（联系作者）</li>
-                            <li>发表时间：2017-10-02 09:08</li>
+                            <li>作者：{{ article.userAuth.subjectName | default }}（联系作者）</li>
+                            <li>发表时间：{{ article.createAt | date('Y-m-d H:i:s') }}</li>
                             <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                             <li>公众号转载：请在文末添加作者公众号二维码</li>
                         </ui>
@@ -80,95 +80,86 @@
                 <div class="ui teal segment">
                     <div class="ui threaded comments">
                         <h3 class="ui dividing header">Comments</h3>
+                        {% for item in commentaries %}
                         <div class="comment">
                             <a class="avatar">
                                 <img src="https://unsplash.it/100/100?image=1005">
                             </a>
                             <div class="content">
-                                <a class="author">Matt</a>
+                                <a class="author">{{ item.user.subjectName | default }}</a>
                                 <div class="metadata">
-                                    <span class="date">Today at 5:42PM</span>
+                                    <span class="date">{{ item.creatAt | date('Y-m-d H:i:s') }}</span>
                                 </div>
                                 <div class="text">
-                                    How artistic!
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
+                                   {{ item.content | default }}
                                 </div>
                             </div>
                         </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005">
-                            </a>
-                            <div class="content">
-                                <a class="author">Elliot Fu</a>
-                                <div class="metadata">
-                                    <span class="date">Yesterday at 12:30AM</span>
-                                </div>
-                                <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                            <div class="comments">
-                                <div class="comment">
-                                    <a class="avatar">
-                                        <img src="https://unsplash.it/100/100?image=1005">
-                                    </a>
-                                    <div class="content">
-                                        <a class="author">Jenny Hess</a>
-                                        <div class="metadata">
-                                            <span class="date">Just now</span>
-                                        </div>
-                                        <div class="text">
-                                            Elliot you are always so right :)
-                                        </div>
-                                        <div class="actions">
-                                            <a class="reply">回复</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005">
-                            </a>
-                            <div class="content">
-                                <a class="author">Joe Henderson</a>
-                                <div class="metadata">
-                                    <span class="date">5 days ago</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+
+{#                        <div class="comment">#}
+{#                            <a class="avatar">#}
+{#                                <img src="https://unsplash.it/100/100?image=1005">#}
+{#                            </a>#}
+{#                            <div class="content">#}
+{#                                <a class="author">Elliot Fu</a>#}
+{#                                <div class="metadata">#}
+{#                                    <span class="date">Yesterday at 12:30AM</span>#}
+{#                                </div>#}
+{#                                <div class="text">#}
+{#                                    <p>This has been very useful for my research. Thanks as well!</p>#}
+{#                                </div>#}
+{#                                <div class="actions">#}
+{#                                    <a class="reply">回复</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="comments">#}
+{#                                <div class="comment">#}
+{#                                    <a class="avatar">#}
+{#                                        <img src="https://unsplash.it/100/100?image=1005">#}
+{#                                    </a>#}
+{#                                    <div class="content">#}
+{#                                        <a class="author">Jenny Hess</a>#}
+{#                                        <div class="metadata">#}
+{#                                            <span class="date">Just now</span>#}
+{#                                        </div>#}
+{#                                        <div class="text">#}
+{#                                            Elliot you are always so right :)#}
+{#                                        </div>#}
+{#                                        <div class="actions">#}
+{#                                            <a class="reply">回复</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="comment">#}
+{#                            <a class="avatar">#}
+{#                                <img src="https://unsplash.it/100/100?image=1005">#}
+{#                            </a>#}
+{#                            <div class="content">#}
+{#                                <a class="author">Joe Henderson</a>#}
+{#                                <div class="metadata">#}
+{#                                    <span class="date">5 days ago</span>#}
+{#                                </div>#}
+{#                                <div class="text">#}
+{#                                    Dude, this is awesome. Thanks so much#}
+{#                                </div>#}
+{#                                <div class="actions">#}
+{#                                    <a class="reply">回复</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
                     </div>
                 </div>
+
+                <!-- 留言区域表结束 -->
+
                 <div class="ui form">
                     <div class="field">
                         <textarea id="content" name="content" placeholder="请输入评论信息..."></textarea>
                     </div>
                     <div class="fields">
-{#                        <div class="field m-mobile-wide m-margin-bottom-small">#}
-{#                            <div class="ui left icon input">#}
-{#                                <i class="user icon"></i>#}
-{#                                <input type="text" name="nickname" placeholder="姓名">#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="field m-mobile-wide m-margin-bottom-small">#}
-{#                            <div class="ui left icon input">#}
-{#                                <i class="mail icon"></i>#}
-{#                                <input type="text" name="email" placeholder="邮箱">#}
-{#                            </div>#}
-{#                        </div>#}
                         <div class="field  m-margin-bottom-small m-mobile-wide">
                             <button id="submit" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
                         </div>

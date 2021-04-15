@@ -6,6 +6,7 @@ use App\Business\AuthBusiness\UserAuthBusiness;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserAuthRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
+use PHPZlc\PHPZlc\Doctrine\ORM\Mapping\OuterColumn;
 use PHPZlc\Validate\Validate;
 
 /**
@@ -74,6 +75,22 @@ class UserAuth
      * @ORM\Column(name="create_at", type="datetime", nullable=true, options={"comment":"创建时间"})
      */
     private $createAt;
+
+    /**
+     *
+     * @OuterColumn(name="subject_name", type="string", options={"comment":"主体人名称"},
+        sql="(
+            CASE subject_type
+            WHEN 2 THEN ifnull ((select a.account from admin a where a.id = sql_pre.subject_id), '')
+            WHEN 3 THEN ifnull ((select u.user_name from user u where u.id = sql_pre.subject_id), '')
+            ELSE ''
+            END
+          )"
+
+    )
+
+     */
+    public $subjectName;
 
 
     public function getId(): ?string
@@ -169,5 +186,10 @@ class UserAuth
         $this->createAt = $createAt;
 
         return $this;
+    }
+
+    public function getSubjectName(): ?string
+    {
+        return $this->subjectName;
     }
 }

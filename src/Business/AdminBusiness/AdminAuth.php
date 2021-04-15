@@ -114,7 +114,7 @@ class AdminAuth extends AbstractBusiness implements SubjectAuthInterface
 
             $salt = $userAuthBusiness->generateSalt('admin');
 
-            $userAuth->setSubjectType('admin');
+            $userAuth->setSubjectType(2);
             $userAuth->setSalt($salt);
             $userAuth->setPassword($password);
             $userAuth->setSubjectId($admin->getId());
