@@ -68,6 +68,10 @@ class AuthTag
                 $user_auth_id = $container->get('session')->get(PlatformClass::getPlatform() . $container->get('parameter_bag')->get('login_tag_session_name'));
                 $userAuth = $doctrine->getRepository('App:UserAuth')->find($user_auth_id);
                 break;
+            case $container->get('parameter_bag')->get('platform_blog'):
+                $user_auth_id = $container->get('session')->get(PlatformClass::getPlatform() . $container->get('parameter_bag')->get('login_tag_session_name'));
+                $userAuth = $doctrine->getRepository('App:UserAuth')->find($user_auth_id);
+                break;
             default:
                 throw new \Exception('来源溢出');
         }

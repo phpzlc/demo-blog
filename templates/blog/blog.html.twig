@@ -154,23 +154,23 @@
                 </div>
                 <div class="ui form">
                     <div class="field">
-                        <textarea name="content" placeholder="请输入评论信息..."></textarea>
+                        <textarea id="content" name="content" placeholder="请输入评论信息..."></textarea>
                     </div>
                     <div class="fields">
-                        <div class="field m-mobile-wide m-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="nickname" placeholder="姓名">
-                            </div>
-                        </div>
-                        <div class="field m-mobile-wide m-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="mail icon"></i>
-                                <input type="text" name="email" placeholder="邮箱">
-                            </div>
-                        </div>
+{#                        <div class="field m-mobile-wide m-margin-bottom-small">#}
+{#                            <div class="ui left icon input">#}
+{#                                <i class="user icon"></i>#}
+{#                                <input type="text" name="nickname" placeholder="姓名">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="field m-mobile-wide m-margin-bottom-small">#}
+{#                            <div class="ui left icon input">#}
+{#                                <i class="mail icon"></i>#}
+{#                                <input type="text" name="email" placeholder="邮箱">#}
+{#                            </div>#}
+{#                        </div>#}
                         <div class="field  m-margin-bottom-small m-mobile-wide">
-                            <button class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+                            <button id="submit" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
                         </div>
                     </div>
 
@@ -200,4 +200,30 @@
 
     <br>
     <br>
+
+    <script>
+        $(document).ready(function (){
+            $("#submit").click(function (){
+                if(!$("#content").val()){
+                    alert('评论不能为空');
+                }else {
+                    var content = $('#content').val();
+                    $('#content').val("");
+
+                    $.ajax({
+                        type: "post",
+                        url: "{{ path('blog_comment') }}",
+                        data: {id:"{{ article.id }}", content:content},
+                        datatype: "json",
+                        success: function (data){
+                            alert(data.msg);
+                        },
+                        error: function (data){
+                            alert(data.msg);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 {% endblock %}

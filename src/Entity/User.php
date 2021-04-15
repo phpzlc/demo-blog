@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Business\AuthBusiness\UserInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`", options={"comment":"用户表"})
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var string

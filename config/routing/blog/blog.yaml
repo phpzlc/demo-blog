@@ -13,16 +13,6 @@ blog_tags:
   controller: App\Controller\Blog\BlogController::tags
   path:   /tags
 
-# 博客归档
-blog_archives:
-  controller: App\Controller\Blog\BlogController::archives
-  path:   /archives
-
-# 博客关于我
-blog_about:
-  controller: App\Controller\Blog\BlogController::about
-  path:   /about
-
 # 博客文章
 blog_article:
  controller:  App\Controller\Blog\BlogController::blog
@@ -47,5 +37,11 @@ blog_login:
 blog_register:
   controller: App\Controller\Blog\BlogController::register
   path: /register
+
+# 博客评论
+blog_comment:
+  controller: App\Controller\Blog\BlogController::comment
+  path: /comment
+
 
 

@@ -13,6 +13,7 @@ namespace App\Controller\Blog;
 use App\Business\AuthBusiness\UserAuthBusiness;
 use App\Business\PlatformBusiness\PlatformClass;
 use App\Business\UserBusiness\ConsumerAuth;
+use App\Entity\Commentary;
 use App\Entity\User;
 use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
@@ -25,6 +26,7 @@ use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class BlogController extends BlogBaseController
 {
@@ -264,5 +266,32 @@ class BlogController extends BlogBaseController
         }
 
         return Responses::success('收藏成功');
+    }
+
+    /**
+     * 评论
+     *
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse
+     */
+    public function comment(Request $request)
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+        $id = $request->get('id');
+        $content = $request->get('content');
+
+        $commentary = new Commentary();
+        $commentary->setArticle($this->articleRepository->find($id));
+        $commentary->setUser($this->curUserAuth);
+        $commentary->setContent($content);
+        $commentary->setCreatAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($commentary);
+        $this->getDoctrine()->getManager()->flush();
+
+        return Responses::success('评论成功');
     }
 }
