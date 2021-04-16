@@ -10,15 +10,18 @@
 
 namespace App\Controller\Blog;
 
+use App\Business\AuthBusiness\AuthTag;
 use App\Business\AuthBusiness\UserAuthBusiness;
 use App\Business\PlatformBusiness\PlatformClass;
 use App\Business\UserBusiness\ConsumerAuth;
+use App\Entity\Collection;
 use App\Entity\Commentary;
 use App\Entity\User;
 use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
 use App\Repository\SortRepository;
+use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -30,6 +33,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class BlogController extends BlogBaseController
 {
+
+    protected $page_tag;
     /**
      * @var ArticleRepository
      */
@@ -67,6 +72,7 @@ class BlogController extends BlogBaseController
         return true;
     }
 
+
     /**
      * 首页
      *
@@ -74,6 +80,8 @@ class BlogController extends BlogBaseController
      */
     public function index()
     {
+        $this->page_tag = "blog_index";
+
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
         if($r !== true){
             return $r;
@@ -104,24 +112,40 @@ class BlogController extends BlogBaseController
     /**
      * 分类页
      *
-     * @return bool|Response
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse|Response
      */
-    public function types()
+    public function types(Request $request)
     {
+        $this->page_tag = "blog_types";
+
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
         if($r !== true){
             return $r;
         }
 
+        $id = $request->get('id');
+
         $sorts = $this->sortRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers' ,'is_del' => 0]);
 
-        $articles = $this->articleRepository->findAll([
-            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
-            'userAuth' . Rule::RA_JOIN => array(
-                'alias' => 'ua'
-            ),
-            'is_del' => 0
-        ]);
+        if(empty($id)) {
+            $articles = $this->articleRepository->findAll([
+                Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+                'userAuth' . Rule::RA_JOIN => array(
+                    'alias' => 'ua'
+                ),
+                'is_del' => 0
+            ]);
+        }else{
+            $articles = $this->articleRepository->findAll([
+                Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+                'userAuth' . Rule::RA_JOIN => array(
+                    'alias' => 'ua'
+                ),
+                'is_del' => 0,
+                'sort_id' => $id
+            ]);
+        }
 
         $count = $this->sortRepository->findCount(['is_del' => 0]);
 
@@ -132,28 +156,68 @@ class BlogController extends BlogBaseController
         ));
     }
 
+
     /**
      * 标签页
      *
-     * @return bool|Response
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse|Response
      */
-    public function tags()
+    public function tags(Request $request)
     {
+        $this->page_tag = "blog_tags";
+
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, false);
         if($r !== true){
             return $r;
         }
 
+        $id = $request->get('id');
+
         $count = $this->labelRepository->findCount(['is_del' => 0]);
+
         $labels = $this->labelRepository->findAll([ Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
             'is_del' => 0]);
-        $articles = $this->articleRepository->findAll([
-            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
-            'userAuth' . Rule::RA_JOIN => array(
-                'alias' => 'ua'
-            ),
-            'is_del' => 0
-        ]);
+
+        if(empty($id)) {
+            $articles = $this->articleRepository->findAll([
+                Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+                'userAuth' . Rule::RA_JOIN => array(
+                    'alias' => 'ua'
+                ),
+                'is_del' => 0
+            ]);
+        }else{
+
+            $articleLabels = $this->articleLabelRepository->findAll(['label_id' => $id]);
+
+            if(!empty($articleLabels)) {
+                $article_ids = [];
+                foreach ($articleLabels as $articleLabel) {
+                    $article_ids[] = $articleLabel->getArticle()->getId();
+                }
+                $article_string = join(',', $article_ids);
+
+                $rules = [
+                    Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+                    'userAuth' . Rule::RA_JOIN => array(
+                        'alias' => 'ua'
+                    ),
+                    'is_del' => 0,
+                    Rule::R_WHERE => "AND sql_pre.id in ({$article_string})"
+                ];
+            }else{
+                $rules = [
+                    Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+                    'userAuth' . Rule::RA_JOIN => array(
+                        'alias' => 'ua'
+                    ),
+                    'is_del' => 0,
+                ];
+            }
+
+            $articles = $this->articleRepository->findAll($rules);
+        }
 
         return $this->render('blog/tags.html.twig', array(
             'count' => $count,
@@ -202,14 +266,25 @@ class BlogController extends BlogBaseController
         ));
     }
 
+    /**
+     * 关于我
+     *
+     * @return bool|JsonResponse|RedirectResponse|Response
+     */
     public function about()
     {
+        $this->page_tag = "blog_about";
+
         $r = $this->inlet(self::RETURN_SHOW_RESOURCE, true);
         if($r !== true){
             return $r;
         }
 
-        return $this->render('blog/about.html.twig');
+        $user = $this->getDoctrine()->getRepository('App:User')->find($this->curUserAuth->getSubjectId());
+
+        return $this->render('blog/about.html.twig', array(
+            'user' => $user
+        ));
     }
 
     /**
@@ -308,6 +383,22 @@ class BlogController extends BlogBaseController
             return $r;
         }
 
+        $id = $request->get('id');
+
+        $collection = $this->getDoctrine()->getRepository('App:Collection')->findAssoc(['article_id' => $id, 'user_auth_id' => $this->curUserAuth->getId() ]);
+
+        if(!empty($collection)){
+            return Responses::error('已被收藏');
+        }
+
+        $collection = new Collection();
+        $collection->setArticle($this->articleRepository->find($id));
+        $collection->setUserAuth($this->curUserAuth);
+        $collection->setCreateAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($collection);
+        $this->getDoctrine()->getManager()->flush();
+
         return Responses::success('收藏成功');
     }
 
@@ -335,6 +426,69 @@ class BlogController extends BlogBaseController
         $this->getDoctrine()->getManager()->persist($commentary);
         $this->getDoctrine()->getManager()->flush();
 
-        return Responses::success('评论成功');
+        $comments = $this->getDoctrine()->getRepository('App:Commentary')->findAll([
+            'article_id' => $id,
+            'is_del' => 0,
+            'user' . Rule::RA_JOIN => array(
+                'alias' => 'u'
+            ),
+            Rule::R_SELECT => 'sql_pre.*, u.subject_name'
+        ]);
+
+        $comments = $this->getDoctrine()->getRepository('App:Commentary')->arraySerialization($comments, ['level' => 1]);
+
+        return Responses::success('评论成功', array(
+            'comments' => $comments
+        ));
     }
+
+    /**
+     * 退出登录
+     *
+     * @return bool|JsonResponse|RedirectResponse
+     * @throws \Exception
+     */
+    public function loginOut()
+    {
+        $r = $this->inlet(self::RETURN_HIDE_RESOURCE, true);
+        if($r !== true){
+            return $r;
+        }
+
+        AuthTag::remove($this->container);
+
+        return $this->redirect($this->generateUrl('blog_index'));
+    }
+
+    /**
+     * 博客修改密码
+     *
+     * @param Request $request
+     * @return bool|JsonResponse|RedirectResponse|Response
+     * @throws \Exception
+     */
+    public function editPassword(Request $request)
+    {
+        $r = $this->inlet($request->getMethod() == 'GET'?self::RETURN_SHOW_RESOURCE:self::RETURN_HIDE_RESOURCE);
+        if($r !== true){
+            return $r;
+        }
+
+        if($request->getMethod() == 'GET'){
+            return $this->render('blog/editPassword.html.twig');
+        }else{
+            $old_password = $request->get('oldPassword');
+            $new_password = $request->get('newPassword');
+
+            $userAuthBusiness = new UserAuthBusiness($this->container);
+
+            if(!$userAuthBusiness->changePassword($this->curUserAuth, $old_password, $new_password)){
+                return Responses::error(Errors::getError());
+            }else{
+                AuthTag::remove($this->container);
+                return Responses::success('密码修改成功');
+            }
+        }
+    }
+
 }

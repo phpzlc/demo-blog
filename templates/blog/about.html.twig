@@ -6,7 +6,7 @@
         <div class="ui container">
 
             <div class="ui stackable grid">
-                <div class="eleven wide column">
+                <div class="five wide column">
                     <div class="ui segment">
                         <img src="{{ admin_asset('asset/face.png') }}" alt="" width="300" height="300" class="ui rounded image">
                     </div>
@@ -15,19 +15,23 @@
                     <div class="ui top attached segment">
                         <div class="ui header">关于我</div>
                     </div>
+
                     <div class="ui attached segment">
-                        <p class="m-text">李仁密</p>
+                        <div class="m-text">在Symfony4的基础上,为  PHP开发者提供成熟的Web应用程序开发教程和业务组件。</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <p class="ui orange basic left pointing">用户名：{{ user.userName | default }}</p>
                     </div>
 
                     <div class="ui attached segment">
-                        <div class="ui orange basic left pointing">登录时间： 2021-4-13</div>
+                        <div class="ui orange basic left pointing">登录时间： {{ user.userAuth.lastLoginAt | date('Y-m-d H:i:s') }}</div>
                     </div>
 
                     <div class="ui attached segment">
-                        <div class="ui orange basic left pointing"><a>修改密码</a></div>
+                        <div class="ui orange basic left pointing"><a href="{{ path('blog_edit_password') }}">修改密码</a></div>
                     </div>
                     <div class="ui attached segment">
-                        <div class="ui teal basic left pointing m-margin-tb-tiny"><a>退出登录</a></div>
+                        <div class="ui teal basic left pointing m-margin-tb-tiny"><a href="{{ path('blog_login_out') }}" style="color: red">退出登录</a></div>
                     </div>
 
 {#                    <div class="ui wechat-qr flowing popup transition hidden">#}

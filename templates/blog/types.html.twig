@@ -30,7 +30,7 @@
                 <div class="ui padded vertical segment m-padded-tb-large m-mobile-lr-clear">
                     <div class="ui mobile reversed stackable grid">
                         <div class="eleven wide column">
-                            <h3 class="ui header">{{ item.title | default }}</h3>
+                            <h3 class="ui header"><a class="ui header" href="{{ path('blog_article') }}?id={{ item.id }}" >{{ item.title | default }}</a></h3>
                             <p class="m-text">{{ item.articleSummary | default }}</p>
                             <div class="ui stackable grid">
                                 <div class="eleven wide column">
@@ -64,16 +64,16 @@
                {% endfor %}
             </div>
 
-            <div class="ui bottom attached segment">
-                <div class="ui middle aligned two column grid">
-                    <div class="column">
-                        <a href="#" class="ui mini teal basic button">上一页</a>
-                    </div>
-                    <div class="right aligned column">
-                        <a href="#" class="ui mini teal basic button">下一页</a>
-                    </div>
-                </div>
-            </div>
+{#            <div class="ui bottom attached segment">#}
+{#                <div class="ui middle aligned two column grid">#}
+{#                    <div class="column">#}
+{#                        <a href="#" class="ui mini teal basic button">上一页</a>#}
+{#                    </div>#}
+{#                    <div class="right aligned column">#}
+{#                        <a href="#" class="ui mini teal basic button">下一页</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
 
         </div>
     </div>

@@ -1,15 +1,16 @@
 {% extends 'blog/base/base.html.twig' %}
 
 {% block body %}
+    {% set ment_root_item = '' %}
+
     <!--导航-->
     <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
-                <a href="{{ path('blog_index') }}" class="active m-item item m-mobile-hide"><i class="mini home icon"></i>首页</a>
-                <a href="{{ path('blog_types') }}" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>分类</a>
-                <a href="{{ path('blog_tags') }}" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>标签</a>
-                <a href="{{ path('blog_about') }}" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>关于我</a>
+                {% for item, menu in admin_menus() %}
+                <a href="{{ menu.url }}" class="{% if admin_page_tag() in menu.tags %} active {% set ment_root_item = item %}{% endif %} m-item item m-mobile-hide"><i class="mini home icon"></i>{{ menu.title }}</a>
+                {% endfor %}
             </div>
         </div>
         <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -26,34 +27,36 @@
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced " >PHPZlc QQ交流群</h4>
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                            <img src="{{ admin_asset('blog/static/images/qq-qun.png') }}" class="ui rounded image" alt="" style="width: 110px">
                         </div>
                     </div>
                 </div>
                 <div class="three wide column">
-                    <h4 class="ui inverted header m-text-thin m-text-spaced " >最新博客</h4>
+                    <h4 class="ui inverted header m-text-thin m-text-spaced " >关联站</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
-                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
-                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
+                        <a href="https://github.com/phpzlc" class="item m-text-thin">GitHub主页</a>
+                        <a href="https://symfony.com/" class="item m-text-thin">Symfony官网</a>
+                        <a href="http://symfony.p2hp.com/" class="item m-text-thin">Symfony中文文档</a>
+                        <a href="https://getcomposer.org/" class="item m-text-thin">Composer官网</a>
+                        <a href="https://phpzlc.github.io/" class="item m-text-thin">PHPZlc文档</a>
                     </div>
                 </div>
                 <div class="three wide column">
-                    <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我</h4>
+                    <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我们</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item m-text-thin">Email：lirenmi@163.com</a>
-                        <a href="#" class="item m-text-thin">QQ：865729312</a>
+                        <a href="https://jq.qq.com/?_wv=1027&k=ZpwdagVG" class="item m-text-thin">QQ：645891927</a>
                     </div>
                 </div>
                 <div class="seven wide column">
-                    <h4 class="ui inverted header m-text-thin m-text-spaced ">Blog</h4>
-                    <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+                    <h4 class="ui inverted header m-text-thin m-text-spaced ">PHPZlc</h4>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">在Symfony4的基础上,为PHP开发者提供成熟的Web应用程序开发教程和业务组件。</p>
                 </div>
             </div>
             <div class="ui inverted section divider"></div>
-            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - 2017 Lirenmi Designed by Lirenmi</p>
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright ©{{ "now" | date('Y') }} 该站点设计由Lirenmi提供 Designed by Lirenmi</p>
         </div>
 
     </footer>

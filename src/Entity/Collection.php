@@ -30,12 +30,12 @@ class Collection
     private $article;
 
     /**
-     * @var User
+     * @var UserAuth
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserAuth")
+     * @ORM\JoinColumn(name="user_auth_id", referencedColumnName="id")
      */
-    private $user;
+    private $userAuth;
 
     /**
      * @var \DateTime
@@ -73,15 +73,16 @@ class Collection
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUserAuth(): ?UserAuth
     {
-        return $this->user;
+        return $this->userAuth;
     }
 
-    public function setUser(?User $user): self
+    public function setUserAuth(?UserAuth $userAuth): self
     {
-        $this->user = $user;
+        $this->userAuth = $userAuth;
 
         return $this;
     }
+
 }

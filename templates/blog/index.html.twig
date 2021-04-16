@@ -27,7 +27,7 @@
                         <div class="ui padded vertical segment m-padded-tb-large">
                             <div class="ui mobile reversed stackable grid">
                                 <div class="eleven wide column">
-                                    <h3 class="ui header">{{ item.title | default }}</h3>
+                                    <h3 class="ui header"><a class="ui header" href="{{ path('blog_article') }}?id={{ item.id }}" >{{ item.title | default }}</a></h3>
                                     <p class="m-text">{{ item.articleSummary | default }}…...</p>
                                     <div class="ui grid">
                                         <div class="eleven wide column">
@@ -64,16 +64,16 @@
                     </div>
 
                     <!--footer-->
-                    <div class="ui bottom attached segment">
-                        <div class="ui middle aligned two column grid">
-                            <div class="column">
-                                <a href="#" class="ui mini teal basic button">上一页</a>
-                            </div>
-                            <div class="right aligned column">
-                                <a href="#" class="ui mini teal basic button">下一页</a>
-                            </div>
-                        </div>
-                    </div>
+{#                    <div class="ui bottom attached segment">#}
+{#                        <div class="ui middle aligned two column grid">#}
+{#                            <div class="column">#}
+{#                                <a href="#" class="ui mini teal basic button">上一页</a>#}
+{#                            </div>#}
+{#                            <div class="right aligned column">#}
+{#                                <a href="#" class="ui mini teal basic button">下一页</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
 
                 </div>
 
@@ -88,14 +88,14 @@
                                     <i class="idea icon"></i>分类
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="{{ path('blog_types') }}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu">
                                 {% for item in sorts %}
-                                <a href="#" class="item">
+                                <a href="{{ path('blog_types')}}?id={{ item.id }}" class="item">
                                     {{ item.sortName | default }}
                                     <div class="ui teal basic left pointing label">{{ item.articlesNumbers | default(0) }}</div>
                                 </a>
@@ -112,13 +112,13 @@
                                     <i class="tags icon"></i>标签
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="{{ path('blog_tags') }}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             {% for label in labels %}
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
+                            <a href="{{ path('blog_tags')}}?id={{ label.id }}" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
                                 {{ label.name | default}} <div class="detail">{{ label.articleNumbers | default }}</div>
                             </a>
                             {% endfor %}

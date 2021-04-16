@@ -8,7 +8,7 @@
                 <div class="ui horizontal link list">
                     <div class="item">
                         <img src="{{ article.thumbnailPath | default }}" alt="" class="ui avatar image">
-                        <div class="content"><a href="#" class="header">李仁密</a></div>
+                        <div class="content"><a href="#" class="header">{{ article.userAuth.subjectName | default }}</a></div>
                     </div>
                     <div class="item">
                         <i class="calendar icon"></i> {{ article.createAt | date('Y-m-d') }}
@@ -20,7 +20,7 @@
             </div>
             <div class="ui attached segment">
                 <!--图片区域-->
-                <img src="{{ article.thumbnailPath | default }}" alt="" class="ui fluid rounded image">
+                <div class="ui horizontal link list"><h3>{{ article.title | default }}</h3></div>
             </div>
             <div class="ui  attached padded segment">
                 <!--内容-->
@@ -41,21 +41,7 @@
 
                 <!--赞赏-->
                 <div class="ui center aligned basic segment">
-                    <button id="payButton" class="ui orange basic circular button">赞赏</button>
-                </div>
-                <div class="ui payQR flowing popup transition hidden">
-                    <div class="ui orange basic label">
-                        <div class="ui images" style="font-size: inherit !important;">
-                            <div class="image">
-                                <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image" style="width: 120px">
-                                <div>支付宝</div>
-                            </div>
-                            <div class="image">
-                                <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image" style="width: 120px">
-                                <div>微信</div>
-                            </div>
-                        </div>
-                    </div>
+                    <button id="payButton" class="ui orange basic circular button">收藏</button>
                 </div>
 
             </div>
@@ -78,7 +64,7 @@
             <div id="comment-container" class="ui bottom attached segment">
                 <!--留言区域列表-->
                 <div class="ui teal segment">
-                    <div class="ui threaded comments">
+                    <div class="ui threaded comments" id="comments">
                         <h3 class="ui dividing header">Comments</h3>
                         {% for item in commentaries %}
                         <div class="comment">
@@ -96,60 +82,6 @@
                             </div>
                         </div>
                         {% endfor %}
-
-{#                        <div class="comment">#}
-{#                            <a class="avatar">#}
-{#                                <img src="https://unsplash.it/100/100?image=1005">#}
-{#                            </a>#}
-{#                            <div class="content">#}
-{#                                <a class="author">Elliot Fu</a>#}
-{#                                <div class="metadata">#}
-{#                                    <span class="date">Yesterday at 12:30AM</span>#}
-{#                                </div>#}
-{#                                <div class="text">#}
-{#                                    <p>This has been very useful for my research. Thanks as well!</p>#}
-{#                                </div>#}
-{#                                <div class="actions">#}
-{#                                    <a class="reply">回复</a>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="comments">#}
-{#                                <div class="comment">#}
-{#                                    <a class="avatar">#}
-{#                                        <img src="https://unsplash.it/100/100?image=1005">#}
-{#                                    </a>#}
-{#                                    <div class="content">#}
-{#                                        <a class="author">Jenny Hess</a>#}
-{#                                        <div class="metadata">#}
-{#                                            <span class="date">Just now</span>#}
-{#                                        </div>#}
-{#                                        <div class="text">#}
-{#                                            Elliot you are always so right :)#}
-{#                                        </div>#}
-{#                                        <div class="actions">#}
-{#                                            <a class="reply">回复</a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="comment">#}
-{#                            <a class="avatar">#}
-{#                                <img src="https://unsplash.it/100/100?image=1005">#}
-{#                            </a>#}
-{#                            <div class="content">#}
-{#                                <a class="author">Joe Henderson</a>#}
-{#                                <div class="metadata">#}
-{#                                    <span class="date">5 days ago</span>#}
-{#                                </div>#}
-{#                                <div class="text">#}
-{#                                    Dude, this is awesome. Thanks so much#}
-{#                                </div>#}
-{#                                <div class="actions">#}
-{#                                    <a class="reply">回复</a>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
                     </div>
                 </div>
 
@@ -207,14 +139,51 @@
                         data: {id:"{{ article.id }}", content:content},
                         datatype: "json",
                         success: function (data){
+                            console.log(data);
                             alert(data.msg);
+                            var comments = data.data.comments;
+                            var html = '<h3 class="ui dividing header"> Comments </h3>';
+                            for (var i =0; i < comments.length; i++){
+                                html +=  '<div class="comment">'+
+                                    '<a class="avatar">'+
+                                    '<img src="https://unsplash.it/100/100?image=1005">'+
+                                    '</a>'+
+                                    '<div class="content">'+
+                                    '<a class="author">' + comments[i].user.subject_name +'</a>'+
+                                    '<div class="metadata">'+
+                                    '<span class="date">'+ comments[i].creat_at + '</span>'+
+                                    '</div>' +
+                                    '<div class="text">' +
+                                    comments[i].content +
+                                    '</div>'+
+                                    '</div>' +
+                                    '</div>'
+                            }
+                            $("#comments").empty()
+                            $("#comments").append(html);
                         },
                         error: function (data){
                             alert(data.msg);
                         }
                     })
                 }
+            });
+
+
+            $("#payButton").click(function (){
+                $.ajax({
+                    type: "post",
+                    url: "{{ path('blog_collection') }}",
+                    data: {id:"{{ article.id }}"},
+                    datatype: "json",
+                    success: function (data){
+                        alert(data.msg);
+                    },
+                    error: function (data){
+                        alert(data.msg);
+                    }
+                })
             })
-        })
+        });
     </script>
 {% endblock %}

@@ -99,7 +99,6 @@ class ArticleBusiness extends AbstractBusiness
             }
 
             $this->em->flush();
-            $this->em->clear();
 
             $this->conn->commit();
             return true;
@@ -149,7 +148,6 @@ class ArticleBusiness extends AbstractBusiness
             $this->em->persist($article);
 
             $this->em->flush();
-            $this->em->clear();
 
             $this->conn->commit();
 
@@ -169,7 +167,6 @@ class ArticleBusiness extends AbstractBusiness
 
             if($is_flush) {
                 $this->em->flush();
-                $this->em->clear();
             }
 
             return true;

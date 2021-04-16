@@ -38,6 +38,16 @@ blog_login:
   controller: App\Controller\Blog\BlogController::login
   path: /login
 
+# 博客退出登录
+blog_login_out:
+  controller: App\Controller\Blog\BlogController::loginout
+  path: /login-out
+
+# 博客修改密码
+blog_edit_password:
+  controller: App\Controller\Blog\BlogController::editPassword
+  path: /edit-password
+
 # 博客注册
 blog_register:
   controller: App\Controller\Blog\BlogController::register
@@ -47,6 +57,11 @@ blog_register:
 blog_comment:
   controller: App\Controller\Blog\BlogController::comment
   path: /comment
+
+# 博客收藏
+blog_collection:
+ controller: App\Controller\Blog\Blogcontroller::collection
+ path:  /collection
 
 
 
