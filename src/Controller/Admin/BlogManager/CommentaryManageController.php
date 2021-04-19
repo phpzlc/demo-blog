@@ -13,6 +13,7 @@ namespace App\Controller\Admin\BlogManager;
 use App\Controller\Admin\AdminManageController;
 use App\Repository\CommentaryRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,7 +58,12 @@ class CommentaryManageController extends AdminManageController
         $article_title = $request->get('article_title');
         $create_at = $request->get('create_at');
 
-        $rules = [];
+        $rules = [
+            Rule::R_SELECT => 'sql_pre.*, u.subject_name',
+            'user' . Rule::RA_JOIN => array(
+                'alias' => 'u'
+            ),
+        ];
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);

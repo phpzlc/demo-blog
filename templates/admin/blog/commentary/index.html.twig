@@ -82,14 +82,16 @@
                     },
 
                     listData: [
+                        {% for item in data %}
                         {
-                            id: '',
-                            user_name: '测试',
-                            article_title: '测试',
-                            content: '测试',
-                            likes: '测试',
-                            create_at: '',
-                        }
+                            id: '{{ item.id | default }}',
+                            user_name: '{{ item.user.subjectName | default }}',
+                            article_title: '{{ item.article.title | default }}',
+                            content: '{{ item.content | default }}',
+                            likes: '{{ item.likes | default(0) }}',
+                            create_at: '{{ item.creatAt | date('Y-m-d H:i:s') }}',
+                        },
+                        {% endfor %}
                     ],
                 }
             },

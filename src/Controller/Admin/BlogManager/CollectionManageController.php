@@ -13,6 +13,7 @@ namespace App\Controller\Admin\BlogManager;
 use App\Controller\Admin\AdminManageController;
 use App\Repository\CollectionRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -55,7 +56,12 @@ class CollectionManageController extends AdminManageController
         $user_name = $request->get('user_name');
         $article_title = $request->get('article_title');
 
-        $rules = [];
+        $rules = [
+            Rule::R_SELECT => "sql_pre.*, ua.subject_name",
+            'userAuth' . Rule::RA_JOIN => array(
+                'alias' => 'ua'
+            )
+        ];
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);

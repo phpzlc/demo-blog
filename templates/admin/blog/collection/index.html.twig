@@ -79,12 +79,14 @@
                     },
 
                     listData: [
+                        {% for item in data %}
                         {
-                            id: '',
-                            user_name: '测试',
-                            article_title: '测试',
-                            create_at: '',
-                        }
+                            id: '{{ item.id | default }}',
+                            user_name: '{{ item.userAuth.subjectName | default }}',
+                            article_title: '{{ item.article.title | default }}',
+                            create_at: '{{ item.createAt | date('Y-m-d H:i:s') }}',
+                        },
+                        {% endfor %}
                     ],
                 }
             },
@@ -117,10 +119,6 @@
                 handleCreate(){
                     window.location = '{{ path('admin_blog_manage_article_page') }}'
                 },
-
-                handleEdit(index, row){
-                    window.location = '{{ path('admin_blog_manage_article_page') }}?id='+ row.id;
-                }
 
             }
         })
