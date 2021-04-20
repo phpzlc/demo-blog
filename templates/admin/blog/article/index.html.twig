@@ -25,7 +25,7 @@
 
                 <el-form-item>
                     <el-button type="primary" size="mini" @click="searchBtn()"> 搜索 </el-button>
-                    <el-button size="mini" @click="resetForm('searchForm')"> 重制 </el-button>
+                    <el-button size="mini" @click="resetForm('searchForm')"> 重置 </el-button>
                 </el-form-item>
 
             </el-form>
@@ -99,7 +99,7 @@
                         {% for item in data %}
                         {
                             id: '{{ item.id | default }}',
-                            user_name: '',
+                            user_name: '{{ item.userAuth.subjectName | default }}',
                         {% if item.labels is not empty %}
                             label:'{% for key in item.labels %} {{ key }} {% endfor %}',
                         {% else %}

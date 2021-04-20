@@ -81,9 +81,12 @@ class ArticleManageController extends AdminManageController
         $title = $request->get('title');
 
         $rules = [
-            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels',
+            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
             'title' . Rule::RA_LIKE => '%' . $title . '%',
             'userAuth' . Rule::RA_LIKE => '%' . $user_name . '%',
+            'userAuth' . Rule::RA_JOIN => array(
+                'alias' => 'ua'
+            )
         ];
 
         $page = $request->get('page', 1);
