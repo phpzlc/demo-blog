@@ -133,7 +133,7 @@
                         </div>
                         {% for item in new_articles %}
                         <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin">{{ item.title | default('') }}</a>
+                            <a href="{{ path('blog_article') }}?id={{ item.id }}" target="_blank" class="m-black m-text-thin">{{ item.title | default('') }}</a>
                         </div>
                         {% endfor %}
                     </div>
