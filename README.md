@@ -106,4 +106,7 @@ php bin/console phpzlc:generate:document
 7. 报表
 
     主分类下的博客数，收藏数
+    
+###  推荐使用浏览器
+   谷歌浏览器
 
