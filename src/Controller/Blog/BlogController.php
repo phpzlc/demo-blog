@@ -196,7 +196,12 @@ class BlogController extends BlogBaseController
                 foreach ($articleLabels as $articleLabel) {
                     $article_ids[] = $articleLabel->getArticle()->getId();
                 }
-                $article_string = join(',', $article_ids);
+
+                $new_array = array_map(function ($value) {
+                    return '\'' . $value . '\'';
+                }, $article_ids);
+
+                $article_string = join(',', $new_array);
 
                 $rules = [
                     Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
