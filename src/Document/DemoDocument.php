@@ -6,7 +6,7 @@ use PHPZlc\Document\Document;
 
 class DemoDocument extends Document
 {
-    public function domeAction()
+    public function demoAction()
     {
         $this->add()
             ->setTitle('演示接口')
