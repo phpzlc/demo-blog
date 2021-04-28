@@ -1,38 +1,16 @@
 {% extends '@PHPZlcAdmin/page/index.html.twig' %}
 
-{% macro loadSortData(sorts) %}
-    {% import _self as m %}
-    {% for sort in sorts %}
-        {
-            id: "{{ sort.sort.id | default }}",
-            sort_no: "{{ sort.sort.sortNo | default }}",
-            sort_name: "{{ sort.sort.sortName | default }}",
-            createAt: "{{ sort.sort.createAt | date('Y-m-d h:i:s') }}",
-        {% if sort.sort.updateAt is not null %}
-            updateAt: "{{ sort.sort.updateAt | date('Y-m-d h:i:s') }}",
-        {% else %}
-            updateAt: "",
-        {% endif %}
-        {% if sort.children is not empty %}
-            children: [
-            {{ m.loadSortData(sort.children) }}
-            ]
-        {% endif %}
-        }{% if loop.last == false %},{% endif %}
-    {% endfor %}
-{% endmacro %}
-
 {% block main_content %}
 <div class="search-page clearfix">
 
     <el-row class="page-search">
         <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="90px" style="margin-left: 10px">
-            <el-form-item label="分类编号:" prop="sort_no">
-                <el-input v-model="searchForm.sort_no" size="mini" clearable placeholder="请输入分类编号"></el-input>
+            <el-form-item label="分类编号:" prop="classify_no">
+                <el-input v-model="searchForm.classify_no" size="mini" clearable placeholder="请输入分类编号"></el-input>
             </el-form-item>
 
-            <el-form-item label="分类名称:" prop="sort_name">
-                <el-input v-model="searchForm.sort_name" size="mini" clearable placeholder="请输入"></el-input>
+            <el-form-item label="分类名称:" prop="classify_name">
+                <el-input v-model="searchForm.classify_name" size="mini" clearable placeholder="请输入"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -46,17 +24,10 @@
         <el-button size="mini" type="primary" @click="add()"> 新建 </el-button>
     </el-row>
 
-    <el-table
-            class="mt-10"
-            :data="tableData"
-            style="width: 100%"
-            border
-            default-expand-all
-            row-key="id"
-            :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-    >
-        <el-table-column prop="sort_no" label="分类编号"></el-table-column>
-        <el-table-column prop="sort_name" label="分类名称"></el-table-column>
+    <el-table class="mt-10" :data="tableData" style="width: 100%" border>
+
+        <el-table-column prop="classify_no" label="分类编号"></el-table-column>
+        <el-table-column prop="classify_name" label="分类名称"></el-table-column>
         <el-table-column prop="createAt" label="创建时间"></el-table-column>
         <el-table-column prop="updateAt" label="编辑时间"></el-table-column>
 
@@ -90,11 +61,22 @@
             data: function () {
                 return {
                     searchForm: {
-                        sort_no: '{{ app.request.get('sort_no') }}',
-                        sort_name: '{{ app.request.get('sort_name') }}',
+                        sort_no: '{{ app.request.get('classify_no') }}',
+                        sort_name: '{{ app.request.get('classify_name') }}',
                     },
                     tableData: [
-                        {{ _self.loadSortData(sorts) }}
+                        {% for item in data %}
+                        {   id: "{{ item.id | default }}",
+                            classify_no: {{ item.classifyNo | default }}"",
+                            classify_name: "{{ item.classifyName | default }}",
+                            createAt: "{{ item.createAt | date('Y-m-d H:i:s') }}",
+                        {% if item.updateAt is not null %}
+                            updateAt: "{{ item.updateAt | date('Y-m-d H:i:s') }}",
+                        {% else %}
+                            updateAt: "",
+                        {% endif %}
+                        },
+                        {% endfor %}
                     ],
                 }
             },

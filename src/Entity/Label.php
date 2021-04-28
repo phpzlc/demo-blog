@@ -58,6 +58,8 @@ class Label
     private $isDel = false;
 
     /**
+     *
+     * TODO 增加comment描述
      * @OuterColumn(name="article_numbers", type="string", sql=" (SELECT COUNT(al.id) FROM article_label al WHERE al.label_id = sql_pre.id)")
      */
     private $articleNumbers;

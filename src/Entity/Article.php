@@ -34,12 +34,12 @@ class Article
     private $userAuth;
 
     /**
-     * @var Sort
+     * @var Classify
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sort")
-     * @ORM\JoinColumn(name="sort_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Classify")
+     * @ORM\JoinColumn(name="classify_id", referencedColumnName="id")
      */
-    private $sort;
+    private $classify;
 
     /**
      * @var string
@@ -103,7 +103,7 @@ class Article
     private $isDel = false;
 
     /**
-     *
+     * TODO 增加comment描述
      * @OuterColumn(name="labels", type="simple_array", sql="(SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id ))")
      */
     public $labels;
@@ -261,14 +261,14 @@ class Article
         return $this;
     }
 
-    public function getSort(): ?Sort
+    public function getClassify(): ?Classify
     {
-        return $this->sort;
+        return $this->classify;
     }
 
-    public function setSort(?Sort $sort): self
+    public function setClassify(?Classify $classify): self
     {
-        $this->sort = $sort;
+        $this->classify = $classify;
 
         return $this;
     }

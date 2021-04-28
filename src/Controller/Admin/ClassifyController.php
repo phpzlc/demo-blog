@@ -10,9 +10,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Business\SortBusiness\SortBusiness;
-use App\Entity\Sort;
-use App\Repository\SortRepository;
+use App\Business\ClassifyBusiness\ClassifyBusiness;
+use App\Entity\Classify;
+use App\Repository\ClassifyRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -22,19 +22,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class SortManageController extends AdminManageController
+class ClassifyController extends AdminManageController
 {
     protected $page_tag = 'admin_sort_index';
 
     /**
-     * @var SortRepository
+     * @var ClassifyRepository
      */
-    protected $sortRepository;
+    protected $classifyRepository;
 
     /**
-     * @var SortBusiness
+     * @var ClassifyBusiness
      */
-    protected $sortBusiness;
+    protected $classifyBusiness;
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
@@ -43,8 +43,8 @@ class SortManageController extends AdminManageController
             return $r;
         }
 
-        $this->sortRepository = $this->getDoctrine()->getRepository('App:Sort');
-        $this->sortBusiness = new SortBusiness($this->container);
+        $this->classifyRepository = $this->getDoctrine()->getRepository('App:Classify');
+        $this->classifyBusiness = new ClassifyBusiness($this->container);
 
         return true;
     }
@@ -64,25 +64,25 @@ class SortManageController extends AdminManageController
 
         $this->adminStrategy->setUrlAnchor();
 
-        $sort_no = $request->get('sort_no');
-        $sort_name = $request->get('sort_name');
+        $classify_no = $request->get('classify_no');
+        $classify_name = $request->get('classify_name');
 
         $rules = [
-            'sortNo' . Rule::RA_LIKE => '%' . $sort_no . '%',
-            'sortName' . Rule::RA_LIKE => '%' . $sort_name . '%'
+            'classifyNo' . Rule::RA_LIKE => '%' . $classify_no . '%',
+            'classifyName' . Rule::RA_LIKE => '%' . $classify_name . '%'
         ];
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);
 
-        $data = $this->sortRepository->findLimitAll($rows, $page, $rules);
-        $count = $this->sortRepository->findCount($rules);
+        $data = $this->classifyRepository->findLimitAll($rows, $page, $rules);
+        $count = $this->classifyRepository->findCount($rules);
 
         return $this->render('admin/sort/index.html.twig', array(
             'page' => $page,
             'rows' => $rows,
             'count' => $count,
-            'sorts' => $this->sortRepository->sequenceSorts($data)
+            'data' => $data
         ));
     }
 
@@ -100,15 +100,14 @@ class SortManageController extends AdminManageController
         }
 
         $id = $request->get('id');
-        $sort = null;
+        $classify = null;
 
         if(!empty($id)){
-            $sort = $this->sortRepository->find($id);
+            $classify = $this->classifyRepository->find($id);
         }
 
         return $this->render('admin/sort/edit.html.twig', array(
-            'sort' => $sort,
-            'parentSorts' => $this->sortRepository->findAll(['is_del' => 0])
+            'classify' => $classify,
         ));
     }
 
@@ -125,16 +124,14 @@ class SortManageController extends AdminManageController
             return $r;
         }
 
-        $sort_no = $request->get('sort_no');
-        $sort_name = $request->get('sort_name');
-        $parentSortId = $request->get('parentSortId');
+        $classify_no = $request->get('classify_no');
+        $classify_name = $request->get('classify_name');
 
-        $sort = new Sort();
-        $sort->setSortNo($sort_no);
-        $sort->setSortName($sort_name);
-        $sort->setParentSort($this->sortRepository->find($parentSortId));
+        $sort = new Classify();
+        $sort->setClassifyNo($classify_no);
+        $sort->setClassifyName($classify_name);
 
-        if(!$this->sortBusiness->create($sort)){
+        if(!$this->classifyBusiness->create($sort)){
             return Responses::error(Errors::getError());
         }
 
@@ -155,21 +152,20 @@ class SortManageController extends AdminManageController
         }
 
         $id = $request->get('id');
-        $sort_no = $request->get('sort_no');
-        $sort_name = $request->get('sort_name');
-        $parentSortId = $request->get('parentSortId');
+        $classify_no = $request->get('classify_no');
+        $classify_name = $request->get('classify_name');
 
-        $sort = $this->sortRepository->find($id);
+
+        $sort = $this->classifyRepository->find($id);
 
         if(empty($sort)){
             return Responses::error('未找到该分类');
         }
 
-        $sort->setSortNo($sort_no);
-        $sort->setSortName($sort_name);
-        $sort->setParentSort($this->sortRepository->find($parentSortId));
+        $sort->setClassifyNo($classify_no);
+        $sort->setClassifyName($classify_name);
 
-        if(!$this->sortBusiness->update($sort)){
+        if(!$this->classifyBusiness->update($sort)){
             return Responses::error(Errors::getError());
         }
 
@@ -191,13 +187,13 @@ class SortManageController extends AdminManageController
 
         $id = $request->get('id');
 
-        $sort = $this->sortRepository->find($id);
+        $classify = $this->classifyRepository->find($id);
 
-        if(empty($sort)){
+        if(empty($classify)){
             return Responses::error('未找到该分类');
         }
 
-        $sort->setIsDel(true);
+        $classify->setIsDel(true);
 
         $this->getDoctrine()->getManager()->flush();
 

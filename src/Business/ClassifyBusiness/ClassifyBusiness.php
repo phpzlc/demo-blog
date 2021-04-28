@@ -8,18 +8,18 @@
  * Time: 12:05 下午
  */
 
-namespace App\Business\SortBusiness;
+namespace App\Business\ClassifyBusiness;
 
-use App\Entity\Sort;
-use App\Repository\SortRepository;
+use App\Entity\Classify;
+use App\Repository\ClassifyRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Business\AbstractBusiness;
 use Psr\Container\ContainerInterface;
 
-class SortBusiness extends AbstractBusiness
+class ClassifyBusiness extends AbstractBusiness
 {
     /**
-     * @var SortRepository
+     * @var ClassifyRepository
      */
     protected $sortRepository;
 
@@ -35,15 +35,15 @@ class SortBusiness extends AbstractBusiness
         if(!parent::validator($class)){
             return false;
         }else{
-            if($class instanceof Sort){
-                $sort_no = $this->sortRepository->findAssoc(['sort_no' => $class->getSortNo()]);
-                if(!empty($sort_no) && $sort_no->getId() !== $class->getId()){
+            if($class instanceof Classify){
+                $classify_no = $this->sortRepository->findAssoc(['sort_no' => $class->getClassifyNo()]);
+                if(!empty($classify_no) && $classify_no->getId() !== $class->getId()){
                     Errors::setErrorMessage('分类编号已存在'); return false;
                 }
 
-                $sort_name = $this->sortRepository->findAssoc(['sort_name' => $class->getSortName()]);
+                $classify_name = $this->sortRepository->findAssoc(['sort_name' => $class->getClassifyName()]);
 
-                if(!empty($sort_name) && $sort_name->getId() !== $class->getId()){
+                if(!empty($classify_name) && $classify_name->getId() !== $class->getId()){
                     Errors::setErrorMessage('分类名称已存在'); return false;
                 }
             }
@@ -52,15 +52,15 @@ class SortBusiness extends AbstractBusiness
         return true;
     }
 
-    public function create(Sort $sort)
+    public function create(Classify $classify)
     {
-        if(!$this->validator($sort)){
+        if(!$this->validator($classify)){
             return false;
         }
 
-        $sort->setCreateAt(new \DateTime());
+        $classify->setCreateAt(new \DateTime());
 
-        $this->em->persist($sort);
+        $this->em->persist($classify);
         $this->em->flush();
         $this->em->clear();
 
@@ -68,15 +68,15 @@ class SortBusiness extends AbstractBusiness
     }
 
 
-    public function update(Sort $sort)
+    public function update(Classify $classify)
     {
-       if(!$this->validator($sort)){
+       if(!$this->validator($classify)){
            return false;
        }
 
-       $sort->setUpdateAt(new \DateTime());
+       $classify->setUpdateAt(new \DateTime());
 
-       $this->em->persist($sort);
+       $this->em->persist($classify);
        $this->em->flush();
        $this->em->clear();
 

@@ -21,7 +21,6 @@ use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\LabelRepository;
 use App\Repository\SortRepository;
-use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -33,8 +32,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class BlogController extends BlogBaseController
 {
-
-    protected $page_tag;
     /**
      * @var ArticleRepository
      */
@@ -88,6 +85,7 @@ class BlogController extends BlogBaseController
         }
 
         $articles_numbers = $this->articleRepository->findCount();
+
         $articles = $this->articleRepository->findAll([
             Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
             'userAuth' . Rule::RA_JOIN => array(
@@ -95,6 +93,7 @@ class BlogController extends BlogBaseController
             ),
             'is_del' => 0
         ]);
+
         $labels = $this->labelRepository->findAll([
             Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
             'is_del' => 0
@@ -176,8 +175,10 @@ class BlogController extends BlogBaseController
 
         $count = $this->labelRepository->findCount(['is_del' => 0]);
 
-        $labels = $this->labelRepository->findAll([ Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
-            'is_del' => 0]);
+        $labels = $this->labelRepository->findAll([
+            Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
+            'is_del' => 0
+        ]);
 
         if(empty($id)) {
             $articles = $this->articleRepository->findAll([

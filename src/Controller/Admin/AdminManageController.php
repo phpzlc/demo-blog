@@ -148,7 +148,7 @@ class AdminManageController extends SystemBaseController
      * @param $field
      * @return array
      */
-    private function atSearch($at, $field)
+    public function atSearch($at, $field)
     {
         $rules = [];
 

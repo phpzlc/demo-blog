@@ -45,13 +45,13 @@
                                             </div>
                                         </div>
                                         <div class="right aligned five wide column">
-                                            <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">{{ item.sort.sortName | default }}</a>
+                                            <a href="{{ path('blog_types')}}?id={{ item.sort.id }}" class="ui teal basic label m-padded-tiny m-text-thin">{{ item.sort.sortName | default }}</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="five wide column">
-                                    <a href="#" target="_blank">
+                                    <a href="{{ path('blog_article') }}?id={{ item.id }}">
                                         <img src="{{ item.thumbnailPath }}" alt="" class="ui rounded image">
                                     </a>
                                 </div>
@@ -88,7 +88,7 @@
                                     <i class="idea icon"></i>分类
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="{{ path('blog_types') }}" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="{{ path('blog_types') }}">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -112,13 +112,13 @@
                                     <i class="tags icon"></i>标签
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="{{ path('blog_tags') }}" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="{{ path('blog_tags') }}">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             {% for label in labels %}
-                            <a href="{{ path('blog_tags')}}?id={{ label.id }}" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">
+                            <a href="{{ path('blog_tags')}}?id={{ label.id }}" class="ui teal basic left pointing label m-margin-tb-tiny">
                                 {{ label.name | default}} <div class="detail">{{ label.articleNumbers | default }}</div>
                             </a>
                             {% endfor %}
@@ -133,7 +133,7 @@
                         </div>
                         {% for item in new_articles %}
                         <div class="ui segment">
-                            <a href="{{ path('blog_article') }}?id={{ item.id }}" target="_blank" class="m-black m-text-thin">{{ item.title | default('') }}</a>
+                            <a href="{{ path('blog_article') }}?id={{ item.id }}" class="m-black m-text-thin">{{ item.title | default('') }}</a>
                         </div>
                         {% endfor %}
                     </div>

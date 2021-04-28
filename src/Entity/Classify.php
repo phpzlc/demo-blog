@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SortRepository;
+use App\Repository\ClassifyRepository;
 use Doctrine\ORM\Mapping as ORM;
 use PHPZlc\PHPZlc\Doctrine\ORM\Mapping\OuterColumn;
 
 /**
- * @ORM\Entity(repositoryClass=SortRepository::class)
- * @ORM\Table(name="sort", options={"comment":"分类表"})
+ * @ORM\Entity(repositoryClass=ClassifyRepository::class)
+ * @ORM\Table(name="classify", options={"comment":"分类表"})
  */
-class Sort
+class Classify
 {
     /**
      * @var string
@@ -23,26 +23,18 @@ class Sort
     private $id;
 
     /**
-     * @var Sort
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sort")
-     * @ORM\JoinColumn(name="parent_sort_id", referencedColumnName="id")
+     * @ORM\Column(name="classify_no", type="string", options={"comment":"分类编号"})
      */
-    private $parentSort;
+    private $classifyNo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sort_no", type="string", options={"comment":"分类编号"})
+     * @ORM\Column(name="classify_name", type="string", options={"comment":"分类名称"})
      */
-    private $sortNo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sort_name", type="string", options={"comment":"分类名称"})
-     */
-    private $sortName;
+    private $classifyName;
 
     /**
      * @var bool
@@ -82,26 +74,26 @@ class Sort
         return $this->id;
     }
 
-    public function getSortNo(): ?string
+    public function getClassifyNo(): ?string
     {
-        return $this->sortNo;
+        return $this->classifyNo;
     }
 
-    public function setSortNo(string $sortNo): self
+    public function setClassifyNo(string $classifyNo): self
     {
-        $this->sortNo = $sortNo;
+        $this->classifyNo = $classifyNo;
 
         return $this;
     }
 
-    public function getSortName(): ?string
+    public function getClassifyName(): ?string
     {
-        return $this->sortName;
+        return $this->classifyName;
     }
 
-    public function setSortName(string $sortName): self
+    public function setClassifyName(string $classifyName): self
     {
-        $this->sortName = $sortName;
+        $this->classifyName = $classifyName;
 
         return $this;
     }
@@ -154,21 +146,8 @@ class Sort
         return $this;
     }
 
-    public function getParentSort(): ?self
-    {
-        return $this->parentSort;
-    }
-
-    public function setParentSort(?self $parentSort): self
-    {
-        $this->parentSort = $parentSort;
-
-        return $this;
-    }
-
     public function getArticlesNumbers(): ?string
     {
         return $this->articlesNumbers;
     }
-
 }

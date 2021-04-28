@@ -18,7 +18,7 @@
 
             <div class="ui attached segment m-padded-tb-large">
                 {% for item in labels %}
-                <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">
+                <a href="{{ path('blog_tags')}}?id={{ item.id }}" class="ui teal basic left pointing large label m-margin-tb-tiny">
                     {{ item.name | default}} <div class="detail">{{ item.articleNumbers | default(0) }}</div>
                 </a>
                 {% endfor %}

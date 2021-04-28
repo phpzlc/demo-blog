@@ -61,7 +61,15 @@ php bin/console assets:install
 
 //生成文档(非必须)
 php bin/console phpzlc:generate:document
+
+// 本地安装成功访问链接
+  前端地址: http://localhost/demo-blog/public/index.php/blog/
+  后端地址: http://localhost/demo-blog/public/index.php/admin/
+  后端登录账号密码: aitime 123456
 ```
+
+
+
 
 ## 功能介绍
 
@@ -69,15 +77,18 @@ php bin/console phpzlc:generate:document
 
 1. 用户登录，个人中心，修改密码，登录，退出登录。
 
-2. 收藏，取消收藏博客，博客列表。
+2. 博客列表。
 
-3. 博客列表，博客详情。
+3. 博客详情.
+
+4. 收藏博客.
+
 
 ### 后台功能
 
 1. 登录，修改密码，退出登录。
 
-2. 博客分类管理（两级）
+2. 博客分类管理（一级）
 
 3. 博客管理 
 
@@ -87,13 +98,14 @@ php bin/console phpzlc:generate:document
      
      发布编辑 （博客标签）
      
-     收藏数
      
 4. 用户管理
 
      用户名，收藏文章数， 最后登录时间， 禁用启用
      
-5. 控制台
+5. 收藏管理     
+     
+6. 控制台
 
     总用户数
     
@@ -103,10 +115,11 @@ php bin/console phpzlc:generate:document
     
     总收藏数
     
-7. 报表
+8. 报表
 
     主分类下的博客数，收藏数
     
+     
 ###  推荐使用浏览器
    谷歌浏览器
 

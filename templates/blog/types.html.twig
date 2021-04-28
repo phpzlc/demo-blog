@@ -19,7 +19,7 @@
             <div class="ui attached segment m-padded-tb-large">
                 {% for item in sorts %}
                 <div class="ui labeled button m-margin-tb-tiny">
-                    <a href="#" class="ui basic teal button">{{ item.sortName | default }}</a>
+                    <a href="{{ path('blog_types')}}?id={{ item.id }}" class="ui basic teal button">{{ item.sortName | default }}</a>
                     <div class="ui basic teal left pointing label">{{ item.articlesNumbers | default(0) }}</div>
                 </div>
                 {% endfor %}
