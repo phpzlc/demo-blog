@@ -12,7 +12,6 @@ namespace App\Controller\Blog;
 
 use App\Business\AuthBusiness\AuthTag;
 use App\Business\AuthBusiness\UserAuthBusiness;
-use App\Business\PlatformBusiness\PlatformClass;
 use App\Business\UserBusiness\ConsumerAuth;
 use App\Entity\Collection;
 use App\Entity\Commentary;

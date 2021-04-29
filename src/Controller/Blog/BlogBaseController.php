@@ -44,7 +44,7 @@ class BlogBaseController extends SystemBaseController
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
-        PlatformClass::setPlatform('blog');
+        PlatformClass::setPlatform($this->getParameter('platform_blog'));
 
         $menus = [
             new Menu('首页', null, 'blog_index', $this->generateUrl('blog_index'), null),
