@@ -431,7 +431,7 @@ CodeMirror.defineMode("perl",function(){
                 sleep                           :1,     // - block for some number of seconds
                 socket                          :1,     // - create a socket
                 socketpair                      :1,     // - create a pair of sockets
-                'sort'                          :1,     // - sort a list of values
+                'sort'                          :1,     // - classify a list of values
                 splice                          :1,     // - add or remove elements anywhere in an array
                 'split'                         :1,     // - split up a string using a regexp delimiter
                 sprintf                         :1,     // - formatted print into a string

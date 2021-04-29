@@ -19,8 +19,8 @@ use App\Entity\Commentary;
 use App\Entity\User;
 use App\Repository\ArticleLabelRepository;
 use App\Repository\ArticleRepository;
+use App\Repository\ClassifyRepository;
 use App\Repository\LabelRepository;
-use App\Repository\SortRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -48,9 +48,9 @@ class BlogController extends BlogBaseController
     protected $articleLabelRepository;
 
     /**
-     * @var SortRepository
+     * @var ClassifyRepository
      */
-    protected $sortRepository;
+    protected $classifyRepository;
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
@@ -64,7 +64,7 @@ class BlogController extends BlogBaseController
         $this->articleRepository = $this->getDoctrine()->getRepository('App:Article');
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
         $this->articleLabelRepository = $this->getDoctrine()->getRepository('App:ArticleLabel');
-        $this->sortRepository = $this->getDoctrine()->getRepository('App:Sort');
+        $this->classifyRepository = $this->getDoctrine()->getRepository('App:Classify');
 
         return true;
     }
@@ -84,26 +84,24 @@ class BlogController extends BlogBaseController
             return $r;
         }
 
-        $articles_numbers = $this->articleRepository->findCount();
+        $articles_count = $this->articleRepository->findCount();
 
         $articles = $this->articleRepository->findAll([
             Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
             'userAuth' . Rule::RA_JOIN => array(
                 'alias' => 'ua'
             ),
-            'is_del' => 0
         ]);
 
         $labels = $this->labelRepository->findAll([
             Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
-            'is_del' => 0
         ]);
 
         return $this->render('blog/index.html.twig', array(
-            'articles_numbers' => $articles_numbers,
+            'articles_count' => $articles_count,
             'labels' => $labels,
             'articles' => $articles,
-            'sorts' => $this->sortRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers' ,'is_del' => 0]),
+            'classifies' => $this->classifyRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers']),
             'new_articles' => $this->articleRepository->findLimitAll(10, 1, ['is_del' => 0])
         ));
     }
@@ -125,7 +123,7 @@ class BlogController extends BlogBaseController
 
         $id = $request->get('id');
 
-        $sorts = $this->sortRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers' ,'is_del' => 0]);
+        $classifies = $this->classifyRepository->findAll([Rule::R_SELECT => 'sql_pre.*, sql_pre.articles_numbers']);
 
         if(empty($id)) {
             $articles = $this->articleRepository->findAll([
@@ -146,10 +144,10 @@ class BlogController extends BlogBaseController
             ]);
         }
 
-        $count = $this->sortRepository->findCount(['is_del' => 0]);
+        $count = $this->classifyRepository->findCount();
 
         return $this->render('blog/types.html.twig', array(
-            'sorts' => $sorts,
+            'classifies' => $classifies,
             'articles' => $articles,
             'count' => $count
         ));
@@ -173,57 +171,20 @@ class BlogController extends BlogBaseController
 
         $id = $request->get('id');
 
-        $count = $this->labelRepository->findCount(['is_del' => 0]);
+        $count = $this->labelRepository->findCount();
 
         $labels = $this->labelRepository->findAll([
             Rule::R_SELECT => 'sql_pre.*, sql_pre.article_numbers',
-            'is_del' => 0
         ]);
 
-        if(empty($id)) {
-            $articles = $this->articleRepository->findAll([
-                Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
-                'userAuth' . Rule::RA_JOIN => array(
-                    'alias' => 'ua'
-                ),
-                'is_del' => 0
-            ]);
-        }else{
+        $articles = $this->articleRepository->findAll([
+            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+              'userAuth' . Rule::RA_JOIN => array(
+                  'alias' => 'ua'
+              ),
+            Rule::R_WHERE => "AND sql_pre.id in (SELECT GROUP_CONCAT(al.article_id) FROM article_label al WHERE al.label_id = '{$id}') "
 
-            $articleLabels = $this->articleLabelRepository->findAll(['label_id' => $id]);
-
-            if(!empty($articleLabels)) {
-                $article_ids = [];
-                foreach ($articleLabels as $articleLabel) {
-                    $article_ids[] = $articleLabel->getArticle()->getId();
-                }
-
-                $new_array = array_map(function ($value) {
-                    return '\'' . $value . '\'';
-                }, $article_ids);
-
-                $article_string = join(',', $new_array);
-
-                $rules = [
-                    Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
-                    'userAuth' . Rule::RA_JOIN => array(
-                        'alias' => 'ua'
-                    ),
-                    'is_del' => 0,
-                    Rule::R_WHERE => "AND sql_pre.id in ({$article_string})"
-                ];
-            }else{
-                $rules = [
-                    Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
-                    'userAuth' . Rule::RA_JOIN => array(
-                        'alias' => 'ua'
-                    ),
-                    'is_del' => 0,
-                ];
-            }
-
-            $articles = $this->articleRepository->findAll($rules);
-        }
+        ]);
 
         return $this->render('blog/tags.html.twig', array(
             'count' => $count,

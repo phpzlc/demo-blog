@@ -189,7 +189,7 @@ CodeMirror.defineMode("xquery", function() {
       if(!stream.eat(":") && foundColon) {
         stream.eatWhile(/[\w\$_-]/);
       }
-      // if the next non whitespace character is an open paren, this is probably a function (if not a keyword of other sort)
+      // if the next non whitespace character is an open paren, this is probably a function (if not a keyword of other classify)
       if(stream.match(/^[ \t]*\(/, false)) {
         mightBeFunction = true;
       }

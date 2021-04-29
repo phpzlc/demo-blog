@@ -40,10 +40,10 @@
             </el-select>
         </el-form-item>
 
-        <el-form-item label="分类:" prop="sort" size="mini" class="el-form-width-all">
-            <el-select v-model="form.sort" placeholder="请选择">
+        <el-form-item label="分类:" prop="classify" size="mini" class="el-form-width-all">
+            <el-select v-model="form.classify" placeholder="请选择">
                 <el-option
-                        v-for="item in sortOptions"
+                        v-for="item in classifyOptions"
                         :key="item.id"
                         :label="item.name"
                         :value="item.id"
@@ -86,7 +86,7 @@
                         ],
                         thumbnail:'{{ info.thumbnail | default }}',
                         summary: '{{ info.articleSummary | default }}',
-                        sort: '{{ info.sort.id | default }}'
+                        classify: '{{ info.classify.id | default }}'
                     },
                     rules: {
                         title: [
@@ -111,11 +111,11 @@
                         {% endfor %}
                     ],
 
-                    sortOptions:[
-                        {% for item in sorts %}
+                    classifyOptions:[
+                        {% for item in classifies %}
                         {
                             id:"{{ item.id | default }}",
-                            name:"{{ item.sortName | default }}"
+                            name:"{{ item.classifyName | default }}"
                         },
                         {% endfor %}
                     ],
@@ -147,6 +147,7 @@
                 }
             },
             methods: {
+                // 提交按钮
                 submitForm(formName) {
                     this.form.content = UE.getEditor('editor').getContent();
                     const that = this;
@@ -162,19 +163,17 @@
                     });
                     {% endif %}
                 },
+
+                // 取消按钮
                 resetForm() {
                     window.location.href ="{{ admin_url_anchor() }}";
                 },
+
                 handleChange(value) {
                     console.log(value);
                 },
-                handleRemove(file, fileList) {
-                    console.log(file, fileList);
-                },
-                handlePreview(file) {
-                    console.log(file);
-                },
 
+                // 上传成功触发方法
                 fileUploadResponse(response, file, fileList){
                     if(response.code == 0){
                         file.path = response.data.path;
@@ -185,6 +184,7 @@
                     }
                 },
 
+                // 上传列表删除图片方法
                 removeThumbnailFileList(){
                     this.form.thumbnail = ''
                 },

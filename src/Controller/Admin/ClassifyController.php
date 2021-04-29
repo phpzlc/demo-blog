@@ -78,7 +78,7 @@ class ClassifyController extends AdminManageController
         $data = $this->classifyRepository->findLimitAll($rows, $page, $rules);
         $count = $this->classifyRepository->findCount($rules);
 
-        return $this->render('admin/sort/index.html.twig', array(
+        return $this->render('admin/classify/index.html.twig', array(
             'page' => $page,
             'rows' => $rows,
             'count' => $count,
@@ -106,7 +106,7 @@ class ClassifyController extends AdminManageController
             $classify = $this->classifyRepository->find($id);
         }
 
-        return $this->render('admin/sort/edit.html.twig', array(
+        return $this->render('admin/classify/edit.html.twig', array(
             'classify' => $classify,
         ));
     }

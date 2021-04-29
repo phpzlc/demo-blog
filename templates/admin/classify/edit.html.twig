@@ -3,23 +3,12 @@
 {% block main_content %}
     <div class="add-page clearfix">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
-            <el-form-item label="分类编号:" prop="sort_no" size="mini" class="el-form-width-all" label-width="100px">
-                <el-input v-model="form.sort_no" placeholder="请输入" style="width: 150px"></el-input>
+            <el-form-item label="分类编号:" prop="classify_no" size="mini" class="el-form-width-all" label-width="100px">
+                <el-input v-model="form.classify_no" placeholder="请输入" style="width: 150px"></el-input>
             </el-form-item>
 
-            <el-form-item label="分类名称:" prop="sort_name" size="mini" class="el-form-width-all" label-width="100px">
-                <el-input v-model="form.sort_name" placeholder="请输入" style="width: 150px"></el-input>
-            </el-form-item>
-
-            <el-form-item label="父级分类:" prop="parentSortId" size="mini" class="el-form-width-all">
-                <el-select v-model="form.parentSortId" placeholder="请选择" style="width: 200px">
-                    <el-option
-                            v-for="item in parentSortOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                    </el-option>
-                </el-select>
+            <el-form-item label="分类名称:" prop="classify_name" size="mini" class="el-form-width-all" label-width="100px">
+                <el-input v-model="form.classify_name" placeholder="请输入" style="width: 150px"></el-input>
             </el-form-item>
 
             <el-form-item size="mini">
@@ -39,26 +28,13 @@
             data: function () {
                 return {
                     form: {
-                        sort_no: "{{ sort.sortNo | default }}",
-                        sort_name: "{{ sort.sortName | default }}",
-                        parentSortId: "{{ sort.parentSort.id | default }}",
+                        classify_no: "{{ classify.classifyNo | default }}",
+                        classify_name: "{{ classify.classifyName | default }}",
                     },
                     rules: {
-                        sort_no: { required: true, message: '请输入分类编号', trigger: 'blur' },
-                        sort_name: { required: true, message: '请输入分类名称', trigger: 'blur' },
+                        classify_no: { required: true, message: '请输入分类编号', trigger: 'blur' },
+                        classify_name: { required: true, message: '请输入分类名称', trigger: 'blur' },
                     },
-                    parentSortOptions: [
-                        {
-                            value: "",
-                            label: "顶级分类"
-                        },
-                        {% for parentSort in parentSorts %}
-                        {
-                            value: "{{ parentSort.id }}",
-                            label: "{{ parentSort.sortNo }}/{{ parentSort.sortName }}"
-                        }{% if loop.last == false %},{% endif %}
-                        {% endfor %}
-                    ],
                 }
             },
             created() {

@@ -2,7 +2,6 @@
 
 {% block main_content %}
 <div class="search-page clearfix">
-
     <el-row class="page-search">
         <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="90px" style="margin-left: 10px">
             <el-form-item label="分类编号:" prop="classify_no">
@@ -21,7 +20,7 @@
     </el-row>
 
     <el-row class="list-btn-content mt-10">
-        <el-button size="mini" type="primary" @click="add()"> 新建 </el-button>
+        <el-button size="mini" type="primary" @click="handleCreate()"> 新建 </el-button>
     </el-row>
 
     <el-table class="mt-10" :data="tableData" style="width: 100%" border>
@@ -61,13 +60,13 @@
             data: function () {
                 return {
                     searchForm: {
-                        sort_no: '{{ app.request.get('classify_no') }}',
-                        sort_name: '{{ app.request.get('classify_name') }}',
+                        classify_no: '{{ app.request.get('classify_no') }}',
+                        classify_name: '{{ app.request.get('classify_name') }}',
                     },
                     tableData: [
                         {% for item in data %}
                         {   id: "{{ item.id | default }}",
-                            classify_no: {{ item.classifyNo | default }}"",
+                            classify_no: "{{ item.classifyNo | default }}",
                             classify_name: "{{ item.classifyName | default }}",
                             createAt: "{{ item.createAt | date('Y-m-d H:i:s') }}",
                         {% if item.updateAt is not null %}
@@ -81,26 +80,31 @@
                 }
             },
             methods: {
+                // 修改当前页数按钮
                 handleCurrentChange(val) {
                     window.location.href = urlParamWrite(getSelfUrl(), 'page', val);
                 },
 
+                // 修改行数按钮
                 handleSizeChange(val) {
                     window.location.href = urlParamWrite(getSelfUrl(), 'rows', val);
                 },
 
+                // 搜索按钮
                 searchBtn() {
                     window.location.href = splicingGetParamsToUrl("{{ path('admin_manage_sort_index') }}", this.searchForm);
                 },
-
+                // 重置按钮
                 resetForm(formName) {
                     this.$refs[formName].resetFields();
                 },
 
-                add(){
+                // 新建按钮
+                handleCreate(){
                     window.location.href = "{{ path('admin_manage_sort_page') }}";
                 },
 
+                // 删除按钮
                 handleDelete(index, row) {
                     this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -119,6 +123,7 @@
                     });
                 },
 
+                // 编辑按钮
                 handleEdit(index, row) {
                     window.location.href = "{{ path('admin_manage_sort_page') }}?id=" + row.id;
                 },

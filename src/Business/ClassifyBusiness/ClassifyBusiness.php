@@ -21,13 +21,13 @@ class ClassifyBusiness extends AbstractBusiness
     /**
      * @var ClassifyRepository
      */
-    protected $sortRepository;
+    protected $classifyRepository;
 
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
 
-        $this->sortRepository = $this->getDoctrine()->getRepository('App:Sort');
+        $this->classifyRepository = $this->getDoctrine()->getRepository('App:Classify');
     }
 
     public function validator($class): bool
@@ -36,12 +36,12 @@ class ClassifyBusiness extends AbstractBusiness
             return false;
         }else{
             if($class instanceof Classify){
-                $classify_no = $this->sortRepository->findAssoc(['sort_no' => $class->getClassifyNo()]);
+                $classify_no = $this->classifyRepository->findAssoc(['sort_no' => $class->getClassifyNo()]);
                 if(!empty($classify_no) && $classify_no->getId() !== $class->getId()){
                     Errors::setErrorMessage('分类编号已存在'); return false;
                 }
 
-                $classify_name = $this->sortRepository->findAssoc(['sort_name' => $class->getClassifyName()]);
+                $classify_name = $this->classifyRepository->findAssoc(['sort_name' => $class->getClassifyName()]);
 
                 if(!empty($classify_name) && $classify_name->getId() !== $class->getId()){
                     Errors::setErrorMessage('分类名称已存在'); return false;

@@ -14,7 +14,7 @@
                                 <h3 class="ui teal header">博客</h3>
                             </div>
                             <div class="right aligned column">
-                                共 <h2 class="ui orange header m-inline-block m-text-thin"> {{ articles_numbers }} </h2> 篇
+                                共 <h2 class="ui orange header m-inline-block m-text-thin"> {{ articles_count }} </h2> 篇
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                             </div>
                                         </div>
                                         <div class="right aligned five wide column">
-                                            <a href="{{ path('blog_types')}}?id={{ item.sort.id }}" class="ui teal basic label m-padded-tiny m-text-thin">{{ item.sort.sortName | default }}</a>
+                                            <a href="{{ path('blog_types')}}?id={{ item.classify.id }}" class="ui teal basic label m-padded-tiny m-text-thin">{{ item.classify.classifyName | default }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -94,9 +94,9 @@
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu">
-                                {% for item in sorts %}
+                                {% for item in classifies %}
                                 <a href="{{ path('blog_types')}}?id={{ item.id }}" class="item">
-                                    {{ item.sortName | default }}
+                                    {{ item.classifyName | default }}
                                     <div class="ui teal basic left pointing label">{{ item.articlesNumbers | default(0) }}</div>
                                 </a>
                                 {% endfor %}

@@ -103,8 +103,8 @@ class Article
     private $isDel = false;
 
     /**
-     * TODO 增加comment描述
-     * @OuterColumn(name="labels", type="simple_array", sql="(SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id ))")
+     *
+     * @OuterColumn(name="labels", type="simple_array", options={"comment":"外接字段,查询文章的标签"}, sql="(SELECT GROUP_CONCAT(l.name) FROM label l WHERE l.id in (SELECT label_id FROM article_label al WHERE al.article_id = sql_pre.id ))")
      */
     public $labels;
 
@@ -112,7 +112,6 @@ class Article
     {
         return $this->id;
     }
-
 
     /**
      * 将富文本内容相对地址转换成前端显示的绝对地址
