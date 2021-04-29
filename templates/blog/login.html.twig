@@ -33,6 +33,10 @@
 {#                        </div>#}
 {#                    {% endif %}#}
                     <el-button type="primary" class="login-btn" @click="loginBtn()">登录</el-button>
+                    <br>
+                    <br>
+                    <br>
+                    <el-button class="login-btn" @click="createBtn()">没有账号？请注册</el-button>
                 </div>
             </div>
         </div>
@@ -78,6 +82,10 @@
                         this.$message.error(validated.msg);
                     }
 
+                },
+
+                createBtn(){
+                   window.location = "{{ path('blog_register_page') }}"
                 },
 
                 // 判断逻辑

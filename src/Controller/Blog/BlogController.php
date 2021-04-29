@@ -54,8 +54,6 @@ class BlogController extends BlogBaseController
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
-        PlatformClass::setPlatform($this->getParameter('platform_blog'));
-
         $r = parent::inlet($returnType, $isLogin);
         if($r !== true){
             return $r;

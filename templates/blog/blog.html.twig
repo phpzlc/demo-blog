@@ -56,9 +56,6 @@
                             <li>公众号转载：请在文末添加作者公众号二维码</li>
                         </ui>
                     </div>
-                    <div class="five wide column">
-                        <img src="../static/images/wechat.jpg" alt="" class="ui right floated rounded bordered image" style="width: 110px">
-                    </div>
                 </div>
             </div>
             <div id="comment-container" class="ui bottom attached segment">
@@ -139,30 +136,34 @@
                         data: {id:"{{ article.id }}", content:content},
                         datatype: "json",
                         success: function (data){
-                            console.log(data);
                             alert(data.msg);
-                            var comments = data.data.comments;
-                            var html = '<h3 class="ui dividing header"> Comments </h3>';
-                            for (var i =0; i < comments.length; i++){
-                                html +=  '<div class="comment">'+
-                                    '<a class="avatar">'+
-                                    '<img src="https://unsplash.it/100/100?image=1005">'+
-                                    '</a>'+
-                                    '<div class="content">'+
-                                    '<a class="author">' + comments[i].user.subject_name +'</a>'+
-                                    '<div class="metadata">'+
-                                    '<span class="date">'+ comments[i].creat_at + '</span>'+
-                                    '</div>' +
-                                    '<div class="text">' +
-                                    comments[i].content +
-                                    '</div>'+
-                                    '</div>' +
-                                    '</div>'
+                            if(data.code == -1){
+                                window.location = data.data.go_url;
+                            }else {
+                                var comments = data.data.comments;
+                                var html = '<h3 class="ui dividing header"> Comments </h3>';
+                                for (var i = 0; i < comments.length; i++) {
+                                    html += '<div class="comment">' +
+                                        '<a class="avatar">' +
+                                        '<img src="https://unsplash.it/100/100?image=1005">' +
+                                        '</a>' +
+                                        '<div class="content">' +
+                                        '<a class="author">' + comments[i].user.subject_name + '</a>' +
+                                        '<div class="metadata">' +
+                                        '<span class="date">' + comments[i].creat_at + '</span>' +
+                                        '</div>' +
+                                        '<div class="text">' +
+                                        comments[i].content +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'
+                                }
+                                $("#comments").empty()
+                                $("#comments").append(html);
                             }
-                            $("#comments").empty()
-                            $("#comments").append(html);
                         },
                         error: function (data){
+                            console.log(data);
                             alert(data.msg);
                         }
                     })

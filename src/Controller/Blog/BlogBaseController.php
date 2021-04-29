@@ -11,6 +11,7 @@
 namespace App\Controller\Blog;
 
 use App\Business\AuthBusiness\UserAuthBusiness;
+use App\Business\PlatformBusiness\PlatformClass;
 use App\Entity\UserAuth;
 use PHPZlc\Admin\Strategy\AdminStrategy;
 use PHPZlc\Admin\Strategy\Menu;
@@ -43,10 +44,7 @@ class BlogBaseController extends SystemBaseController
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
-        $r = parent::inlet($returnType, $isLogin);
-        if($r !== true){
-            return $r;
-        }
+        PlatformClass::setPlatform('blog');
 
         $menus = [
             new Menu('首页', null, 'blog_index', $this->generateUrl('blog_index'), null),
@@ -61,11 +59,17 @@ class BlogBaseController extends SystemBaseController
             ->setPageTag($this->page_tag)
             ->setMenus($menus);
 
+        $r = parent::inlet($returnType, $isLogin);
+        if($r !== true){
+            return $r;
+        }
+
         if($isLogin){
             $userAuthBusiness = new UserAuthBusiness($this->container);
             $userAuth = $userAuthBusiness->isLogin();
 
             $this->curUserAuth = $userAuth;
+
 
             if($userAuth === false){
                 if(self::getReturnType() === SystemBaseController::RETURN_HIDE_RESOURCE){
