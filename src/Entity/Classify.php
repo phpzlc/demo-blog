@@ -65,7 +65,7 @@ class Classify
     private $updateAt;
 
     /**
-     * @OuterColumn(name="articles_numbers", type="string", sql="(SELECT COUNT(a.id) FROM article a WHERE a.classify_id = sql_pre.id)")
+     * @OuterColumn(name="articles_numbers", type="string", options={"comment":"外接字段,查询分类下有多少篇文章"}, sql="(SELECT COUNT(a.id) FROM article a WHERE a.classify_id = sql_pre.id)")
      */
     public $articlesNumbers;
 

@@ -59,8 +59,7 @@ class Label
 
     /**
      *
-     * TODO 增加comment描述
-     * @OuterColumn(name="article_numbers", type="string", sql=" (SELECT COUNT(al.id) FROM article_label al WHERE al.label_id = sql_pre.id)")
+     * @OuterColumn(name="article_numbers", type="string", options={"comment":"外接字段,查询标签下有多少文章"}, sql=" (SELECT COUNT(al.id) FROM article_label al WHERE al.label_id = sql_pre.id)")
      */
     private $articleNumbers;
 
