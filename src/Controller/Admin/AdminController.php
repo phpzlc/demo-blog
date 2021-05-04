@@ -24,7 +24,7 @@ use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminManageController extends SystemBaseController
+class AdminController extends SystemBaseController
 {
     /**
      * 管理策略

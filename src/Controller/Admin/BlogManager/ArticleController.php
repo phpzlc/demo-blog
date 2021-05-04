@@ -12,7 +12,7 @@ namespace App\Controller\Admin\BlogManager;
 
 use App\Business\ArticleBusiness\ArticleBusiness;
 use App\Business\AuthBusiness\CurAuthSubject;
-use App\Controller\Admin\AdminManageController;
+use App\Controller\Admin\AdminController;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Repository\ClassifyRepository;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class ArticleManageController extends AdminManageController
+class ArticleController extends AdminController
 {
     protected $page_tag = 'admin_article_index';
 
@@ -79,6 +79,7 @@ class ArticleManageController extends AdminManageController
 
         $user_name = $request->get('user_name');
         $title = $request->get('title');
+        $create_at = $request->get('create_at');
 
         $rules = [
             Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
@@ -88,6 +89,8 @@ class ArticleManageController extends AdminManageController
                 'alias' => 'ua'
             )
         ];
+
+        $rules = array_merge($rules, $this->atSearch($create_at, 'create_at'));
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);

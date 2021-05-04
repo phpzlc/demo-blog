@@ -60,7 +60,7 @@ blog_comment:
 
 # 博客收藏
 blog_collection:
- controller: App\Controller\Blog\Blogcontroller::collection
+ controller: App\Controller\Blog\BlogController::collection
  path:  /collection
 
 

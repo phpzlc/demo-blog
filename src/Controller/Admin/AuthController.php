@@ -23,7 +23,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class AuthController extends AdminManageController
+class AuthController extends AdminController
 {
 
     /**

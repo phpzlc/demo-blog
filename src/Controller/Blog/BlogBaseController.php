@@ -44,6 +44,7 @@ class BlogBaseController extends SystemBaseController
 
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
+
         PlatformClass::setPlatform($this->getParameter('platform_blog'));
 
         $menus = [

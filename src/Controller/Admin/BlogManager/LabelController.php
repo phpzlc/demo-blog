@@ -11,18 +11,19 @@
 namespace App\Controller\Admin\BlogManager;
 
 use App\Business\LabelBusiness\LabelBusiness;
-use App\Controller\Admin\AdminManageController;
+use App\Controller\Admin\AdminController;
 use App\Entity\Label;
 use App\Repository\LabelRepository;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
+use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class LabelManageController extends AdminManageController
+class LabelController extends AdminController
 {
     protected $page_tag = 'admin_label_index';
 
@@ -67,6 +68,7 @@ class LabelManageController extends AdminManageController
         $name = $request->get('name');
 
         $rules = [
+            'name' . Rule::RA_LIKE => '%' . $name . '%',
             'is_del' => 0
         ];
 

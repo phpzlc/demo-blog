@@ -1,4 +1,4 @@
 # 首页
 admin_blog_manage_collection_index:
   path: /
-  controller: App\Controller\Admin\BlogManager\CollectionManageController::index
+  controller: App\Controller\Admin\BlogManager\CollectionController::index

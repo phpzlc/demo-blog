@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClassifyController extends AdminManageController
+class ClassifyController extends AdminController
 {
     protected $page_tag = 'admin_sort_index';
 

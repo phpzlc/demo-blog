@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class StatisticalStationController extends AdminManageController
+class StatisticalStationController extends AdminController
 {
     protected $page_tag = 'admin_statistical_station_index';
 

@@ -1,7 +1,7 @@
 # 管理端-首页
 admin_manage_index:
   path:   /
-  controller: App\Controller\Admin\AdminManageController:index
+  controller: App\Controller\Admin\AdminController:index
 
 # 管理端-登录
 admin_manage_login:

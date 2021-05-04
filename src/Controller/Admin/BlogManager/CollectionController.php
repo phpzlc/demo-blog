@@ -10,7 +10,7 @@
 
 namespace App\Controller\Admin\BlogManager;
 
-use App\Controller\Admin\AdminManageController;
+use App\Controller\Admin\AdminController;
 use App\Repository\CollectionRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class CollectionManageController extends AdminManageController
+class CollectionController extends AdminController
 {
     protected $page_tag = 'admin_collection_index';
 
@@ -57,10 +57,15 @@ class CollectionManageController extends AdminManageController
         $article_title = $request->get('article_title');
 
         $rules = [
-            Rule::R_SELECT => "sql_pre.*, ua.subject_name",
+            Rule::R_SELECT => "sql_pre.*, ua.subject_name, a.id as a_id, a.title",
+            'ua.subject_name' .  Rule::RA_LIKE => '%' . $user_name . '%',
+            'a.title' . Rule::RA_LIKE => '%' . $article_title . '%',
+            'article' . Rule::RA_JOIN => array(
+                'alias' => 'a'
+            ),
             'userAuth' . Rule::RA_JOIN => array(
                 'alias' => 'ua'
-            )
+            ),
         ];
 
         $page = $request->get('page', 1);

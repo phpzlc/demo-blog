@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class UsersManageController extends AdminManageController
+class UsersController extends AdminController
 {
     protected $page_tag = 'admin_blog_user';
 

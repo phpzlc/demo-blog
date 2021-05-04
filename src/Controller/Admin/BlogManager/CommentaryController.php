@@ -10,7 +10,7 @@
 
 namespace App\Controller\Admin\BlogManager;
 
-use App\Controller\Admin\AdminManageController;
+use App\Controller\Admin\AdminController;
 use App\Repository\CommentaryRepository;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CommentaryManageController extends AdminManageController
+class CommentaryController extends AdminController
 {
     protected $page_tag = 'admin_commentary_index';
 
@@ -59,11 +59,18 @@ class CommentaryManageController extends AdminManageController
         $create_at = $request->get('create_at');
 
         $rules = [
-            Rule::R_SELECT => 'sql_pre.*, u.subject_name',
+            Rule::R_SELECT => 'sql_pre.*, u.subject_name, a.title',
             'user' . Rule::RA_JOIN => array(
                 'alias' => 'u'
             ),
+            'u.subject_name' .  Rule::RA_LIKE => '%' . $user_name . '%',
+            'a.title' . Rule::RA_LIKE => '%' . $article_title . '%',
+            'article' . Rule::RA_JOIN => array(
+                'alias' => 'a'
+            ),
         ];
+
+        $rules = array_merge($rules, $this->atSearch($create_at, 'create_at'));
 
         $page = $request->get('page', 1);
         $rows = $request->get('rows', 20);

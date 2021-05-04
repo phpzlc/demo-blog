@@ -169,22 +169,23 @@
                     })
                 }
             });
-
-                $("#payButton").click(function () {
-                    $.ajax({
-                        type: "post",
-                        url: "{{ path('blog_collection') }}",
-                        data: {id: "{{ article.id }}"},
-                        // datatype: "json",
-                        success: function (data) {
-                            console.log(data)
-                            alert(data.msg);
-                        },
-                        error: function (data) {
-                            alert(data.msg);
-                        }
-                    })
-                })
         });
+
+        $(document).ready(function (){
+            $("#payButton").click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "{{ path('blog_collection') }}",
+                    data: {id: "{{ article.id }}"},
+                    // datatype: "json",
+                    success: function (data) {
+                        alert(data.msg);
+                    },
+                    error: function (data) {
+                        alert(data.msg);
+                    }
+                })
+            })
+        })
     </script>
 {% endblock %}
