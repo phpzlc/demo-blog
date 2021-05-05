@@ -46,6 +46,12 @@ class ArticleBusiness extends AbstractBusiness
 
     }
 
+    /**
+     * 验证器
+     *
+     * @param $class
+     * @return bool
+     */
     public function validator($class): bool
     {
         if(!parent::validator($class)){
@@ -62,6 +68,15 @@ class ArticleBusiness extends AbstractBusiness
         return true;
     }
 
+    /**
+     * 创建
+     *
+     * @param Article $article
+     * @param null $labels
+     * @param null $sort
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     public function create(Article $article, $labels = null, $sort = null)
     {
         if(!$this->validator($article)){
@@ -109,6 +124,15 @@ class ArticleBusiness extends AbstractBusiness
         }
     }
 
+    /**
+     * 更新
+     *
+     * @param Article $article
+     * @param null $labels
+     * @param null $sort
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     public function update(Article $article, $labels = null, $sort = null)
     {
         if(!$this->validator($article)){
@@ -159,6 +183,13 @@ class ArticleBusiness extends AbstractBusiness
         }
     }
 
+    /**
+     * 文章-标签中间表插入数据
+     *
+     * @param ArticleLabel $articleLabel
+     * @param bool $is_flush
+     * @return bool
+     */
     public function articleLabel(ArticleLabel $articleLabel, $is_flush = true)
     {
         try {
@@ -177,6 +208,12 @@ class ArticleBusiness extends AbstractBusiness
         }
     }
 
+    /**
+     * 删除文章-标签中间表数据
+     *
+     * @param ArticleLabel $articleLabel
+     * @return bool
+     */
     public function deleteArticleLabel(ArticleLabel $articleLabel)
     {
         try {

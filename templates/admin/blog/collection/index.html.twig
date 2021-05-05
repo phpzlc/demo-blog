@@ -73,9 +73,9 @@
             data: function () {
                 return {
                     searchForm: {
-                        user_name: '',
-                        article_title: '',
-                        create_at: ''
+                        user_name: '{{ app.request.get('user_name') }}',
+                        article_title: '{{ app.request.get('article_title') }}',
+                        create_at: {{ app.request.get('create_at') | explode | json_encode | raw }}
                     },
 
                     listData: [

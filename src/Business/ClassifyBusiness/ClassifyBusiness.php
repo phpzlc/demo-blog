@@ -30,6 +30,12 @@ class ClassifyBusiness extends AbstractBusiness
         $this->classifyRepository = $this->getDoctrine()->getRepository('App:Classify');
     }
 
+    /**
+     * 验证器
+     *
+     * @param $class
+     * @return bool
+     */
     public function validator($class): bool
     {
         if(!parent::validator($class)){
@@ -52,6 +58,12 @@ class ClassifyBusiness extends AbstractBusiness
         return true;
     }
 
+    /**
+     * 创建
+     *
+     * @param Classify $classify
+     * @return bool
+     */
     public function create(Classify $classify)
     {
         if(!$this->validator($classify)){
@@ -62,12 +74,17 @@ class ClassifyBusiness extends AbstractBusiness
 
         $this->em->persist($classify);
         $this->em->flush();
-        $this->em->clear();
 
         return true;
     }
 
 
+    /**
+     * 更新
+     *
+     * @param Classify $classify
+     * @return bool
+     */
     public function update(Classify $classify)
     {
        if(!$this->validator($classify)){
@@ -78,7 +95,6 @@ class ClassifyBusiness extends AbstractBusiness
 
        $this->em->persist($classify);
        $this->em->flush();
-       $this->em->clear();
 
        return true;
     }

@@ -34,6 +34,12 @@ class ConsumerAuth extends AbstractBusiness implements SubjectAuthInterface
         $this->userRepository = $this->getDoctrine()->getRepository('App:User');
     }
 
+    /**
+     * 验证器
+     *
+     * @param $class
+     * @return bool
+     */
     public function validator($class): bool
     {
         if(parent::validator($class)){
@@ -65,6 +71,14 @@ class ConsumerAuth extends AbstractBusiness implements SubjectAuthInterface
         return true;
     }
 
+    /**
+     * 创建
+     *
+     * @param User $user
+     * @param $password
+     * @return bool
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
     public function create(User $user, $password)
     {
         if(!$this->validator($user)){
@@ -103,6 +117,13 @@ class ConsumerAuth extends AbstractBusiness implements SubjectAuthInterface
         }
     }
 
+    /**
+     * 更新
+     *
+     * @param User $user
+     * @param $password
+     * @return bool
+     */
     public function update(User $user, $password)
     {
         if(!$this->validator($user)){
@@ -121,7 +142,6 @@ class ConsumerAuth extends AbstractBusiness implements SubjectAuthInterface
         }
 
         $this->getDoctrine()->getManager()->flush();
-        $this->getDoctrine()->getManager()->clear();
 
         return true;
 

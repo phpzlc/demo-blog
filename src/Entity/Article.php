@@ -108,6 +108,12 @@ class Article
      */
     public $labels;
 
+    /**
+     *
+     * @OuterColumn(name="collections", type="string", options={"comment":"外接字段,查询收藏文章收藏次数"}, sql="(SELECT COUNT(c.article_id) FROM collection c WHERE c.article_id = sql_pre.id)")
+     */
+    public $collections;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -270,6 +276,11 @@ class Article
         $this->classify = $classify;
 
         return $this;
+    }
+
+    public function getCollections(): ?string
+    {
+        return $this->collections;
     }
 
 }

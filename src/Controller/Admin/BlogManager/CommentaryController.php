@@ -110,7 +110,6 @@ class CommentaryController extends AdminController
         $commentary->setIsDel(true);
 
         $this->getDoctrine()->getManager()->flush();
-        $this->getDoctrine()->getManager()->clear();
 
         return Responses::success('删除成功');
     }

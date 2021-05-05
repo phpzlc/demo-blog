@@ -82,7 +82,7 @@ class ArticleController extends AdminController
         $create_at = $request->get('create_at');
 
         $rules = [
-            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, ua.subject_name',
+            Rule::R_SELECT => 'sql_pre.*, sql_pre.labels, sql_pre.collections, ua.subject_name',
             'title' . Rule::RA_LIKE => '%' . $title . '%',
             'userAuth' . Rule::RA_LIKE => '%' . $user_name . '%',
             'userAuth' . Rule::RA_JOIN => array(
@@ -180,6 +180,7 @@ class ArticleController extends AdminController
      *
      * @param Request $request
      * @return bool|JsonResponse|RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function edit(Request $request)
     {
@@ -235,7 +236,6 @@ class ArticleController extends AdminController
         $article->setIsDel(true);
 
         $this->getDoctrine()->getManager()->flush();
-        $this->getDoctrine()->getManager()->clear();
 
         return Responses::success('删除成功');
     }

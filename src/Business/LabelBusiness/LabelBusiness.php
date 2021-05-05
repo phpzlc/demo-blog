@@ -30,6 +30,12 @@ class LabelBusiness extends AbstractBusiness
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
     }
 
+    /**
+     * 验证器
+     *
+     * @param $class
+     * @return bool
+     */
     public function validator($class): bool
     {
         if(!parent::validator($class)){
@@ -46,6 +52,12 @@ class LabelBusiness extends AbstractBusiness
         return true;
     }
 
+    /**
+     * 创建
+     *
+     * @param Label $label
+     * @return bool
+     */
     public function create(Label $label)
     {
         if(!$this->validator($label)){
@@ -65,6 +77,12 @@ class LabelBusiness extends AbstractBusiness
         }
     }
 
+    /**
+     * 更新
+     *
+     * @param Label $label
+     * @return bool
+     */
     public function update(Label $label)
     {
         if(!$this->validator($label)){

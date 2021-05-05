@@ -69,9 +69,8 @@
         data: function () {
             return {
                 searchForm: {
-                    user_name: '',
-                    mailbox: '',
-                    login_at: ''
+                    user_name: '{{ app.request.get('user_name') }}',
+                    login_at: {{ app.request.get('login_at') | explode | json_encode | raw }}
                 },
 
                 listData: [
