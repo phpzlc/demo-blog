@@ -67,7 +67,9 @@ php bin/console phpzlc:generate:document
 
 前端地址: http://localhost/demo-blog/public/index.php/
 
-后端地址: http://localhost/demo-blog/public/index.php/admin/
+后台地址: http://localhost/demo-blog/public/index.php/admin/
+
+后台管理员账号密码: aitime 123456
 
 ## 功能介绍
 
