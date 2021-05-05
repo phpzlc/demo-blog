@@ -7,7 +7,7 @@ parameters:
   subject_system: system
 
   # 操作主体- 管理员
-  subject_admin: 2
+  subject_admin: admin
 
   # 操作主体- 用户
   subject_user: 3
