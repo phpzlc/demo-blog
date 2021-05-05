@@ -65,7 +65,7 @@ php bin/console phpzlc:generate:document
 
 ## 访问
 
-前端地址: http://localhost/demo-blog/public/index.php/
+博客地址: http://localhost/demo-blog/public/index.php/blog/
 
 后台地址: http://localhost/demo-blog/public/index.php/admin/
 
