@@ -12,4 +12,4 @@ captcha:
 
 blog:
   resource: "routing/blog/blog.yaml"
-  prefix:   /
+  prefix:   /blog
