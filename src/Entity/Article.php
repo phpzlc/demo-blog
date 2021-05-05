@@ -136,14 +136,19 @@ class Article
      * 将富文本内容的绝地地址转换成数据库存储的相对位置
      *
      * @param string $content
+     * @param $is_flush
      * @return $this
      */
-    public function setContent(string $content): self
+    public function setContent(string $content, $is_flush = true): self
     {
-        $request = ActionLoad::$globalContainer->get('request_stack');
-        $host = $request->getCurrentRequest()->getSchemeAndHttpHost(). $request->getCurrentRequest()->getBasePath() . '/';
+        if($is_flush) {
+            $request = ActionLoad::$globalContainer->get('request_stack');
+            $host = $request->getCurrentRequest()->getSchemeAndHttpHost() . $request->getCurrentRequest()->getBasePath() . '/';
 
-        $this->content = RichText::richTextRelativeUrl($content, $host);
+            $this->content = RichText::richTextRelativeUrl($content, $host);
+        }else{
+            $this->content = $content;
+        }
 
         return $this;
     }

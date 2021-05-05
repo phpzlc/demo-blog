@@ -52,7 +52,7 @@ class BlogFixtures extends Fixture
         $article = new Article();
         $article->setTitle('文章1')
             ->setArticleSummary('这是测试使用文章，你可以去后台新建文章')
-            ->setContent('<p>这是测试使用文章，你可以去后台新建文章</p>')
+            ->setContent('<p>这是测试使用文章，你可以去后台新建文章</p>', false)
             ->setCreateAt(new \DateTime())
             ->setClassify($classify);
 
