@@ -53,23 +53,23 @@ sudo chmod -R 777 var/ public/upload/
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:create
 
-//内置数据
-php bin/console doctrine:fixtures:load  --append
-
 //安装资源
 php bin/console assets:install  
 
+//内置数据(APP_ENV=dev环境下可执行)
+php bin/console doctrine:fixtures:load  --append
+
 //生成文档(非必须)
 php bin/console phpzlc:generate:document
-
-// 本地安装成功访问链接
-  前端地址: http://localhost/demo-blog/public/index.php/blog/
-  后端地址: http://localhost/demo-blog/public/index.php/admin/
-  后端登录账号密码: aitime 123456
 ```
 
+## 访问
 
+前端地址: http://localhost/demo-blog/public/index.php/
 
+后台地址: http://localhost/demo-blog/public/index.php/admin/
+
+后台管理员账号密码: aitime 123456
 
 ## 功能介绍
 
@@ -121,5 +121,6 @@ php bin/console phpzlc:generate:document
     
      
 ###  推荐使用浏览器
+
    谷歌浏览器
 
