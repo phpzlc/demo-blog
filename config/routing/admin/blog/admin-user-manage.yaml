@@ -1,0 +1,29 @@
+# 账号列表
+admin_manage_admin_user_index:
+  path:   /
+  controller: App\Controller\Admin\AdminUserController:index
+
+# 创建/编辑管理员
+admin_manage_admin_user_admin:
+  path:   /info
+  controller: App\Controller\Admin\AdminUserController:admin
+
+# 设置管理员角色
+admin_manage_admin_user_role:
+  path:   /role
+  controller: App\Controller\Admin\AdminUserController:adminRole
+
+# 删除管理员
+admin_manage_admin_user_del:
+  path:   /del
+  controller: App\Controller\Admin\AdminUserController:delAdmin
+
+# 移除角色
+admin_manage_admin_user_remove_role:
+  path:   /remove-role
+  controller: App\Controller\Admin\AdminUserController:removeRole
+
+# 添加角色
+admin_manage_admin_user_add_role:
+  path:   /add-role
+  controller: App\Controller\Admin\AdminUserController:addRole

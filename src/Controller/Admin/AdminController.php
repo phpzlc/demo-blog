@@ -63,14 +63,18 @@ class AdminController extends SystemBaseController
         //菜单
         $menus = [
             new Menu('博客管理系统', null, null, null, null, [
-                new Menu('统计台', null, 'admin_statistical_station_index', $this->generateUrl('admin_manage_statistical_station_index'), null),
-                new Menu('用户管理', null, 'admin_blog_user', $this->generateUrl('admin_users_index'), null),
-                new Menu('分类管理', null, 'admin_sort_index', $this->generateUrl('admin_manage_sort_index'), null),
-                new Menu('博客管理', null, null, null, null, [
+                new Menu('统计台', 'fa fa-bar-chart', 'admin_statistical_station_index', $this->generateUrl('admin_manage_statistical_station_index'), null),
+                new Menu('用户管理', 'fa fa-user-circle-o', 'admin_blog_user', $this->generateUrl('admin_users_index'), null),
+                new Menu('分类管理', 'fa fa-navicon', 'admin_sort_index', $this->generateUrl('admin_manage_sort_index'), null),
+                new Menu('博客管理', 'fa fa-clone', null, null, null, [
                     new Menu('文章管理', null, 'admin_article_index', $this->generateUrl('admin_blog_manage_article_index'), null),
                     new Menu('评论管理', null, 'admin_commentary_index', $this->generateUrl('admin_blog_manage_commentary_index'), null),
                     new Menu('标签管理', null, 'admin_label_index', $this->generateUrl('admin_blog_manage_label_index'), null),
                     new Menu('收藏管理', null, 'admin_collection_index', $this->generateUrl('admin_blog_manage_collection_index'), null)
+                ]),
+                new Menu('系统设置', 'fa fa-cog', null, null, null, [
+                    new Menu('角色与权限管理', null, 'admin_role_index', $this->generateUrl('admin_manage_admin_role_index')),
+                    new Menu('账号与角色管理', null, 'admin_user_role_index', $this->generateUrl('admin_manage_admin_user_index')),
                 ])
             ])
         ];
