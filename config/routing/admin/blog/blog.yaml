@@ -17,13 +17,3 @@ admin_blog_manage_label:
 admin_blog_manage_collection:
   prefix: /collection
   resource: 'collection/collection.yaml'
-
-# 管理端-角色与权限
-admin_manage_admin_role:
-  resource: "admin-role-manage.yaml"
-  prefix:   /admin-role
-
-# 管理端-账号与角色
-admin_manage_admin_user:
-  resource: "admin-user-manage.yaml"
-  prefix:   /admin-user

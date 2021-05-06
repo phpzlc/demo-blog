@@ -22,18 +22,45 @@ admin_manage_edit_password:
 admin_manage_statistical_station:
   prefix: /statistical-station
   resource: 'statistical-station/statistical-station.yaml'
+  options:
+    permission_group:
+    permission_tag: statistical_station
+    permission_description: 统计台权限
 
 # 管理端-分类管理
 admin_manage_sort:
   prefix: /classify
   resource: 'classify/classify.yaml'
+  options:
+    permission_group:
+    permission_tag: classify
+    permission_description: 分类管理权限
 
 # 管理端-用户管理
 admin_users_manage:
   prefix:   /users
   resource: 'users/users.yaml'
+  options:
+    permission_group:
+    permission_tag: user
+    permission_description: 用户管理权限
 
 # 管理端-博客管理
 admin_blog_manage:
   prefix:   /blog
   resource: 'blog/blog.yaml'
+  options:
+    permission_group:
+    permission_tag: blog_manage
+    permission_description: 博客管理权限
+
+# 管理端-系统设置
+admin_blog_system_setting:
+    prefix:   /system-setting
+    resource: 'system-setting/system-setting.yaml'
+    options:
+      permission_group:
+      permission_tag: system-setting
+      permission_description: 系统设置权限
+
+

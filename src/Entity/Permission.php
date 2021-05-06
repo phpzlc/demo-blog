@@ -116,6 +116,13 @@ class Permission
         return $this->routes;
     }
 
+    public function addRoute($route)
+    {
+        $this->routes[] = $route;
+
+        return $this;
+    }
+
     public function setRoutes(array $routes): self
     {
         $this->routes = $routes;
