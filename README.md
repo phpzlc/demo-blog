@@ -65,9 +65,15 @@ php bin/console phpzlc:generate:document
 
 ## 访问
 
-博客地址: http://localhost/demo-blog/public/index.php/blog/
+推荐浏览器: **谷歌浏览器**
 
-后台地址: http://localhost/demo-blog/public/index.php/admin/
+浏览器访问项目`public`目录。
+
+博客地址: {project_public_dir}/index.php/blog/
+
+后台地址: {project_public_dir}/index.php/admin/
+
+接口文档地址: {project_public_dir}/apidoc/index.html
 
 后台管理员账号密码: aitime 123456
 
@@ -118,9 +124,4 @@ php bin/console phpzlc:generate:document
 8. 报表
 
     主分类下的博客数，收藏数
-    
-     
-###  推荐使用浏览器
-
-   谷歌浏览器
 
