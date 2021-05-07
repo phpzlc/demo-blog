@@ -13,6 +13,8 @@ namespace App\Controller\Admin;
 use App\Business\AuthBusiness\CurAuthSubject;
 use App\Business\AuthBusiness\UserAuthBusiness;
 use App\Business\PlatformBusiness\PlatformClass;
+use App\Business\RBACBusiness\PermissionBusiness;
+use App\Business\RBACBusiness\RBACBusiness;
 use App\Entity\UserAuth;
 use App\Repository\AdminRepository;
 use PHPZlc\Admin\Strategy\AdminStrategy;
@@ -21,6 +23,7 @@ use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -54,11 +57,17 @@ class AdminController extends SystemBaseController
      */
     protected $page_tag;
 
+    /**
+     * @var RBACBusiness
+     */
+    protected $rbac;
+
     public function inlet($returnType = SystemBaseController::RETURN_HIDE_RESOURCE, $isLogin = true)
     {
         PlatformClass::setPlatform($this->getParameter('platform_admin'));
 
         $this->adminRepository = $this->getDoctrine()->getRepository('App:Admin');
+        $this->rbac = new RBACBusiness($this->container, PlatformClass::getPlatform());
 
         //菜单
         $menus = [
@@ -89,6 +98,7 @@ class AdminController extends SystemBaseController
             ->setSettingPwdUrl($this->generateUrl('admin_manage_edit_password'))
             ->setMenuModel(AdminStrategy::menu_model_simple)
             ->setPageTag($this->page_tag)
+            ->setClearCacheApiUrl($this->generateUrl('admin_manage_clearCache'))
             ->setLogo($this->adminStrategy->getBaseUrl() . '/asset/logo.png')
             ->setMenus($menus);
 
@@ -115,11 +125,19 @@ class AdminController extends SystemBaseController
             $this->adminStrategy->setAdminName(CurAuthSubject::getCurUser()->getAccount());
             $this->adminStrategy->setAdminRoleName(CurAuthSubject::getCurUser()->getName());
 
+            $this->rbac->setIsSuper(CurAuthSubject::getCurUser()->getIsSuper());
 
             //对路由进行权限校验
-
+            if(!$this->rbac->canRoute($this->get('request_stack')->getCurrentRequest()->get('_route'))){
+                if(self::getReturnType() == SystemBaseController::RETURN_HIDE_RESOURCE){
+                    return Responses::error('权限不足');
+                }else{
+                    return $this->render('@PHPZlcAdmin/page/no_permission.html.twig');
+                }
+            }
 
             //对菜单进行权限筛选
+            $this->adminStrategy->setMenus($this->rbac->menusFilter($this->adminStrategy->getMenus()));
         }
 
         return true;
@@ -143,6 +161,29 @@ class AdminController extends SystemBaseController
         }
 
         return $this->render('admin/auth/login.html.twig');
+    }
+
+    /**
+     * 清除缓存
+     *
+     * @return bool|JsonResponse|RedirectResponse|Response
+     */
+    public function clearCache()
+    {
+        $r = $this->inlet();
+        if($r !== true){
+            return $r;
+        }
+
+        (new PermissionBusiness($this->container))->builtUpdatePermission();
+
+        $this->get('session')->remove(($this->rbac->getCacheSessionName()));
+
+        if(Errors::isExistError()){
+            return Responses::error(Errors::getError());
+        }
+
+        return Responses::success('缓存清除成功');
     }
 
     /**

@@ -18,6 +18,11 @@ admin_manage_edit_password:
   path:   /edit-password
   controller: App\Controller\Admin\AuthController:editPassword
 
+# 清除缓存
+admin_manage_clearCache:
+  path: /clearCache
+  controller: App\Controller\Admin\AdminController:clearCache
+
 # 管理端-统计台
 admin_manage_statistical_station:
   prefix: /statistical-station

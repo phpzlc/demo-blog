@@ -73,11 +73,11 @@ class ArticleBusiness extends AbstractBusiness
      *
      * @param Article $article
      * @param null $labels
-     * @param null $sort
+     * @param false $is_built
      * @return bool
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function create(Article $article, $labels = null, $sort = null)
+    public function create(Article $article, $labels = null, $is_built = false)
     {
         if(!$this->validator($article)){
             return false;
@@ -111,6 +111,11 @@ class ArticleBusiness extends AbstractBusiness
                         }
                     }
                 }
+            }
+
+            if($is_built){
+                $user = $this->getDoctrine()->getRepository('App:Admin')->findAssoc(['name' => '超级管理员']);
+                $article->setUserAuth($user->getUserAuth());
             }
 
             $this->em->flush();

@@ -58,6 +58,6 @@ class BlogFixtures extends Fixture
 
         $labels[] = $label->getId();
 
-        (new ArticleBusiness($this->container))->create($article, $labels);
+        (new ArticleBusiness($this->container))->create($article, $labels, true );
     }
 }

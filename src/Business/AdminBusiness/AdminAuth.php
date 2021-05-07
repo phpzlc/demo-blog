@@ -10,8 +10,11 @@
 
 namespace App\Business\AdminBusiness;
 
+use App\Business\AuthBusiness\CurAuthSubject;
 use App\Business\AuthBusiness\SubjectAuthInterface;
 use App\Business\AuthBusiness\UserAuthBusiness;
+use App\Business\PlatformBusiness\PlatformClass;
+use App\Business\RBACBusiness\RBACBusiness;
 use App\Entity\Admin;
 use App\Entity\UserAuth;
 use App\Repository\AdminRepository;
@@ -182,7 +185,27 @@ class AdminAuth extends AbstractBusiness implements SubjectAuthInterface
      */
     public function inletSet(UserAuth $userAuth)
     {
+        $rbac = new RBACBusiness($this->container, PlatformClass::getPlatform());
+        $user = $this->adminRepository->find($userAuth->getSubjectId());
+        $rbac->setIsSuper($user->getIsSuper());
 
+        if(!$rbac->can('statistical_station', 'and', $userAuth)) {
+            if($rbac->can('classify', 'and', $userAuth)){
+                $curAuthSuccessGoUrl = $this->generateUrl('admin_manage_sort_index');
+            }elseif ($rbac->can('user', 'and', $userAuth)){
+                $curAuthSuccessGoUrl = $this->generateUrl('admin_users_index');
+            }elseif ($rbac->can('blog_manage', 'and', $userAuth)){
+                $curAuthSuccessGoUrl = $this->generateUrl('admin_blog_manage_article_index');
+            }elseif ($rbac->can('system-setting', 'and', $userAuth)){
+                $curAuthSuccessGoUrl = $this->generateUrl('admin_manage_admin_role_index');
+            }
+        }else{
+            $curAuthSuccessGoUrl = $this->generateUrl('admin_manage_statistical_station_index');
+        }
+
+        if(!empty($curAuthSuccessGoUrl)){
+            CurAuthSubject::setCurAuthSuccessGoUrl($curAuthSuccessGoUrl);
+        }
     }
 
 }
