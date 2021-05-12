@@ -124,4 +124,42 @@ php bin/console phpzlc:generate:document
 8. 报表
 
     主分类下的博客数，收藏数
+    
+9. 效果
+    登录页面
+    
+    ![登录](/public/readme/index.png)
+    
+    控制台
+    
+    ![控制台](/public/readme/console.png)
+    
+    用户页面
+    
+    ![用户](/public/readme/user.png)
+    
+    分类页面
+    
+    ![分类](/public/readme/classify.png)    
 
+    新建文章
+    
+    ![文章](/public/readme/editArticle.png)
+    
+    角色与权限
+    
+    ![角色与权限](/public/readme/roleIndex.png)
+    
+    设置权限
+    
+    ![权限](/public/readme/editRole.png)
+    
+    账号与角色
+    
+    ![账号与角色](/public/readme/adminRole.png)
+    
+    设置角色
+    
+    ![角色](/public/readme/editAdminRole.png)
+    
+    
