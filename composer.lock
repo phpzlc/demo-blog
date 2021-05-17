@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fbede04309b51d5d7383fe70e838db2",
+    "content-hash": "f4ffb4bf5d2d6747c55db986222bf8b1",
     "packages": [
         {
             "name": "brick/math",
@@ -2573,16 +2573,16 @@
         },
         {
             "name": "phpzlc/phpzlc",
-            "version": "v1.0.8",
+            "version": "v1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpzlc/phpzlc.git",
-                "reference": "05ad7fb0b82323eea47a73e408e24210dbbcad65"
+                "reference": "4e6faf6843e435f4e8cb166f0ec73cb00cd0807b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpzlc/phpzlc/zipball/05ad7fb0b82323eea47a73e408e24210dbbcad65",
-                "reference": "05ad7fb0b82323eea47a73e408e24210dbbcad65",
+                "url": "https://api.github.com/repos/phpzlc/phpzlc/zipball/4e6faf6843e435f4e8cb166f0ec73cb00cd0807b",
+                "reference": "4e6faf6843e435f4e8cb166f0ec73cb00cd0807b",
                 "shasum": ""
             },
             "require": {
@@ -2618,12 +2618,7 @@
                 "phpzlc",
                 "symfony"
             ],
-            "support": {
-                "email": "1044295598@qq.com",
-                "issues": "https://github.com/phpzlc/phpzlc/issues",
-                "source": "https://github.com/phpzlc/phpzlc/tree/v1.0.8"
-            },
-            "time": "2021-03-12T02:49:08+00:00"
+            "time": "2021-05-14T03:49:47+00:00"
         },
         {
             "name": "phpzlc/platform-business",

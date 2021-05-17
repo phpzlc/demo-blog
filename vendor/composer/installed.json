@@ -2694,17 +2694,17 @@
     },
     {
         "name": "phpzlc/phpzlc",
-        "version": "v1.0.8",
-        "version_normalized": "1.0.8.0",
+        "version": "v1.0.21",
+        "version_normalized": "1.0.21.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpzlc/phpzlc.git",
-            "reference": "05ad7fb0b82323eea47a73e408e24210dbbcad65"
+            "reference": "4e6faf6843e435f4e8cb166f0ec73cb00cd0807b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpzlc/phpzlc/zipball/05ad7fb0b82323eea47a73e408e24210dbbcad65",
-            "reference": "05ad7fb0b82323eea47a73e408e24210dbbcad65",
+            "url": "https://api.github.com/repos/phpzlc/phpzlc/zipball/4e6faf6843e435f4e8cb166f0ec73cb00cd0807b",
+            "reference": "4e6faf6843e435f4e8cb166f0ec73cb00cd0807b",
             "shasum": ""
         },
         "require": {
@@ -2716,7 +2716,7 @@
             "ramsey/uuid": "^4.1",
             "symfony/framework-bundle": "4.4.*"
         },
-        "time": "2021-03-12T02:49:08+00:00",
+        "time": "2021-05-14T03:49:47+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2741,12 +2741,7 @@
         "keywords": [
             "phpzlc",
             "symfony"
-        ],
-        "support": {
-            "email": "1044295598@qq.com",
-            "issues": "https://github.com/phpzlc/phpzlc/issues",
-            "source": "https://github.com/phpzlc/phpzlc/tree/v1.0.8"
-        }
+        ]
     },
     {
         "name": "phpzlc/platform-business",
