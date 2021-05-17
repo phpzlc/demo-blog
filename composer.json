@@ -30,6 +30,8 @@
         "symfony/property-info": "4.4.*",
         "symfony/proxy-manager-bridge": "4.4.*",
         "symfony/security-bundle": "4.4.*",
+        "symfony/security-core": "4.4.23",
+        "symfony/security-guard": "4.4.23",
         "symfony/serializer": "4.4.*",
         "symfony/translation": "4.4.*",
         "symfony/twig-bundle": "^4.4",
@@ -90,9 +92,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": true,
-            "require": "4.4.*",
-            "endpoint": "http://127.0.0.1:8000"
+            "allow-contrib": false,
+            "require": "4.4.*"
         }
     }
 }
