@@ -262,7 +262,7 @@ class UserAuthBusiness extends AbstractBusiness
             return false;
         }
 
-        $userAuth->setPassword($this->encryptPassword($new_password, $userAuth->getSalt()));
+        $userAuth->setPassword($new_password);
 
         try {
             $this->em->flush();
