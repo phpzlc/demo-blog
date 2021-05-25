@@ -81,35 +81,64 @@ php bin/console phpzlc:generate:document
 
 ### 前台功能
 
-1. 用户登录，个人中心，修改密码，登录，退出登录。
+1. 登录
 
-2. 博客列表。
+    ![登录](/public/readme/fore-end/login.png)
+
+2. 博客列表
+    
+    ![列表](/public/readme/fore-end/index.png)
 
 3. 博客详情.
+    
+    ![详情](/public/readme/fore-end/article.png)
+    
+4. 博客分类
 
-4. 收藏博客.
+    ![分类](/public/readme/fore-end/classify.png)
+    
+5. 博客标签
+    
+    ![标签](/public/readme/fore-end/label.png)
+    
+6. 关于我
 
+    ![关于我](/public/readme/fore-end/about.png)   
 
 ### 后台功能
 
 1. 登录，修改密码，退出登录。
 
-2. 博客分类管理（一级）
+    ![登录](/public/readme/index.png)
+    
+2. 博客分类管理（一级)
 
+    ![分类](/public/readme/classify.png)
+    
 3. 博客管理 
 
-     发布编辑删除 
+     发布编辑删除
+     
+      ![博客](/public/readme/editArticle.png)
       
      评论管理
      
+     ![评论](/public/readme/comment.png)
+     
      发布编辑 （博客标签）
      
+     ![博客](/public/readme/editLable.png)
      
+    
 4. 用户管理
 
-     用户名，收藏文章数， 最后登录时间， 禁用启用
+     用户名，最后登录时间， 禁用启用
      
-5. 收藏管理     
+     ![用户](/public/readme/user.png)
+     
+5. 收藏管理
+    
+    ![收藏](/public/readme/collection.png)     
      
 6. 控制台
 
@@ -121,45 +150,27 @@ php bin/console phpzlc:generate:document
     
     总收藏数
     
+    ![控制台](/public/readme/console.png)
+    
 8. 报表
 
     主分类下的博客数，收藏数
     
-9. 效果
-    登录页面
-    
-    ![登录](/public/readme/index.png)
-    
-    控制台
-    
     ![控制台](/public/readme/console.png)
     
-    用户页面
-    
-    ![用户](/public/readme/user.png)
-    
-    分类页面
-    
-    ![分类](/public/readme/classify.png)    
+9. 权限系统
 
-    新建文章
+    账号与角色管理
     
-    ![文章](/public/readme/editArticle.png)
+    ![角色](/public/readme/adminRole.png)
     
-    角色与权限
+    ![角色](/public/readme/editAdminRole.png)
     
-    ![角色与权限](/public/readme/roleIndex.png)
+    角色与权限管理
     
-    设置权限
+    ![权限](/public/readme/roleIndex.png)
     
     ![权限](/public/readme/editRole.png)
     
-    账号与角色
-    
-    ![账号与角色](/public/readme/adminRole.png)
-    
-    设置角色
-    
-    ![角色](/public/readme/editAdminRole.png)
     
     
