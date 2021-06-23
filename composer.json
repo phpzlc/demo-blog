@@ -94,7 +94,7 @@
         "symfony": {
             "allow-contrib": true,
             "require": "4.4.*",
-            "endpoint": "http://127.0.0.1:8000"
+            "endpoint": "https://phpzlc.com/"
         }
     }
 }
