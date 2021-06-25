@@ -177,7 +177,8 @@ class AdminController extends SystemBaseController
 
         (new PermissionBusiness($this->container))->builtUpdatePermission();
 
-        $this->get('session')->remove(($this->rbac->getCacheSessionName()));
+        //清除当前用户权限菜单
+        $this->rbac->clearCache($this->curUserAuth);
 
         if(Errors::isExistError()){
             return Responses::error(Errors::getError());
