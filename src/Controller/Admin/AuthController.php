@@ -75,6 +75,9 @@ class AuthController extends AdminController
         }
 
         AuthTag::remove($this->container);
+        
+        //清除当前用户权限菜单
+        $this->rbac->clearCache($this->curUserAuth);
 
         return $this->redirect($this->adminStrategy->getEntranceUrl());
     }
