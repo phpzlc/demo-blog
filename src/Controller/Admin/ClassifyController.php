@@ -13,6 +13,7 @@ namespace App\Controller\Admin;
 use App\Business\ClassifyBusiness\ClassifyBusiness;
 use App\Entity\Classify;
 use App\Repository\ClassifyRepository;
+use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -42,6 +43,8 @@ class ClassifyController extends AdminController
         if($r !== true){
             return $r;
         }
+
+        $this->adminStrategy->addNavigation(new Navigation('分类管理'));
 
         $this->classifyRepository = $this->getDoctrine()->getRepository('App:Classify');
         $this->classifyBusiness = new ClassifyBusiness($this->container);
@@ -104,6 +107,9 @@ class ClassifyController extends AdminController
 
         if(!empty($id)){
             $classify = $this->classifyRepository->find($id);
+            $this->adminStrategy->addNavigation(new Navigation('编辑分类'));
+        }else{
+            $this->adminStrategy->addNavigation(new Navigation('新建分类'));
         }
 
         return $this->render('admin/classify/edit.html.twig', array(

@@ -12,6 +12,8 @@ namespace App\Controller\Admin\BlogManager;
 
 use App\Controller\Admin\AdminController;
 use App\Repository\CommentaryRepository;
+use PhpParser\Node\Name;
+use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use PHPZlc\PHPZlc\Responses\Responses;
@@ -35,6 +37,8 @@ class CommentaryController extends AdminController
         if($r !== true){
             return $r;
         }
+
+        $this->adminStrategy->addNavigation(new Navigation('评论管理'));
 
         $this->commentaryRepository = $this->getDoctrine()->getRepository('App:Commentary');
 

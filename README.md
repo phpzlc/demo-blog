@@ -73,7 +73,7 @@ php bin/console phpzlc:generate:document
 
 浏览器访问项目`public`目录。
 
-博客地址: {project_public_dir}/index.php/blog/
+博客地址: {project_public_dir}/index.php/
 
 后台地址: {project_public_dir}/index.php/admin/
 

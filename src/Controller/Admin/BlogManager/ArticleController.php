@@ -127,6 +127,9 @@ class ArticleController extends AdminController
         if(!empty($id)){
             $info = $this->articleRepository->find($id);
             $article_labels = $this->getDoctrine()->getRepository('App:ArticleLabel')->findAll(['article_id' => $id]);
+            $this->adminStrategy->addNavigation(new Navigation('编辑文章'));
+        }else{
+            $this->adminStrategy->addNavigation(new Navigation('新建文章'));
         }
 
         $labels = $this->getDoctrine()->getRepository('App:Label')->findAll(['is_del' => 0]);

@@ -82,8 +82,8 @@ class AdminController extends SystemBaseController
                     new Menu('收藏管理', null, 'admin_collection_index', $this->generateUrl('admin_blog_manage_collection_index'), null)
                 ]),
                 new Menu('系统设置', 'fa fa-cog', null, null, null, [
-                    new Menu('角色与权限管理', null, 'admin_role_index', $this->generateUrl('admin_manage_admin_role_index')),
-                    new Menu('账号与角色管理', null, 'admin_user_role_index', $this->generateUrl('admin_manage_admin_user_index')),
+                    new Menu('角色与权限管理', null, 'admin_role_index', $this->generateUrl('admin_manage_admin_role_index'), null),
+                    new Menu('账号与角色管理', null, 'admin_user_role_index', $this->generateUrl('admin_manage_admin_user_index'), null),
                 ])
             ])
         ];

@@ -12,6 +12,7 @@ namespace App\Controller\Admin\BlogManager;
 
 use App\Controller\Admin\AdminController;
 use App\Repository\CollectionRepository;
+use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,8 @@ class CollectionController extends AdminController
         if($r !== true){
             return $r;
         }
+
+        $this->adminStrategy->addNavigation(new Navigation('收藏管理'));
 
         $this->collectionRepository = $this->getDoctrine()->getRepository('App:Collection');
 

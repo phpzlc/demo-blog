@@ -14,6 +14,7 @@ use App\Business\LabelBusiness\LabelBusiness;
 use App\Controller\Admin\AdminController;
 use App\Entity\Label;
 use App\Repository\LabelRepository;
+use PHPZlc\Admin\Strategy\Navigation;
 use PHPZlc\PHPZlc\Abnormal\Errors;
 use PHPZlc\PHPZlc\Bundle\Controller\SystemBaseController;
 use PHPZlc\PHPZlc\Doctrine\ORM\Rule\Rule;
@@ -43,6 +44,8 @@ class LabelController extends AdminController
         if($r !== true){
             return $r;
         }
+
+        $this->adminStrategy->addNavigation(new Navigation('标签管理'));
 
         $this->labelRepository = $this->getDoctrine()->getRepository('App:Label');
         $this->labelBusiness = new LabelBusiness($this->container);
@@ -104,6 +107,9 @@ class LabelController extends AdminController
 
         if(!empty($id)){
             $info = $this->labelRepository->find($id);
+            $this->adminStrategy->addNavigation(new Navigation('编辑标签'));
+        }else{
+            $this->adminStrategy->addNavigation(new Navigation('新建标签'));
         }
 
         return $this->render('admin/blog/label/edit.html.twig', array(
