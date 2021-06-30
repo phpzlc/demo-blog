@@ -16,7 +16,7 @@ blog_tags:
 # 博客文章
 blog_article:
  controller:  App\Controller\Blog\BlogController::blog
- path:    /blog
+ path:    /article
 
 # 博客关于我
 blog_about:
