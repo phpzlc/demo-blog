@@ -2,6 +2,10 @@
 
 用于展示PHPZlc框架在实践场景下的使用方法。
 
+# 在线演示地址
+
+[http://demo.blog.phpzlc.com](http://demo.blog.phpzlc.com)
+
 ## 环境要求
 
     php 7.3
