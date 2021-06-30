@@ -136,7 +136,6 @@ class AdminController extends SystemBaseController
                 }
             }
 
-            //对菜单进行权限筛选
             $this->adminStrategy->setMenus($this->rbac->menusFilter($this->adminStrategy->getMenus()));
         }
 
