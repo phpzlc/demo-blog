@@ -51,7 +51,8 @@ class BlogBaseController extends SystemBaseController
             new Menu('首页', null, 'blog_index', $this->generateUrl('blog_index'), null),
             new Menu('分类', null, 'blog_types', $this->generateUrl('blog_types'), null),
             new Menu('标签', null, 'blog_tags', $this->generateUrl('blog_tags'), null),
-            new Menu('关于我', null, 'blog_about', $this->generateUrl('blog_about'), null)
+            new Menu('关于我', null, 'blog_about', $this->generateUrl('blog_about'), null),
+            new Menu('后台管理', null, null, $this->generateUrl('admin_manage_index'))
         ];
 
         $this->adminStrategy = new AdminStrategy($this->container);
