@@ -26,17 +26,17 @@ blog_about:
 # 博客登录页面
 blog_login_page:
   controller: App\Controller\Blog\BlogController::loginPage
-  path: /page
+  path: /login
 
 # 博客注册页面
 blog_register_page:
   controller: App\Controller\Blog\BlogController::registerPage
-  path: /register-page
+  path: /register
 
 # 博客登录
 blog_login:
   controller: App\Controller\Blog\BlogController::login
-  path: /login
+  path: /login-api
 
 # 博客退出登录
 blog_login_out:
@@ -51,7 +51,7 @@ blog_edit_password:
 # 博客注册
 blog_register:
   controller: App\Controller\Blog\BlogController::register
-  path: /register
+  path: /register-api
 
 # 博客评论
 blog_comment:
