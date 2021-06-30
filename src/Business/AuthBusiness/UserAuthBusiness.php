@@ -287,7 +287,7 @@ class UserAuthBusiness extends AbstractBusiness
         $userAuth = AuthTag::get($this->container);
 
         if(empty($userAuth)){
-            Errors::setErrorMessage('登录超时');
+            Errors::setErrorMessage('请先登录！');
             return false;
         }
 

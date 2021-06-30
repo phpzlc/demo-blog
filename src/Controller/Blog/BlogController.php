@@ -168,6 +168,12 @@ class BlogController extends BlogBaseController
 
         $id = $request->get('id');
 
+        $where = '';
+
+        if(!empty($id)){
+            $where = "AND sql_pre.id in (SELECT GROUP_CONCAT(al.article_id) FROM article_label al WHERE al.label_id = '{$id}') ";
+        }
+
         $count = $this->labelRepository->findCount();
 
         $labels = $this->labelRepository->findAll([
@@ -179,8 +185,7 @@ class BlogController extends BlogBaseController
               'userAuth' . Rule::RA_JOIN => array(
                   'alias' => 'ua'
               ),
-            Rule::R_WHERE => "AND sql_pre.id in (SELECT GROUP_CONCAT(al.article_id) FROM article_label al WHERE al.label_id = '{$id}') "
-
+            Rule::R_WHERE => $where
         ]);
 
         return $this->render('blog/tags.html.twig', array(
