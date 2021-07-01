@@ -75,13 +75,13 @@ class AdminController extends SystemBaseController
                 new Menu('统计台', 'fa fa-bar-chart', 'admin_statistical_station_index', $this->generateUrl('admin_manage_statistical_station_index'), null),
                 new Menu('用户管理', 'fa fa-user-circle-o', 'admin_blog_user', $this->generateUrl('admin_users_index'), null),
                 new Menu('分类管理', 'fa fa-navicon', 'admin_sort_index', $this->generateUrl('admin_manage_sort_index'), null),
-                new Menu('博客管理', 'fa fa-clone', null, null, null, [
+                new Menu('博客管理', 'fa fa-clone', null,  $this->generateUrl('admin_blog_manage_article_index'), null, [
                     new Menu('文章管理', null, 'admin_article_index', $this->generateUrl('admin_blog_manage_article_index'), null),
                     new Menu('评论管理', null, 'admin_commentary_index', $this->generateUrl('admin_blog_manage_commentary_index'), null),
                     new Menu('标签管理', null, 'admin_label_index', $this->generateUrl('admin_blog_manage_label_index'), null),
                     new Menu('收藏管理', null, 'admin_collection_index', $this->generateUrl('admin_blog_manage_collection_index'), null)
                 ]),
-                new Menu('系统设置', 'fa fa-cog', null, null, null, [
+                new Menu('系统设置', 'fa fa-cog', null, $this->generateUrl('admin_manage_admin_role_index'), null, [
                     new Menu('角色与权限管理', null, 'admin_role_index', $this->generateUrl('admin_manage_admin_role_index'), null),
                     new Menu('账号与角色管理', null, 'admin_user_role_index', $this->generateUrl('admin_manage_admin_user_index'), null),
                 ])
@@ -96,10 +96,11 @@ class AdminController extends SystemBaseController
             ->setEntranceUrl($this->generateUrl('admin_manage_index'))
             ->setEndUrl($this->generateUrl('admin_manage_logout'))
             ->setSettingPwdUrl($this->generateUrl('admin_manage_edit_password'))
-            ->setMenuModel(AdminStrategy::menu_model_simple)
+            ->setMenuModel(AdminStrategy::menu_model_all)
             ->setPageTag($this->page_tag)
             ->setClearCacheApiUrl($this->generateUrl('admin_manage_clearCache'))
             ->setLogo($this->adminStrategy->getBaseUrl() . '/asset/logo.png')
+            ->setFaviconIco($this->adminStrategy->getBaseUrl() . '/asset/favicon.ico')
             ->setMenus($menus);
 
         $r = parent::inlet($returnType, $isLogin);
