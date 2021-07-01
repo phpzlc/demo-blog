@@ -96,7 +96,7 @@ class AdminController extends SystemBaseController
             ->setEntranceUrl($this->generateUrl('admin_manage_index'))
             ->setEndUrl($this->generateUrl('admin_manage_logout'))
             ->setSettingPwdUrl($this->generateUrl('admin_manage_edit_password'))
-            ->setMenuModel(AdminStrategy::menu_model_all)
+            ->setMenuModel(AdminStrategy::menu_model_simple)
             ->setPageTag($this->page_tag)
             ->setClearCacheApiUrl($this->generateUrl('admin_manage_clearCache'))
             ->setLogo($this->adminStrategy->getBaseUrl() . '/asset/logo.png')
