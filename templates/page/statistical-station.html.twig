@@ -1,0 +1,187 @@
+{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+
+{% block hend %}
+    <!-- 引用图表的特殊js start -->
+
+    <script type="application/javascript" src="{{ admin_asset('bundles/phpzlcadmin/echarts/echarts.min.js') }}"></script>
+    <script type="application/javascript" src="{{ admin_asset('bundles/phpzlcadmin/echarts/theme/macarons.js') }}"></script>
+
+    <!-- 引用图表的特殊js end -->
+
+{% endblock %}
+
+{% block main_content %}
+    <div class="console-page clearfix">
+
+        <!-- 块状数据图 start -->
+
+        <div class="console-small-statistics clearfix">
+            <a :class="'console-small-statistics-bg'+(index+1)"
+               v-for="(item, index) in consoleSmall" :key="index" :href= "item.src" style="margin-left: 40px">
+                <p class="console-statistics-name">${item.name}$:</p>
+                <p class="console-statistics-value">${item.value}$</p>
+            </a>
+        </div>
+
+        <!-- 块状数据图 end -->
+
+
+
+        <!-- 线性图/柱状图 start -->
+
+        <div class="echarts-content clearfix">
+            <el-col>
+                <el-col :span="12">
+                    <div id="main1" style="width: 100%;height:400px;">
+                    </div>
+                    <span style="position: absolute; margin-left: 365px; margin-top: -30px; z-index: 100; font-size: 16px">线性图标题</span>
+                </el-col>
+
+                <el-col :span="12">
+                    <div id="main2" style="width: 100%;height:400px;"></div>
+                    <span style="position: absolute; margin-left: 365px; margin-top: -30px; z-index: 100; font-size: 16px">柱状图标题</span>
+
+                </el-col>
+            </el-col>
+        </div>
+
+        <!-- 线性图/柱状图 end -->
+
+    </div>
+
+{% endblock %}
+
+{% block main_content_vue %}
+    <script>
+        new Vue({
+            el: '#main-content',
+            delimiters: ['${', '}$'],
+            data: function () {
+                return {
+                    // 块状数据图数据(根据数据数量进行渲染)
+                    consoleSmall: [
+                        {
+                            id: 1,
+                            name: '总用户数',
+                            value: '{{ users }}',
+                            src: '{{ path('admin_users_index') }}'
+                        },
+                        {
+                            id: 2,
+                            name: '总博客数',
+                            value: '{{ articles }}',
+                            src: '{{ path('admin_blog_manage_article_index') }}'
+                        },
+                        {
+                            id: 3,
+                            name: '总评论数',
+                            value: '{{ commentaries }}',
+                            src: '{{ path('admin_blog_manage_commentary_index') }}'
+                        },
+                        {
+                            id: 4,
+                            name: '总收藏数',
+                            value: '{{ collections }}',
+                            src: '{{ path('admin_blog_manage_collection_index') }}'
+                        },
+                    ],
+
+
+                }
+            },
+            created() {
+                // // 页面初始化使用
+                // console.log(1);
+            },
+
+            mounted() {
+            },
+            methods: {
+            }
+        })
+    </script>
+    <script>
+        // 线性图/柱状图数据渲染方法
+        setTimeout(function(){
+            // 基于准备好的dom，初始化echarts实例
+            var myChart1 = echarts.init(document.getElementById('main1'), "macarons");
+
+            // 线性图数据显示
+            option1 = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [
+                        '{{ articles_chart[7]['date'] }}',
+                        '{{ articles_chart[6]['date'] }}',
+                        '{{ articles_chart[5]['date'] }}',
+                        '{{ articles_chart[4]['date'] }}',
+                        '{{ articles_chart[3]['date'] }}',
+                        '{{ articles_chart[2]['date'] }}',
+                        '{{ articles_chart[1]['date'] }}',
+                    ],
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [
+                        {{ articles_chart[7]['articles_number'] }},
+                        {{ articles_chart[6]['articles_number'] }},
+                        {{ articles_chart[5]['articles_number'] }},
+                        {{ articles_chart[4]['articles_number'] }},
+                        {{ articles_chart[3]['articles_number'] }},
+                        {{ articles_chart[2]['articles_number'] }},
+                        {{ articles_chart[1]['articles_number'] }},
+                    ],
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart1.setOption(option1);
+
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart2 = echarts.init(document.getElementById('main2'), "macarons");
+
+            // 柱状图数据显示
+            option2 = {
+                xAxis: {
+                    type: 'category',
+                    data: [
+                        '{{ users_chart[7]['date'] }}',
+                        '{{ users_chart[6]['date'] }}',
+                        '{{ users_chart[5]['date'] }}',
+                        '{{ users_chart[4]['date'] }}',
+                        '{{ users_chart[3]['date'] }}',
+                        '{{ users_chart[2]['date'] }}',
+                        '{{ users_chart[1]['date'] }}',
+                    ],
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [
+                        {{ users_chart[7]['users_number'] }},
+                        {{ users_chart[6]['users_number'] }},
+                        {{ users_chart[5]['users_number'] }},
+                        {{ users_chart[4]['users_number'] }},
+                        {{ users_chart[3]['users_number'] }},
+                        {{ users_chart[2]['users_number'] }},
+                        {{ users_chart[1]['users_number'] }},
+                    ],
+                    type: 'bar',
+                    showBackground: true,
+                    backgroundStyle: {
+                        color: 'rgba(220, 220, 220, 0.8)'
+                    }
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart2.setOption(option2);
+        }, 1500)
+    </script>
+
+{% endblock %}
