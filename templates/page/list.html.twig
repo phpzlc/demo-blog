@@ -7,32 +7,27 @@
         <el-row class="page-search">
             <el-form ref="searchForm" :inline="true" :model="searchForm" label-width="90px" style="margin-left: 10px">
 
-                <el-form-item label="标签名" prop="user_name">
+                <el-form-item label="用户名" prop="user_name">
                     <el-input v-model="searchForm.user_name" size="mini" clearable placeholder="请输入">
                     </el-input>
                 </el-form-item>
 
-                <el-form-item label="标签名:" prop="title">
-                    <el-input v-model="searchForm.title" size="mini" clearable placeholder="请输入">
-                    </el-input>
-                </el-form-item>
-
-                <el-form-item label="时间选择控件" prop="create_at" class="search-item-time">
+                <el-form-item label="登录时间" prop="create_at" class="search-item-time">
                     <el-date-picker v-model="searchForm.create_at" size="mini" clearable type="daterange"
                                     range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
                     </el-date-picker>
                 </el-form-item>
 
-                <el-form-item label="下拉选择控件" prop="create_at" class="search-item-time">
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                    </el-option>
-                </el-select>
-                </el-form-item>
+{#                <el-form-item label="下拉选择控件" prop="create_at" class="search-item-time">#}
+{#                <el-select v-model="value" placeholder="请选择">#}
+{#                    <el-option#}
+{#                            v-for="item in options"#}
+{#                            :key="item.value"#}
+{#                            :label="item.label"#}
+{#                            :value="item.value">#}
+{#                    </el-option>#}
+{#                </el-select>#}
+{#                </el-form-item>#}
 
                 <el-form-item>
                     <el-button type="primary" size="mini" @click="searchBtn()"> 搜索 </el-button>
@@ -52,20 +47,17 @@
 
         <!-- 数据显示 start-->
         <el-table :data="listData" style="width: 100%" border class="mt-10">
-            <el-table-column prop="data" label="列名"></el-table-column>
+            <el-table-column prop="data1" label="用户名"></el-table-column>
 
-            <el-table-column prop="data" label="列名"></el-table-column>
+            <el-table-column prop="data2" label="注册时间"></el-table-column>
 
-            <el-table-column prop="data" label="列名"></el-table-column>
-
-            <el-table-column prop="data" label="列名"></el-table-column>
-
-            <el-table-column prop="data" label="列名"></el-table-column>
+            <el-table-column prop="data3" label="最后登录时间"></el-table-column>
 
             <!-- 添加操作行 start -->
             <el-table-column prop="date" label="操作" width="250">
                 <template slot-scope="scope">
                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary"> 编辑 </el-button>
+                    <el-button size="mini" @click="handleInfo(scope.$index, scope.row)" type="primary"> 详情 </el-button>
                     <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" type="danger"> 删除 </el-button>
                 </template>
             </el-table-column>
@@ -97,33 +89,35 @@
                     // 搜索框数据
                     searchForm: {
                         user_name: '{{ app.request.get('user_name') }}',
-                        title: '{{ app.request.get('title') }}',
                         // 对于时间数据进行特殊转换处理
                         create_at: {{ app.request.get('create_at') | explode | json_encode | raw }}
                     },
 
                     // 列表数据处理
                     listData: [
-                        // 对后台传来的数据进行循环处理
-                        {% for item in data %}
                         {
-                            id: '{{ item.id | default }}',
-                            user_name: '{{ item.userAuth.subjectName | default }}',
-                            label:'{% for key in item.labels %} {{ key }} {% endfor %}',
-                            title: '{{ item.title | default }}',
-                            collections: '{{ item.collections | default(0) }}',
-                            views: '{{ item.views | default(0) }}',
-                            // 对于时间数据进行特殊处理
-                            create_at: '{{ item.createAt | date('Y-m-d H:i:s') }}',
-                        {% if item.updateAt | default is not null %}
-                            update_at: '{{ item.updateAt | date('Y-m-d H:i:s') }}',
-                        {% else %}
-                            update_at: '',
-                        {% endif %}
-                            classify: '{{ item.classify.classifyName | default }}'
+                            data1: '用户名',
+                            data2: '注册时间',
+                            data3: '最后登录时间',
                         },
-                        {% endfor %}
                     ],
+
+                    // options: [
+                    //     {
+                    //         value: 1,
+                    //         label: 'phpzlc'
+                    //     },
+                    //
+                    //     {
+                    //         value: 1,
+                    //         label: 'phpzlc'
+                    //     },
+                    //
+                    //     {
+                    //         value: 1,
+                    //         label: 'phpzlc'
+                    //     },
+                    // ],
                 }
             },
 
@@ -154,15 +148,13 @@
                 handleDelete(index, row){},
 
                 // 新建按钮
-                handleCreate(){
-                    window.location = '{{ path('admin_blog_manage_article_page') }}'
-                },
+                handleCreate(){},
 
                 // 编辑按钮
-                handleEdit(index, row){
-                    window.location = '{{ path('admin_blog_manage_article_page') }}?id='+ row.id;
-                }
+                handleEdit(index, row){},
 
+                // 详情按钮
+                handleInfo(index, row){}
             }
         })
     </script>

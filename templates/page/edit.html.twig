@@ -13,7 +13,6 @@
 
         <el-form-item label="文章概要:" prop="summary" size="mini" class="el-form-width-all">
             <el-input v-model="summary" placeholder="请输入概要" maxlength="144"></el-input>
-            <span style="padding-left: 10px">还可输入${ titleFontNum }$个字符</span>
         </el-form-item>
 
         <!-- 图片控件 start -->
@@ -32,7 +31,6 @@
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10M，<p style="color:#ff0000 ">如果需要重新上传，请删除已上传的缩略图，再进行上传操作</p></div>
             </el-upload>
         </el-form-item>
-
         <!-- 图片控件 end -->
 
         <!-- 选择控件 start -->
@@ -88,13 +86,13 @@
                     id: '',
                     // 表单数据
                     form: {
-                        id: '{{ info.id|default }}',
-                        title: '{{ info.title|default }}',
+                        id: '',
+                        title: '',
                         content: '',
                         label:[],
-                        thumbnail:'{{ info.thumbnail | default }}',
-                        summary: '{{ info.articleSummary | default }}',
-                        classify: '{{ info.classify.id | default }}'
+                        thumbnail:'',
+                        summary: '',
+                        classify: ''
                     },
                     // 表单内容验证
                     rules: {
@@ -112,35 +110,30 @@
                     },
 
                     labelOptions:[
-                        {% for item in labels %}
                         {
-                            id:"{{ item.id | default }}",
-                            name: "{{ item.name | default }}"
+                            id:"1",
+                            name: "phpzlc"
                         },
-                        {% endfor %}
                     ],
 
                     classifyOptions:[
-                        {% for item in classifies %}
                         {
-                            id:"{{ item.id | default }}",
-                            name:"{{ item.classifyName | default }}"
+                            id:"1",
+                            name:"phpzlc"
                         },
-                        {% endfor %}
                     ],
 
                     // 上传图片显示
                     uploadThumbnailFileList:[
-                        {% if info.thumbnail | default  is not empty %}
                         {
                             name:'缩略图',
-                            url:"{{ info.thumbnailPath | default }}"
+                            url:"#"
                         }
-                        {% endif %}
-                    ],
 
-                    titleFontNum: "{{ info.articleSummary | default | length }}",
-                    summary: "{{ info.articleSummary | default }}"
+                    ],
+                    // titleFontNum: "",
+                    // summary: ""
+
 
                 }
             },
@@ -150,17 +143,17 @@
                 this.fontNumCompute();
             },
 
-            watch: {
-                summary: function (){
-                    this.form.summary = this.summary;
-                    this.fontNumCompute();
-                }
-            },
+            watch: {},
+
             methods: {
                 // 提交按钮
                 submitForm(formName) {
+                    // 获取富文本编辑框内容
                     this.form.content = UE.getEditor('editor').getContent();
+                    // 定义全局变量
                     const that = this;
+
+                    // 判断表单数据是新建/编辑，然后进入不同的路由当中
                     {% if app.request.get('id') is not null %}
                     var url = "{{ path('admin_blog_manage_article_edit') }}?id={{ app.request.get('id') }}";
                     $.post(url, that.form, function (result) {
@@ -178,7 +171,6 @@
                 resetForm() {
                     window.location.href ="{{ admin_url_anchor() }}";
                 },
-
 
                 handleChange(value) {
                     console.log(value);
@@ -200,9 +192,6 @@
                     this.form.thumbnail = ''
                 },
 
-                fontNumCompute(){
-                    this.titleFontNum = 144 - this.form.summary.length;
-                }
             }
         })
     </script>
