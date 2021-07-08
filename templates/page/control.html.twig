@@ -1,209 +1,304 @@
-{% extends '@PHPZlcAdmin/page/index.html.twig' %}
+<!-- 主要控件 start -->
 
-{% block main_content %}
-<div class="add-page clearfix">
-    <!-- 新建/编辑表单 start -->
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="left" class="form-content">
+<!-- input输入框  start -->
+<el-input v-model="input" placeholder="请输入内容"></el-input>
 
-        <!-- 一般输入框 start -->
-        <el-form-item label="文章标题:" prop="title" size="mini" class="el-form-width-all">
-            <el-input v-model="form.title" placeholder="请输入标题"></el-input>
-        </el-form-item>
-        <!-- 一般输入框 end -->
-
-        <el-form-item label="文章概要:" prop="summary" size="mini" class="el-form-width-all">
-            <el-input v-model="summary" placeholder="请输入概要" maxlength="144"></el-input>
-            <span style="padding-left: 10px">还可输入${ titleFontNum }$个字符</span>
-        </el-form-item>
-
-        <!-- 图片控件 start -->
-        <el-form-item label="缩略图:" prop="thumbnail" size="mini" class="el-form-width-all">
-            <el-upload
-                    class="upload-demo"
-                    action="{{ path('upload_file') }}"
-                    :limit="1"
-                    :on-remove="removeThumbnailFileList"
-                    :on-success="fileUploadResponse"
-                    :file-list="uploadThumbnailFileList"
-                    :data="{uploadType:1}"
-                    list-type="picture"
-            >
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10M，<p style="color:#ff0000 ">如果需要重新上传，请删除已上传的缩略图，再进行上传操作</p></div>
-            </el-upload>
-        </el-form-item>
-
-        <!-- 图片控件 end -->
-
-        <!-- 选择控件 start -->
-        <el-form-item label="标签:" prop="label" size="mini" class="el-form-width-all">
-            <el-select v-model="form.label" multiple placeholder="请选择">
-                <el-option
-                        v-for="item in labelOptions"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
-                >
-                </el-option>
-            </el-select>
-        </el-form-item>
-        <!-- 选择控件 end -->
-
-        <el-form-item label="分类:" prop="classify" size="mini" class="el-form-width-all">
-            <el-select v-model="form.classify" placeholder="请选择">
-                <el-option
-                        v-for="item in classifyOptions"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
-                >
-                </el-option>
-            </el-select>
-        </el-form-item>
-
-        <!-- 富文本编辑控件 start -->
-        <el-form-item label="内容" prop="content" size="mini" class="el-form-width-all" class="form-content">
-            <el-ueditor id="editor" action="{{ path('upload_file') }}" content="{{ info.content | default }}"></el-ueditor>
-        </el-form-item>
-        <!-- 富文本编辑控件 end -->
-
-        <el-form-item size="mini">
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-            <el-button @click="resetForm()">取消</el-button>
-        </el-form-item>
-    </el-form>
-
-    <!-- 新建/编辑表单 end -->
-</div>
-{% endblock %}
-
-
-{% block main_content_vue %}
-    <script>
-        new Vue({
-            el: '#main-content',
-            delimiters: ['${', '}$'],
-            data: function () {
-                return {
-                    id: '',
-                    // 表单数据
-                    form: {
-                        id: '{{ info.id|default }}',
-                        title: '{{ info.title|default }}',
-                        content: '',
-                        label:[],
-                        thumbnail:'{{ info.thumbnail | default }}',
-                        summary: '{{ info.articleSummary | default }}',
-                        classify: '{{ info.classify.id | default }}'
-                    },
-                    // 表单内容验证
-                    rules: {
-                        title: [
-                            { required: true, message: '请输入标题', trigger: 'blur' },
-                        ],
-
-                        content: [
-                            { required: true, message: '请输入内容', trigger: 'blur' },
-                        ],
-
-                        summary: [
-                            { required: true, message: '请输入文章概要', trigger: 'blur'}
-                        ]
-                    },
-
-                    labelOptions:[
-                        {% for item in labels %}
-                        {
-                            id:"{{ item.id | default }}",
-                            name: "{{ item.name | default }}"
-                        },
-                        {% endfor %}
-                    ],
-
-                    classifyOptions:[
-                        {% for item in classifies %}
-                        {
-                            id:"{{ item.id | default }}",
-                            name:"{{ item.classifyName | default }}"
-                        },
-                        {% endfor %}
-                    ],
-
-                    // 上传图片显示
-                    uploadThumbnailFileList:[
-                        {% if info.thumbnail | default  is not empty %}
-                        {
-                            name:'缩略图',
-                            url:"{{ info.thumbnailPath | default }}"
-                        }
-                        {% endif %}
-                    ],
-
-                    titleFontNum: "{{ info.articleSummary | default | length }}",
-                    summary: "{{ info.articleSummary | default }}"
-
-                }
-            },
-            created() {
-                // // 页面初始化使用
-                // console.log(1);
-                this.fontNumCompute();
-            },
-
-            watch: {
-                summary: function (){
-                    this.form.summary = this.summary;
-                    this.fontNumCompute();
-                }
-            },
-            methods: {
-                // 提交按钮
-                submitForm(formName) {
-                    this.form.content = UE.getEditor('editor').getContent();
-                    const that = this;
-                    {% if app.request.get('id') is not null %}
-                    var url = "{{ path('admin_blog_manage_article_edit') }}?id={{ app.request.get('id') }}";
-                    $.post(url, that.form, function (result) {
-                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
-                    });
-                    {% elseif app.request.get('id') is null %}
-                    var url = "{{ path('admin_blog_manage_article_create')}}";
-                    $.post(url, that.form, function (result) {
-                        resultPreprocess(that, result,"{{ admin_url_anchor() }}")
-                    });
-                    {% endif %}
-                },
-
-                // 取消按钮
-                resetForm() {
-                    window.location.href ="{{ admin_url_anchor() }}";
-                },
-
-
-                handleChange(value) {
-                    console.log(value);
-                },
-
-                // 上传成功触发方法
-                fileUploadResponse(response, file, fileList){
-                    if(response.code == 0){
-                        file.path = response.data.path;
-                        this.form.thumbnail = file.path;
-                    }else {
-                        this.$message.error(response.msg);
-                        fileList.splashArray(fileList.length-1, 1);
-                    }
-                },
-
-                // 上传列表删除图片方法
-                removeThumbnailFileList(){
-                    this.form.thumbnail = ''
-                },
-
-                fontNumCompute(){
-                    this.titleFontNum = 144 - this.form.summary.length;
-                }
+<script>
+    export default {
+        data() {
+            return {
+                input: ''
             }
-        })
-    </script>
-{% endblock %}
+        }
+    }
+</script>
+<!-- input输入框  end -->
+
+
+<!-- 密码框 start -->
+<el-input placeholder="请输入密码" v-model="input" show-password></el-input>
+
+<script>
+    export default {
+        data() {
+            return {
+                input: ''
+            }
+        }
+    }
+</script>
+<!-- 密码框 end -->
+
+
+<!-- 文本域 start -->
+<el-input
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="textarea">
+</el-input>
+
+<script>
+    export default {
+        data() {
+            return {
+                textarea: ''
+            }
+        }
+    }
+</script>
+<!-- 文本域 end -->
+
+
+<!-- select选择器(单选) start  -->
+<template>
+    <el-select v-model="value" placeholder="请选择">
+        <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+        </el-option>
+    </el-select>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                value: ''
+            }
+        }
+    }
+</script>
+<!-- select选择器(单选) end -->
+
+
+<!-- select选择器(多选) start  -->
+<el-select v-model="value1" multiple placeholder="请选择">
+    <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+    </el-option>
+</el-select>
+
+<script>
+    export default {
+        data() {
+            return {
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                value1: [],
+                value2: []
+            }
+        }
+    }
+</script>
+<!-- select选择器(多选) end  -->
+
+<!-- DatePicker 日期选择(选择日) start -->
+<div class="block">
+    <span class="demonstration">默认</span>
+    <el-date-picker
+            v-model="value1"
+            type="date"
+            placeholder="选择日期">
+    </el-date-picker>
+</div>
+
+<script>
+    export default {
+        data() {
+            return {
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [{
+                        text: '今天',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date());
+                        }
+                    }, {
+                        text: '昨天',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周前',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', date);
+                        }
+                    }]
+                },
+                value1: '',
+                value2: '',
+            };
+        }
+    };
+</script>
+<!-- DatePicker 日期选择器(选择日) end -->
+
+
+<!-- DatePicker 日期选择器(选择日期范围) start-->
+<div class="block">
+    <span class="demonstration">默认</span>
+    <el-date-picker
+            v-model="value1"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+    </el-date-picker>
+</div>
+
+<script>
+    export default {
+        data() {
+            return {
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+                value1: '',
+                value2: ''
+            };
+        }
+    };
+</script>
+
+<!-- DatePicker 日期选择器(选择日期范围) end -->
+
+<!-- upload 上传 start -->
+<el-upload
+        class="upload-demo"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :before-remove="beforeRemove"
+        multiple
+        :limit="3"
+        :on-exceed="handleExceed"
+        :file-list="fileList">
+    <el-button size="small" type="primary">点击上传</el-button>
+    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+</el-upload>
+<script>
+    export default {
+        data() {
+            return {
+                fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+            };
+        },
+        methods: {
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePreview(file) {
+                console.log(file);
+            },
+            handleExceed(files, fileList) {
+                this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            beforeRemove(file, fileList) {
+                return this.$confirm(`确定移除 ${ file.name }？`);
+            }
+        }
+    }
+</script>
+<!-- upload 上传 end -->
+
+<!-- radio 单选框 start -->
+<template>
+    <el-radio v-model="radio" label="1">备选项</el-radio>
+    <el-radio v-model="radio" label="2">备选项</el-radio>
+</template>
+
+<script>
+    export default {
+        data () {
+            return {
+                radio: '1'
+            };
+        }
+    }
+</script>
+<!-- radio 单选框 end -->
+
+<!-- checked 多选框 start -->
+<template>
+    <!-- `checked` 为 true 或 false -->
+    <el-checkbox v-model="checked">备选项</el-checkbox>
+</template>
+<script>
+    export default {
+        data() {
+            return {
+                checked: true
+            };
+        }
+    };
+</script>
+<!-- checked 多选框 end -->
+
+
+<<!-- 主要控件 end -->
